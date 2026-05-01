@@ -7,26 +7,26 @@ import { ChevronRightIcon } from "@/lib/icons/ChevronRightIcon";
 import { clsx } from "clsx";
 import { useState } from "react";
 
-export default function TourPolicy() {
-  const [showPolicy, setShowPolicy] = useState(false);
+export default function TourOrder() {
+  const [showOrder, setShowOrder] = useState(false);
   return (
     <section>
       <div className="p-15 bg-[#171717]">
         <button
           className={clsx(
             "flex items-center justify-between w-full",
-            showPolicy && "mb-7.5",
+            showOrder && "mb-7.5",
           )}
           type="button"
-          onClick={() => setShowPolicy(!showPolicy)}
+          onClick={() => setShowOrder(!showOrder)}
         >
           <Text as="h2" color="white" size="md">
-            Cancellation Policy
+            Order Policy
           </Text>
-          {showPolicy ? <ArrowDownIcon isBig /> : <ChevronRightIcon />}
+          {showOrder ? <ArrowDownIcon isBig /> : <ChevronRightIcon />}
         </button>
 
-        {showPolicy && (
+        {/* {showOrder && (
           <ol className="pl-5 list-decimal marker:text-white/60 flex flex-col gap-4">
             {cancellationPolicy.map(({ id, text, points }) => (
               <li key={id}>
@@ -47,7 +47,7 @@ export default function TourPolicy() {
               </li>
             ))}
           </ol>
-        )}
+        )} */}
       </div>
     </section>
   );

@@ -12,6 +12,8 @@ import TourInclude from "./TourInclude";
 import TourAdvantages from "./TourAdvantages";
 import Reviews from "@/app/home/Reviews";
 import TourPolicy from "./TourPolicy";
+import TourOrder from "./TourOrder";
+import TourSchedule from "./TourSchedule";
 
 export default function TourDetails() {
   const tourDetails = useParams();
@@ -32,9 +34,13 @@ export default function TourDetails() {
           included={includedInTheTour}
           notIncluded={notIncludedInTheTour}
         />
+        <TourSchedule />
         <TourAdvantages />
         <Reviews isDark />
-        <TourPolicy />
+        <div className="pt-37.5 flex flex-col gap-7.5">
+          <TourPolicy />
+          <TourOrder />
+        </div>
       </div>
     </main>
   );

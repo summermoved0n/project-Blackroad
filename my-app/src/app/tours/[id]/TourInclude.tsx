@@ -19,20 +19,15 @@ export default function TourInclude({
             The price includes
           </Text>
 
-          <ul className="flex flex-col gap-4">
+          <ol className="list-disc marker:text-[#ea9c3f] flex flex-col gap-4">
             {included.map((item, i) => (
               <li key={i} className="pl-[20px] relative">
-                <Text
-                  as="p"
-                  color="white60"
-                  size="sm"
-                  className="content-'' before:h-1 before:w-1 before:bg-amber-500 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:rounded-full"
-                >
+                <Text as="p" color="white60" size="sm">
                   {item}
                 </Text>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
 
         <div>
@@ -40,20 +35,15 @@ export default function TourInclude({
             Not included
           </Text>
 
-          <ul className="flex flex-col gap-4">
+          <ol className="list-disc marker:text-[#ea9c3f] flex flex-col gap-4">
             {notIncluded.map((item, i) => (
               <li key={i} className="pl-[20px] relative">
-                <Text
-                  as="p"
-                  color="white60"
-                  size="sm"
-                  className="content-'' before:h-1 before:w-1 before:bg-amber-500 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:rounded-full"
-                >
+                <Text as="p" color="white60" size="sm">
                   {item}
                 </Text>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
     </section>

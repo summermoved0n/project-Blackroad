@@ -1,3 +1,27 @@
+export const cancellationPolicy = [
+  {
+    id: 1,
+    text: "The Agreement comes into force from the moment of acceptance (acceptance) of this offer and is valid until the end of the Tour term, but in any case until the parties fully fulfill their obligations.",
+  },
+  {
+    id: 2,
+    text: "The Agreement may be terminated ahead of schedule, at the initiative of one of the Parties, but not earlier than the date of all mutual settlements between the Tourist and the Tour Operator/Travel Agent.",
+  },
+  {
+    id: 3,
+    text: "This Agreement shall termin:",
+    points: [
+      "early by mutual agreement of the Parties;",
+      "early on the initiative of one of the Parties in accordance with the procedure provided for herein;",
+      "in other cases stipulated by the current legislation of Canada.",
+    ],
+  },
+  {
+    id: 4,
+    text: "In case of termination of the Agreement at the initiative of the Tourist, the Tourist is returned the amount deposited with the deduction of penalties from it in the amount of 25% of the total cost of the Tour.",
+  },
+];
+
 export const includedInTheTour = [
   "Travel on a tourist bus along the entire route",
   "Excursions on the program",
