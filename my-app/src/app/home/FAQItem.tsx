@@ -17,11 +17,7 @@ export default function FAQItem({ question, description }: FAQItemProps) {
           {question}
         </Text>
 
-        <button
-          type="button"
-          className=""
-          onClick={() => setShowText(!showText)}
-        >
+        <button type="button" onClick={() => setShowText(!showText)}>
           {!showText ? <PlusIcon /> : <MinusIcon />}
         </button>
       </div>

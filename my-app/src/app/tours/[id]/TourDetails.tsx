@@ -10,6 +10,8 @@ import TourInfo from "./TourInfo";
 import TourDates from "./TourDates";
 import TourInclude from "./TourInclude";
 import TourAdvantages from "./TourAdvantages";
+import Reviews from "@/app/home/Reviews";
+import TourPolicy from "./TourPolicy";
 
 export default function TourDetails() {
   const tourDetails = useParams();
@@ -31,6 +33,8 @@ export default function TourDetails() {
           notIncluded={notIncludedInTheTour}
         />
         <TourAdvantages />
+        <Reviews isDark />
+        <TourPolicy />
       </div>
     </main>
   );
