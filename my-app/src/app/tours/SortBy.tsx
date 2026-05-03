@@ -10,14 +10,7 @@ import { useRef, useState } from "react";
 import Filter from "../components/Filter";
 import SortByList from "./SortByList";
 import { useClickOutside } from "@/lib/hooks/useClickOutside";
-
-const sortOptions = [
-  { id: 1, label: "default" },
-  { id: 2, label: "price: Low to High" },
-  { id: 3, label: "price: High to Low" },
-  { id: 4, label: "rating" },
-  { id: 5, label: "popularity" },
-];
+import { sortOptions } from "@/lib/data/toursPageData";
 
 export default function SortBy() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +21,7 @@ export default function SortBy() {
   useClickOutside(containerRef, () => setShowSortList(false));
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-12.5 mb-7.5 md:mb-12.5 md:mt-0">
+    <div className="flex flex-col md:flex-row lg:justify-between md:items-center mt-12.5 mb-7.5 md:mb-12.5 md:mt-0">
       <Text
         as="h3"
         color="white"
@@ -39,7 +32,10 @@ export default function SortBy() {
         choose a tour
       </Text>
 
-      <div className="relative hidden md:flex items-center gap-7.5">
+      <div
+        ref={containerRef}
+        className="relative hidden lg:flex items-center gap-7.5"
+      >
         <Text as="p" color="white" size="md">
           Sort by:
         </Text>
@@ -47,7 +43,9 @@ export default function SortBy() {
         <button
           type="button"
           className="flex items-center gap-7.5"
-          onClick={() => setShowSortList(!showSortList)}
+          onClick={() => {
+            setShowSortList(!showSortList);
+          }}
         >
           <Text as="p" color="white60" size="sm" className="w-37 text-right">
             {sortName}
@@ -57,10 +55,7 @@ export default function SortBy() {
         </button>
 
         {showSortList && (
-          <div
-            ref={containerRef}
-            className="absolute top-10 bg-[#171717] rounded-md p-5 flex flex-col gap-2.5 z-20"
-          >
+          <div className="absolute w-full top-10 bg-[#171717] p-5 flex flex-col gap-2.5 z-20">
             {sortOptions.map(({ id, label }) => (
               <SortByList
                 key={id}
@@ -73,7 +68,7 @@ export default function SortBy() {
         )}
       </div>
 
-      <div className="flex gap-2 w-full md:hidden">
+      <div className="flex gap-2 w-full lg:hidden">
         <Button
           variant="primary"
           size="sm"
@@ -104,11 +99,23 @@ export default function SortBy() {
       </Modal>
 
       <Modal openModal={openSortModal} setOpenModal={setOpenSortModal}>
-        fsdfsd
-        {/* <SortByList
-          setShowSortList={setShowSortList}
-          setSortName={setSortName}
-        /> */}
+        {openSortModal && (
+          <div className="absolute w-full top-10 p-4">
+            <Text as="p" color="white" size="md" className="text-[20px] mb-10">
+              Sort by
+            </Text>
+            <div className="flex flex-col gap-7.5">
+              {sortOptions.map(({ id, label }) => (
+                <SortByList
+                  key={id}
+                  label={label}
+                  setOpenSortModal={setOpenSortModal}
+                  setSortName={setSortName}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

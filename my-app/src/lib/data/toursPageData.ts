@@ -1,3 +1,11 @@
+export const sortOptions = [
+  { id: 1, label: "default" },
+  { id: 2, label: "price: Low to High" },
+  { id: 3, label: "price: High to Low" },
+  { id: 4, label: "rating" },
+  { id: 5, label: "popularity" },
+];
+
 export const cancellationPolicy = [
   {
     id: 1,

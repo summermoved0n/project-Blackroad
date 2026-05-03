@@ -6,13 +6,15 @@ import { useFilters } from "@/lib/hooks/useFilters";
 
 type SortByListProps = {
   label: string;
-  setShowSortList: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSortList?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSortModal?: React.Dispatch<React.SetStateAction<boolean>>;
   setSortName: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function SortByList({
   label,
   setShowSortList,
+  setOpenSortModal,
   setSortName,
 }: SortByListProps) {
   const { setFilter } = useFilters();
@@ -20,7 +22,8 @@ export default function SortByList({
     <button
       onClick={() => {
         setSortName(label);
-        setShowSortList(false);
+        setOpenSortModal?.(false);
+        setShowSortList?.(false);
         setFilter("sort", label);
       }}
       className="text-left"

@@ -46,8 +46,8 @@ export default function ToursSearchForm() {
 
         <SortBy />
 
-        <div className="grid md:grid-cols-[1fr_2fr] md:gap-7.5">
-          <div className="hidden md:block">
+        <div className="grid lg:grid-cols-[1fr_2fr] md:gap-7.5">
+          <div className="hidden lg:block">
             <Filter />
           </div>
           <ToursList paginateListData={paginateListData} />
