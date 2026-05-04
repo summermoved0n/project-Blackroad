@@ -12,7 +12,7 @@ type TextProps = {
     | "black50"
     | "black60"
     | "orange";
-  size: "xs" | "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   as?: "p" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   spacing?: "sm";
   className?: string;

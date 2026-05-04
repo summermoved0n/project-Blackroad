@@ -11,7 +11,7 @@ export default function TourPolicy() {
   const [showPolicy, setShowPolicy] = useState(false);
   return (
     <section>
-      <div className="p-15 bg-[#171717]">
+      <div className="p-5 md:p-15 bg-[#171717]">
         <button
           className={clsx(
             "flex items-center justify-between w-full",

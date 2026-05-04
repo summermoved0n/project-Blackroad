@@ -23,10 +23,10 @@ type TourInfoProps = {
 export default function TourInfo({ tourData }: TourInfoProps) {
   const route = useRouter();
 
-  const { id, categories, title, img, stars, desc, price } = tourData || {};
+  const { id, categories, title, img, stars, price } = tourData || {};
   return (
-    <section className="flex flex-col items-center justify-center pb-25">
-      <div className="py-3 px-5 bg-[#171717] rounded-md flex w-fit justify-center items-center gap-2 mb-12.5">
+    <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
+      <div className="py-3 px-5 bg-[#171717] rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5">
         <Text as="p" color="white60" size="xs">
           Main
         </Text>
@@ -48,32 +48,39 @@ export default function TourInfo({ tourData }: TourInfoProps) {
 
         <button
           type="button"
-          className="w-53.5 h-12 bg-[#171717] rounded-md text-white text-[16px] flex justify-center items-center gap-5"
+          className="w-16 md:w-53.5 h-12 bg-[#171717] rounded-md text-white flex justify-center items-center gap-5"
         >
-          Add to Favorites
+          <Text as="span" color="white" size="sm" className="hidden md:block">
+            Add to Favorites
+          </Text>
           <EmptyHeartIcon />
         </button>
       </div>
 
-      <div className="w-full h-163 grid grid-cols-[1fr_400px] gap-35">
-        <div className="relative bg-white">
+      <div className="w-full md:h-163 grid md:grid-cols-[2fr_1fr] md:gap-35">
+        <div className="relative h-75 md:h-full mb-7.5 md:mb-0">
           <Image
             className="object-cover object-center"
             src={img}
             alt={title}
             fill
-            sizes="50vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 
         <div className="flex flex-col justify-between">
-          <Text as="h3" color="white" size="md">
+          <Text as="h3" color="white" size="md" className="mb-10 md:mb-0">
             Tour Information
           </Text>
 
-          <ReviewStars stars={stars} />
+          <div className="mb-10 md:mb-0 flex items-center justify-between">
+            <ReviewStars stars={stars} />
+            <Text as="h3" color="white" size="md" className="md:hidden">
+              {stars}
+            </Text>
+          </div>
 
-          <div className="w-75 flex flex-col gap-10">
+          <div className="md:w-75 flex flex-col gap-10 mb-10 md:mb-0">
             <div className="flex flex-col gap-4">
               <Text as="h4" color="white60" size="sm">
                 Route:

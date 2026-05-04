@@ -17,7 +17,7 @@ export default function ToursTable({ data }: { data: ToursTableProps[] }) {
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
-    <div className="overflow-x-auto py-15 px-15 bg-[#171717]">
+    <div className="hidden md:block overflow-x-auto py-15 px-15 bg-[#171717]">
       <table className="w-full">
         <thead className="text-white text-left text-md">
           <tr>

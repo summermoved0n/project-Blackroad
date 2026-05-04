@@ -1,17 +1,24 @@
 import { Button } from "@/app/components/Button";
+import ButtonWithArrow from "@/app/components/ButtonWithArrow";
 import { Text } from "@/app/components/Text";
 import { ArrowRightIcon } from "@/lib/icons/ArrowRightIcon";
 import Image from "next/image";
 
 export default function TourSchedule() {
   return (
-    <section className="py-25">
-      <Text as="h2" color="white" size="lg" spacing="sm" className="mb-10">
+    <section className="py-12.5 md:py-25">
+      <Text
+        as="h2"
+        color="white"
+        size="lg"
+        spacing="sm"
+        className="mb-7.5 md:mb-10"
+      >
         Day 1
       </Text>
 
-      <div className="grid grid-cols-[3fr_2fr] gap-7.5 items-center">
-        <div className="relative h-175 w-full">
+      <div className="grid md:grid-cols-[3fr_2fr] gap-7.5 items-center">
+        <div className="relative h-62.5 md:h-175 w-full mb-20 md:mb-0">
           <Image
             className="object-cover object-center z-10"
             src="/images/We_change_big_house.jpg"
@@ -20,19 +27,21 @@ export default function TourSchedule() {
             sizes="70vw"
           />
 
-          <div className="absolute w-137 p-15 bg-white top-1/2 right-0 translate-x-1/2 -translate-y-1/2 z-20">
-            <Text as="p" color="black" size="md" className="mb-7.5">
+          <div className="absolute w-[90%] md:w-137 p-7.5 md:p-15 bg-white top-1/2 right-[5%] translate-y-1/2 md:top-1/2 md:right-0 md:translate-x-1/2 md:-translate-y-1/2 z-20">
+            <Text as="p" color="black" size="md" className="mb-4 md:mb-7.5">
               Satanic Forest
             </Text>
 
             <Button
               variant="tertiary"
-              className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+              className="hidden md:flex absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 items-center justify-center"
             >
               <ArrowRightIcon />
             </Button>
 
-            <Text as="p" color="black60" size="sm">
+            <ButtonWithArrow className="md:hidden">More</ButtonWithArrow>
+
+            <Text as="p" color="black60" size="sm" className="hidden md:block">
               Arrival to the park, where predators live and undergo
               rehabilitation: bears, wolves, foxes. During the tour, experts
               will talk about the behavior of animals, their habits and eating
@@ -43,7 +52,7 @@ export default function TourSchedule() {
           </div>
         </div>
 
-        <div className="relative h-137">
+        <div className="hidden md:block relative h-137">
           <Image
             className="object-cover object-center"
             src="/images/We_change_left.jpg"

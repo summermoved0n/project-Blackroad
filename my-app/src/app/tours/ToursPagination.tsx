@@ -16,7 +16,7 @@ export default function ToursPagination({
   const pages = getPages(currentPage, totalPages);
 
   return (
-    <div className="pt-14 flex items-center justify-center gap-10">
+    <div className="py-7.5 md:pt-14 md:py-0 flex items-center justify-center gap-10">
       <button
         className="h-6 w-6 flex justify-center items-center"
         onClick={() => {
