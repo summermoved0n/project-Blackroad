@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Modal from "@/components/Modal";
 import { useState } from "react";
+import SignupForm from "./SignupForm";
 
 export default function Signup() {
   const router = useRouter();
@@ -24,6 +25,8 @@ export default function Signup() {
               Login
             </button>
           </p>
+
+          <SignupForm />
         </div>
       </Modal>
     </section>

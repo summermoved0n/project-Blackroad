@@ -1,16 +1,24 @@
-import { prisma } from "@/lib/prisma";
+import { signUpUser } from "@/lib/services/auth.services";
+import { signupValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const body = await req.json();
-  const { email, password } = body;
+  try {
+    const body = await req.json();
 
-  const newUser = await prisma.user.create({
-    data: {
-      email,
-      password,
-    },
-  });
+    const validatedBody = signupValidationSchema.safeParse(body);
 
-  return NextResponse.json(newUser);
+    if (!validatedBody.success) {
+      return NextResponse.json(
+        { error: validatedBody.error.message },
+        { status: 400 },
+      );
+    }
+
+    await signUpUser(validatedBody.data);
+
+    return NextResponse.json({ message: "User create success" }, { status: 201 });
+  } catch (error) {
+    console.log(error);
+  }
 }
