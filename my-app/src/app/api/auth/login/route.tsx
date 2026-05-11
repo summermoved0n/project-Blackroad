@@ -1,24 +1,51 @@
-import { prisma } from "@/lib/prisma";
-import { signupValidationSchema } from "@/lib/validations/auth.validation";
+import jwt from "jsonwebtoken";
+
+import { logInUser } from "@/lib/services/auth.services";
+import { loginValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const validatedBody = loginValidationSchema.safeParse(body);
 
-    const validatedBody = signupValidationSchema.safeParse(body);
+    if (!validatedBody.success) {
+      return NextResponse.json(
+        { error: validatedBody.error.message },
+        { status: 400 },
+      );
+    }
 
-    console.log(validatedBody);
+    await logInUser(validatedBody.data);
 
-    // const { email, password } = body;
+    const token = jwt.sign(
+      {
+        email: validatedBody.data.email,
+      },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "7d",
+      },
+    );
 
-    // const newUser = await prisma.user.create({
-    //   data: {
-    //     email,
-    //     password,
-    //   },
-    // });
+    const response = NextResponse.json(
+      { message: "User create success" },
+      { status: 200 },
+    );
 
-    // return NextResponse.json(newUser);
-  } catch (error) {}
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 401 });
+    }
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }

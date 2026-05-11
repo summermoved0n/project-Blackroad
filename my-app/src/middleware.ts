@@ -1,20 +1,27 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token");
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get("token");
 
-  const isProtected = request.nextUrl.pathname.startsWith("/tours");
+  const isAuthPage = req.nextUrl.pathname.startsWith("/login");
 
-  if (isProtected && !token) {
-    const loginUrl = new URL("/login", request.url);
+  const isProtectedRoute =
+    req.nextUrl.pathname.startsWith("/build-tour") ||
+    req.nextUrl.pathname.includes("/booking");
 
-    return NextResponse.redirect(loginUrl);
+  // нема токена → на login
+  if (!token && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // вже залогінений → не пускати в login
+  if (token && isAuthPage) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/tours/:id/booking"],
+  matcher: ["/build-tour", "/tours/:path*/booking"],
 };
