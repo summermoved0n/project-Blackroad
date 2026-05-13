@@ -36,7 +36,7 @@ export const logInUser = async ({ email, password }: LogInUserProps) => {
     existedUser.password,
   );
 
-    if (!comparePassword) {
-      throw new Error("Email or password not valid");
-    }
+  if (!comparePassword) {
+    throw new Error("Email or password not valid");
+  }
 };

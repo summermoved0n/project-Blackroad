@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const signupValidationSchema = z
   .object({
-    email: z.email(),
-    password: z.string().min(6),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Password is required"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -12,7 +12,7 @@ export const signupValidationSchema = z
   });
 
 export const loginValidationSchema = z.object({
-  email: z.email("Invalid email"),
+  email: z.string().email("Invalid email"),
   password: z.string().min(1, "Password is required"),
 });
 

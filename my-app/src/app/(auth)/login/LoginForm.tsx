@@ -1,23 +1,33 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import axios from "axios";
+import { Button } from "@/components/Button";
+import {
+  LoginSchema,
+  loginValidationSchema,
+} from "@/lib/validations/auth.validation";
+import { useState } from "react";
+import { ShowPasswordIcon } from "@/components/icons/ShowPasswordIcon";
+import { HidePasswordIcon } from "@/components/icons/HidePasswordIcon";
 
 export default function LoginForm() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginValidationSchema),
+  });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (data: LoginSchema) => {
     try {
-      e.preventDefault();
-
-      const formData = { email, password };
-      await axios.post("/api/auth/login", formData);
-
-      router.push("/tours");
+      await axios.post("/api/auth/login", data);
+      router.replace("/tours");
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -25,29 +35,45 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleLogin} className="pt-20 flex flex-col gap-4">
-      <h1 className="text-white">Login</h1>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full flex flex-col gap-7.5"
+    >
+      <label className="text-white flex flex-col">
+        E-mail
+        <input
+          {...register("email")}
+          className="border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none"
+          placeholder="email@example.com"
+          type="email"
+        />
+        {errors.email && <p className="text-red-400">{errors.email.message}</p>}
+      </label>
 
-      <input
-        className="border border-amber-200 text-white"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <label className="relative text-white flex flex-col">
+        Password
+        <input
+          {...register("password")}
+          className="border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none"
+          placeholder="●  ●  ●  ●  ●  ●  ●  ●"
+          type={!showPassword ? "password" : "text"}
+          autoComplete="current-password"
+        />
+        <button
+          className="absolute right-0 top-1/2 translate-y-1/2"
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? <ShowPasswordIcon /> : <HidePasswordIcon />}
+        </button>
+        {errors.password && (
+          <p className="text-red-400">{errors.password.message}</p>
+        )}
+      </label>
 
-      <input
-        className="border border-amber-200 text-white"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button
-        className="bg-amber-500 text-white py-2 px-4 rounded"
-        type="submit"
-      >
+      <Button variant="primary" type="submit">
         Login
-      </button>
+      </Button>
     </form>
   );
 }

@@ -12,23 +12,85 @@ datasource db {
   provider = "postgresql"
 }
 
+enum RoomType {
+  single
+  double
+}
+
 model User { 
   id        Int     @id @default(autoincrement()) 
   email     String  @unique
   password  String  
   name      String?
-  posts Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings  Booking[]
+  reviews   Review[]
 
   @@map("users")
 } 
 
-model Post { 
-  id        Int     @id @default(autoincrement()) 
-  title     String
-  content   String?
-  published Boolean @default(false) 
-  author    User    @relation(fields: [authorId], references: [id]) 
-  authorId  Int
+model Tour { 
+  id                  Int     @id @default(autoincrement()) 
+  title               String
+  description         String
+  category            String
+  rating              Int
+  price               Int
 
-  @@map("posts")
+  route               String[]
+  tourDates           DateTime[]
+
+  duration            Int
+  food                String
+
+  dateOfArrival       DateTime
+  dateOfDeparture     DateTime
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  bookings            Booking[]
+  reviews             Review[]
+
+  @@map("tours")
 } 
+
+model Review {
+  id         Int @id @default(autoincrement())
+  rating     Int
+  comment    String
+  instagram  String?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  authorId   Int
+  author     User     @relation(fields: [authorId], references: [id])
+
+  tourId     Int
+  tour       Tour     @relation(fields: [tourId], references: [id])
+
+  @@map("reviews")
+}
+
+model Booking {
+  id         Int      @id @default(autoincrement())
+
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+
+  tourId     Int
+  tour       Tour     @relation(fields: [tourId], references: [id])
+
+  guests     Int
+  room       RoomType @default(single)
+  totalPrice Int
+  status     String
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("bookings")
+}
