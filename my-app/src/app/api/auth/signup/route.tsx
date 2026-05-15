@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+// import { resend } from "@/lib/resend";
 import { signUpUser } from "@/lib/services/auth.services";
 import { signupValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
@@ -18,6 +19,17 @@ export async function POST(req: Request) {
     }
 
     await signUpUser(validatedBody.data);
+
+  //   await resend.emails.send({
+  //     from: "onboarding@resend.dev",
+  //     to: validatedBody.data.email,
+  //     subject: "Verify email",
+  //     html: `
+  //   <a href="${verifyLink}">
+  //     Verify account
+  //   </a>
+  // `,
+  //   });
 
     const token = jwt.sign(
       {

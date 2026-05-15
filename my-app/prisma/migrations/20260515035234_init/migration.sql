@@ -18,6 +18,7 @@ CREATE TABLE "tours" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "rating" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,

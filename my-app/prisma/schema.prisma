@@ -35,8 +35,9 @@ model Tour {
   id                  Int     @id @default(autoincrement()) 
   title               String
   description         String
+  imageUrl            String
   category            String
-  rating              Int
+  rating              Float
   price               Int
 
   route               String[]
@@ -59,7 +60,7 @@ model Tour {
 
 model Review {
   id         Int @id @default(autoincrement())
-  rating     Int
+  rating     Float
   comment    String
   instagram  String?
 
