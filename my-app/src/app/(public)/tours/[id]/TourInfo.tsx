@@ -14,7 +14,8 @@ type TourInfoProps = {
     categories: string;
     title: string;
     img: string;
-    stars: 1 | 2 | 3 | 4 | 5;
+    stars: number;
+
     desc: string;
     price: number;
   };

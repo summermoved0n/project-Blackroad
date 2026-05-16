@@ -4,7 +4,8 @@ import { InstagramIcon } from "@/components/icons/InstagramIcon";
 import clsx from "clsx";
 
 type ReviewsItemProps = {
-  stars: 1 | 2 | 3 | 4 | 5;
+  stars: number;
+
   description: string;
   author: string;
   isDark?: boolean;

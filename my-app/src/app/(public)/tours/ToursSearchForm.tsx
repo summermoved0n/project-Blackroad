@@ -1,7 +1,6 @@
 "use client";
 
 import { useFilters } from "@/hooks/useFilters";
-import { toursListData } from "@/lib/data/toursPageData";
 import ToursPagination from "./ToursPagination";
 import ToursList from "./ToursList";
 import SortBy from "./SortBy";
@@ -12,13 +11,27 @@ import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
 
 const toursPerPage = 4;
-const totalPages = Math.ceil(toursListData.length / toursPerPage);
 
-export default function ToursSearchForm() {
+type ToursListProps = {
+  toursListData: {
+    id: number;
+    description: string;
+    category: string;
+    title: string;
+    imageUrl: string;
+    rating: number;
+    price: number;
+  }[];
+};
+
+export default function ToursSearchForm({ toursListData }: ToursListProps) {
+  const totalPages = Math.ceil(toursListData.length / toursPerPage);
+
+  const { searchParams } = useFilters();
+
   const [pickDate, setPickDate] = useState<DateRange | undefined>();
   const [showModal, setShowModal] = useState(false);
 
-  const { searchParams } = useFilters();
   const currentPage = Number(searchParams.get("page") || 1);
   const paginateListData = toursListData.slice(
     (currentPage - 1) * toursPerPage,

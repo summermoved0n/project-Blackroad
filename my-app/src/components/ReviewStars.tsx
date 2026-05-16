@@ -2,11 +2,11 @@ import { EmptyStarIcon } from "@/components/icons/EmptyStarIcon";
 import { FillStarIcon } from "@/components/icons/FillStarIcon";
 
 type ReviewStarsProps = {
-  stars: 1 | 2 | 3 | 4 | 5;
+  stars: number;
 };
 
 export default function ReviewStars({ stars }: ReviewStarsProps) {
-  if (stars === 5) {
+  if (stars >= 4.5) {
     return (
       <div className="flex gap-1.5">
         <FillStarIcon />

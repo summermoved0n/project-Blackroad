@@ -10,32 +10,33 @@ import ButtonWithArrow from "@/components/ButtonWithArrow";
 type ToursListItemProps = {
   itemData: {
     id: number;
-    categories: string;
+    description: string;
+    category: string;
     title: string;
-    img: string;
-    stars: 1 | 2 | 3 | 4 | 5;
-    desc: string;
+    imageUrl: string;
+    rating: number;
     price: number;
   };
 };
 
 export default function ToursListItem({ itemData }: ToursListItemProps) {
-  const { id, categories, title, img, stars, desc, price } = itemData;
+  const { id, category, title, imageUrl, rating, description, price } =
+    itemData;
 
   return (
     <li key={id} id={id.toString()} className="w-full h-fit bg-[#171717]">
-      <div className="relative w-full h-[400px]">
+      <div className="relative w-full h-100">
         <Text
           as="p"
           color="white"
           size="md"
           className={clsx(
             "absolute px-5 py-3 top-5 left-5 rounded-md z-10",
-            categories === "Mountains" && "bg-[#213e2b]",
-            categories === "Lakes" && "bg-[#477292]",
+            category === "Mountains" && "bg-[#213e2b]",
+            category === "Lakes" && "bg-[#477292]",
           )}
         >
-          {categories}
+          {category}
         </Text>
         <button
           type="button"
@@ -44,7 +45,7 @@ export default function ToursListItem({ itemData }: ToursListItemProps) {
           <EmptyHeartIcon />
         </button>
         <Image
-          src={img}
+          src={imageUrl}
           alt={title}
           fill
           className="absolute inset-0 w-full h-full object-cover"
@@ -52,17 +53,17 @@ export default function ToursListItem({ itemData }: ToursListItemProps) {
         />
       </div>
       <div className="px-5 py-5 flex flex-col gap-7.5">
-        <Text as="p" color="white" size="md">
+        <Text as="p" color="white" size="md" className="">
           {title}
         </Text>
         <div className="flex justify-between items-center">
-          <ReviewStars stars={stars} />
+          <ReviewStars stars={rating} />
           <Text as="p" color="white" size="sm">
-            {stars}
+            {rating}
           </Text>
         </div>
-        <Text as="p" color="white60" size="sm">
-          {desc}
+        <Text as="p" color="white60" size="sm" className="">
+          {description}
         </Text>
         <div className="flex justify-between items-center">
           <ButtonWithArrow

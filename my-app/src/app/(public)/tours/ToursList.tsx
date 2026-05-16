@@ -3,11 +3,11 @@ import ToursListItem from "./ToursListItem";
 type ToursListProps = {
   paginateListData: {
     id: number;
-    categories: string;
+    description: string;
+    category: string;
     title: string;
-    img: string;
-    stars: 1 | 2 | 3 | 4 | 5;
-    desc: string;
+    imageUrl: string;
+    rating: number;
     price: number;
   }[];
 };
