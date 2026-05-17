@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../prisma";
 
-type dbCreateUserProps = { email: string; password: string };
+type dbCreateUserProps = {
+  email: string;
+  password: string;
+  verificationToken: string;
+};
 
 type dbUpdateUserProps = {
   filter: { email: string };
@@ -18,7 +22,6 @@ export const dbFindUser = async ({ filter }: { filter: string }) => {
 
 export const dbCreateUser = async (data: dbCreateUserProps) => {
   const hashPassword = await bcrypt.hash(data.password, 10);
-  console.log(data);
   return prisma.user.create({ data: { ...data, password: hashPassword } });
 };
 

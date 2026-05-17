@@ -3,9 +3,8 @@
 import {
   includedInTheTour,
   notIncludedInTheTour,
-  toursListData,
 } from "@/lib/data/toursPageData";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import TourInfo from "./TourInfo";
 import TourDates from "./TourDates";
 import TourInclude from "./TourInclude";
@@ -15,12 +14,27 @@ import TourPolicy from "./TourPolicy";
 import TourOrder from "./TourOrder";
 import TourSchedule from "./TourSchedule";
 
-export default function TourDetails() {
-  const tourDetails = useParams();
-  const tourData = toursListData.find(
-    (item) => item.id === Number(tourDetails.id),
-  );
+type TourDataProps = {
+  tourData: {
+    id: number;
+    category: string;
+    title: string;
+    imageUrl: string;
+    rating: number;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date;
+    description: string;
+    route: string[];
+    tourDates: Date[];
+    duration: number;
+    food: string;
+    dateOfArrival: Date;
+    dateOfDeparture: Date;
+  } | null;
+};
 
+export default function TourDetails({ tourData }: TourDataProps) {
   if (!tourData) {
     notFound();
   }

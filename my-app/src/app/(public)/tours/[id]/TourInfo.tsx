@@ -11,20 +11,27 @@ import { useRouter } from "next/navigation";
 type TourInfoProps = {
   tourData: {
     id: number;
-    categories: string;
+    category: string;
     title: string;
-    img: string;
-    stars: number;
-
-    desc: string;
+    imageUrl: string;
+    rating: number;
     price: number;
-  };
+    createdAt: Date;
+    updatedAt: Date;
+    description: string;
+    route: string[];
+    tourDates: Date[];
+    duration: number;
+    food: string;
+    dateOfArrival: Date;
+    dateOfDeparture: Date;
+  } | null;
 };
 
 export default function TourInfo({ tourData }: TourInfoProps) {
   const route = useRouter();
 
-  const { id, categories, title, img, stars, price } = tourData || {};
+  const { id, category, title, imageUrl, rating, price } = tourData || {};
   return (
     <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
       <div className="py-3 px-5 bg-[#171717] rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5">
@@ -62,8 +69,8 @@ export default function TourInfo({ tourData }: TourInfoProps) {
         <div className="relative h-75 md:h-full mb-7.5 md:mb-0">
           <Image
             className="object-cover object-center"
-            src={img}
-            alt={title}
+            src={imageUrl!}
+            alt={title!}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
           />
@@ -75,9 +82,9 @@ export default function TourInfo({ tourData }: TourInfoProps) {
           </Text>
 
           <div className="mb-10 md:mb-0 flex items-center justify-between">
-            <ReviewStars stars={stars} />
+            <ReviewStars stars={rating!} />
             <Text as="h3" color="white" size="md" className="md:hidden">
-              {stars}
+              {rating}
             </Text>
           </div>
 
@@ -124,7 +131,7 @@ export default function TourInfo({ tourData }: TourInfoProps) {
                 Category:
               </Text>
               <Text as="p" color="white" size="sm">
-                {categories}
+                {category}
               </Text>
             </div>
           </div>
