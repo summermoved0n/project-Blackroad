@@ -22,6 +22,10 @@ export const changePassValidationSchema = z
     newPassword: z.string().min(6, "Password is required"),
     confirmNewPassword: z.string(),
   })
+  .refine((data) => data.newPassword !== data.password, {
+    message: "New password must be not the same as old",
+    path: ["password"],
+  })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "Passwords do not match",
     path: ["confirmNewPassword"],

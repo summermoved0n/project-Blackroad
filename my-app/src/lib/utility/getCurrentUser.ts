@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { dbFindUser } from "../repositories/auth.repo";
 
 type TokenPayload = {
+  id: number;
   email: string;
 };
 
@@ -12,7 +13,7 @@ export const getCurrentUser = async () => {
 
   if (!token) return null;
 
-  const { email } = jwt.verify(token!, process.env.JWT_SECRET!) as TokenPayload;
+  const { id } = jwt.verify(token!, process.env.JWT_SECRET!) as TokenPayload;
 
-  return await dbFindUser({ email });
+  return await dbFindUser({ id });
 };

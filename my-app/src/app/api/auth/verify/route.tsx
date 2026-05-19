@@ -13,9 +13,9 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
+      return NextResponse.json({ message: "Not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

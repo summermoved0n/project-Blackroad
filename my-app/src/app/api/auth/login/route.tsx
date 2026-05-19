@@ -11,16 +11,17 @@ export async function POST(req: Request) {
 
     if (!validatedBody.success) {
       return NextResponse.json(
-        { error: validatedBody.error.message },
+        { message: validatedBody.error.message },
         { status: 400 },
       );
     }
 
-    await logInUser(validatedBody.data);
+    const user = await logInUser(validatedBody.data);
 
     const token = jwt.sign(
       {
-        email: validatedBody.data.email,
+        id: user.id,
+        email: user.email,
       },
       process.env.JWT_SECRET!,
       {

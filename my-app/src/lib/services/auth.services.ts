@@ -4,9 +4,11 @@ import {
   dbCreateUser,
   dbFindUser,
   dbUpdateUser,
+  hashNewPassword,
   validatePassword,
 } from "../repositories/auth.repo";
 import { resend } from "../resend";
+import { getCurrentUser } from "../utility/getCurrentUser";
 
 const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
@@ -18,6 +20,11 @@ type SignUpUserProps = {
 type LogInUserProps = {
   email: string;
   password: string;
+};
+
+type ChangePassProps = {
+  password: string;
+  newPassword: string;
 };
 
 type VerificationTokenProps = {
@@ -62,6 +69,8 @@ export const logInUser = async ({ email, password }: LogInUserProps) => {
   if (!comparePassword) {
     throw new Error("Email or password not valid");
   }
+
+  return existedUser;
 };
 
 export const userVerify = async ({
@@ -79,4 +88,29 @@ export const userVerify = async ({
   });
 };
 
-export const userChangePassword = async () => {};
+export const userChangePassword = async ({
+  password,
+  newPassword,
+}: ChangePassProps) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    throw new Error("User not found");
+  }
+
+  const comparePassword = await validatePassword(
+    password,
+    currentUser.password,
+  );
+
+  if (!comparePassword) {
+    throw new Error("Email or password not valid");
+  }
+
+  const createNewPassword = await hashNewPassword(newPassword);
+
+  await dbUpdateUser({
+    filter: { id: currentUser.id },
+    data: { password: createNewPassword },
+  });
+};

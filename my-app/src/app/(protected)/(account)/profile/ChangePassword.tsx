@@ -3,15 +3,19 @@
 import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { Text } from "@/components/Text";
+import { handleApiError } from "@/lib/utility/handleApiError";
 import {
   ChangePasswordSchema,
   changePassValidationSchema,
 } from "@/lib/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function ChangePassword() {
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -19,7 +23,16 @@ export default function ChangePassword() {
     resolver: zodResolver(changePassValidationSchema),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: ChangePasswordSchema) => {
+    try {
+      const response = await axios.post("/api/auth/change-password", data);
+      toast.success(response.data.message);
+      reset();
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+
   return (
     <div className="bg-[#171717] p-15">
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">

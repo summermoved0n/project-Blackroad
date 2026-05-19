@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     if (!validatedBody.success) {
       return NextResponse.json(
-        { error: validatedBody.error.message },
+        { message: validatedBody.error.message },
         { status: 400 },
       );
     }
@@ -23,9 +23,9 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 409 });
+      return NextResponse.json({ message: error.message }, { status: 409 });
     }
 
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

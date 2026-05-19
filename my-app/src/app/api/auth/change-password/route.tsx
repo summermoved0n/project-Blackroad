@@ -1,3 +1,4 @@
+import { userChangePassword } from "@/lib/services/auth.services";
 import { changePassValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
 
@@ -9,13 +10,22 @@ export async function POST(req: Request) {
 
     if (!validatedBody.success) {
       return NextResponse.json(
-        { error: validatedBody.error.message },
+        { message: validatedBody.error.message },
         { status: 400 },
       );
     }
 
-    console.log(validatedBody.data);
+    await userChangePassword(validatedBody.data);
 
-    NextResponse.json({ message: "Password change success" }, { status: 200 });
-  } catch (error) {}
+    return NextResponse.json(
+      { message: "Password change success" },
+      { status: 200 },
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
 }

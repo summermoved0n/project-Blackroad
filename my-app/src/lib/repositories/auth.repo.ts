@@ -25,7 +25,7 @@ export const dbFindUser = async (filter: UserWhereUniqueInput) => {
 };
 
 export const dbCreateUser = async (data: dbCreateUserProps) => {
-  const hashPassword = await bcrypt.hash(data.password, 10);
+  const hashPassword = await hashNewPassword(data.password);
   return prisma.user.create({ data: { ...data, password: hashPassword } });
 };
 
@@ -36,5 +36,10 @@ export const dbUpdateUser = async ({ filter, data }: dbUpdateUserProps) => {
   });
 };
 
-export const validatePassword = (password: string, hashPassword: string) =>
-  bcrypt.compare(password, hashPassword);
+export const validatePassword = async (
+  password: string,
+  hashPassword: string,
+) => await bcrypt.compare(password, hashPassword);
+
+export const hashNewPassword = async (password: string) =>
+  await bcrypt.hash(password, 10);
