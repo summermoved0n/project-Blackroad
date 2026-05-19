@@ -29,7 +29,7 @@ export default function InputPassword<T extends FieldValues>({
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="text-white flex flex-col gap-5">
       <label htmlFor={name}>{lable}</label>
 
       <div className="relative w-full">

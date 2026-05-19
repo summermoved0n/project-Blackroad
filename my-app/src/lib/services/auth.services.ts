@@ -78,3 +78,5 @@ export const userVerify = async ({
     data: { isVerify: true, verificationToken: "" },
   });
 };
+
+export const userChangePassword = async () => {};

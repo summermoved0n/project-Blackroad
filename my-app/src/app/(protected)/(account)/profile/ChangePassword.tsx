@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { Text } from "@/components/Text";
 import {
@@ -57,6 +58,10 @@ export default function ChangePassword() {
           register={register}
           error={errors.confirmNewPassword}
         />
+
+        <Button type="submit" variant="primary" size="sm">
+          Save
+        </Button>
       </form>
     </div>
   );
