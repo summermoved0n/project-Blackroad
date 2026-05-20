@@ -18,7 +18,7 @@ export default function InputField<T extends FieldValues>({
   name,
   lable,
   type = "text",
-  placeholder,
+  placeholder = "email@gmail.com",
   register,
   error,
 }: Props<T>) {

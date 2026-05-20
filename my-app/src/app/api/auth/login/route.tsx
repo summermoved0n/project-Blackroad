@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     );
 
     const response = NextResponse.json(
-      { message: "User create success" },
+      { message: "Welcome to your account" },
       { status: 200 },
     );
 
@@ -45,8 +45,8 @@ export async function POST(req: Request) {
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 401 });
+      return NextResponse.json({ message: error.message }, { status: 401 });
     }
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

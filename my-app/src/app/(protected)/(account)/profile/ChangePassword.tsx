@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
+import ForgotPasswordBtn from "@/components/ForgotPasswordBtn";
 import InputPassword from "@/components/InputPassword";
 import { Text } from "@/components/Text";
 import { handleApiError } from "@/lib/utility/handleApiError";
@@ -51,11 +52,9 @@ export default function ChangePassword() {
             error={errors.password}
           />
 
-          <button className="w-fit right-0" type="button" onClick={() => {}}>
-            <Text as="p" color="white60" size="xs">
-              Forgot password?
-            </Text>
-          </button>
+          <div className="w-full flex justify-end">
+            <ForgotPasswordBtn />
+          </div>
         </div>
 
         <InputPassword

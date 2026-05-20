@@ -16,6 +16,10 @@ export const loginValidationSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+export const forgotPassValidationSchema = z.object({
+  email: z.string().email("Invalid email"),
+});
+
 export const changePassValidationSchema = z
   .object({
     password: z.string().min(6, "Password is required"),
@@ -34,3 +38,4 @@ export const changePassValidationSchema = z
 export type SignupSchema = z.infer<typeof signupValidationSchema>;
 export type LoginSchema = z.infer<typeof loginValidationSchema>;
 export type ChangePasswordSchema = z.infer<typeof changePassValidationSchema>;
+export type ForgotPasswordSchema = z.infer<typeof forgotPassValidationSchema>;

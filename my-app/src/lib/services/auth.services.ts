@@ -114,3 +114,32 @@ export const userChangePassword = async ({
     data: { password: createNewPassword },
   });
 };
+
+export const userForgotPassword = async ({ email }: { email: string }) => {
+  const existedUser = await dbFindUser({ email });
+
+  if (!existedUser) {
+    throw new Error("User not found");
+  }
+
+  if (existedUser!.resetPasswordExpire! > new Date()) {
+    throw new Error("Token was sent and still active");
+  }
+
+  const resetToken = nanoid(25);
+
+  await dbUpdateUser({
+    filter: { id: existedUser.id },
+    data: {
+      resetPasswordToken: resetToken,
+      resetPasswordExpire: new Date(Date.now() + 1000 * 60 * 15),
+    },
+  });
+
+  await resend.emails.send({
+    from: RESEND_EMAIL_FROM!,
+    to: email,
+    subject: "Reset password for Blackroad",
+    html: `<a href="${BASE_URL}/reset-password/${resetToken}" target="_blank">Click to reset password</a>`,
+  });
+};

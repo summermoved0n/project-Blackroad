@@ -15,6 +15,8 @@ type dbUpdateUserProps = {
     password?: string;
     isVerify?: boolean;
     verificationToken?: string;
+    resetPasswordToken?: string;
+    resetPasswordExpire?: Date;
   };
 };
 

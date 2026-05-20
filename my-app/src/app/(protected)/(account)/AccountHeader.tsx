@@ -2,19 +2,27 @@
 
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { Text } from "@/components/Text";
+import { handleApiError } from "@/lib/utility/handleApiError";
 import axios from "axios";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AccountHeader() {
   const router = useRouter();
   const pathname = usePathname();
 
   const onLogOut = async () => {
-    await axios.post("/api/auth/logout");
+    try {
+      const response = await axios.post("/api/auth/logout");
 
-    router.replace("/");
-    router.refresh();
+      router.replace("/");
+      router.refresh();
+
+      toast.success(response.data.message);
+    } catch (error) {
+      handleApiError(error);
+    }
   };
 
   const handleNavigate = (path: string) => {
