@@ -1,5 +1,8 @@
+"use client";
+
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
+import { useRouter } from "next/navigation";
 
 type User = {
   user: {
@@ -17,6 +20,7 @@ type User = {
 };
 
 export default function ProfileInfo({ user }: User) {
+  const router = useRouter();
   return (
     <div className="bg-[#171717] p-15">
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">
@@ -61,7 +65,13 @@ export default function ProfileInfo({ user }: User) {
         </div>
       </div>
 
-      <Button variant="primary" size="sm">
+      <Button
+        variant="primary"
+        size="sm"
+        onClick={() => {
+          router.push("/profile/edit");
+        }}
+      >
         Edit
       </Button>
     </div>

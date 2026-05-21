@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   FieldError,
   FieldValues,
@@ -12,6 +13,7 @@ type Props<T extends FieldValues> = {
   placeholder?: string;
   register: UseFormRegister<T>;
   error?: FieldError;
+  className?: string;
 };
 
 export default function InputField<T extends FieldValues>({
@@ -21,6 +23,7 @@ export default function InputField<T extends FieldValues>({
   placeholder = "email@gmail.com",
   register,
   error,
+  className,
 }: Props<T>) {
   return (
     <div className="text-white flex flex-col">
@@ -29,7 +32,10 @@ export default function InputField<T extends FieldValues>({
       <input
         id={name}
         {...register(name)}
-        className="border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none"
+        className={clsx(
+          className,
+          "border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none",
+        )}
         placeholder={placeholder}
         type={type}
       />
