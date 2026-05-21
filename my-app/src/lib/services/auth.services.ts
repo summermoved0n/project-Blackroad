@@ -27,6 +27,11 @@ type ChangePassProps = {
   newPassword: string;
 };
 
+type ResetPassProps = {
+  password: string;
+  resetToken: string;
+};
+
 type VerificationTokenProps = {
   verificationToken: string;
 };
@@ -107,6 +112,15 @@ export const userChangePassword = async ({
     throw new Error("Email or password not valid");
   }
 
+  const isSamePassword = await validatePassword(
+    newPassword,
+    currentUser.password,
+  );
+
+  if (isSamePassword) {
+    throw new Error("New password must be different");
+  }
+
   const createNewPassword = await hashNewPassword(newPassword);
 
   await dbUpdateUser({
@@ -141,5 +155,27 @@ export const userForgotPassword = async ({ email }: { email: string }) => {
     to: email,
     subject: "Reset password for Blackroad",
     html: `<a href="${BASE_URL}/reset-password/${resetToken}" target="_blank">Click to reset password</a>`,
+  });
+};
+
+export const userResetPassword = async ({
+  password,
+  resetToken,
+}: ResetPassProps) => {
+  const user = await dbFindUser({ resetPasswordToken: resetToken });
+
+  if (!user || user.resetPasswordExpire! < new Date()) {
+    throw new Error("Invalid or expired token");
+  }
+
+  const hashedPassword = await hashNewPassword(password);
+
+  await dbUpdateUser({
+    filter: { id: user.id },
+    data: {
+      password: hashedPassword,
+      resetPasswordToken: null,
+      resetPasswordExpire: null,
+    },
   });
 };

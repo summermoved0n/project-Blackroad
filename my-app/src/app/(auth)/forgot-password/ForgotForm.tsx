@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 export default function ForgotForm() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(true);
+  const [showForm, setShowForm] = useState(true);
 
   const {
     register,
@@ -32,6 +33,8 @@ export default function ForgotForm() {
   const onSubmit = async (data: ForgotPasswordSchema) => {
     try {
       const response = await axios.post("/api/auth/forgot-password", data);
+
+      setShowForm(false);
 
       toast.success(response.data.message);
     } catch (error) {
@@ -50,7 +53,7 @@ export default function ForgotForm() {
               size="lg"
               className="uppercase text-center mb-7.5"
             >
-              Forgot your password?
+              {showForm ? "Forgot your password?" : "Reset password"}
             </Text>
             <Text
               as="p"
@@ -58,37 +61,40 @@ export default function ForgotForm() {
               size="md"
               className="text-center mb-7.5"
             >
-              Dont worry, we`ll help you recover it. Just enter your registered
-              email and you`ll receive a link to reset your old password.
+              {showForm
+                ? "Dont worry, we`ll help you recover it. Just enter your registered email and youll receive a link to reset your old password."
+                : "An email with further instructions has been sent to your email address. Please check your email!"}
             </Text>
           </div>
-          <form
-            className="w-full flex flex-col gap-7.5"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <InputField
-              name="email"
-              lable="E-mail"
-              register={register}
-              error={errors.email}
-            />
+          {showForm && (
+            <form
+              className="w-full flex flex-col gap-7.5"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <InputField
+                name="email"
+                lable="E-mail"
+                register={register}
+                error={errors.email}
+              />
 
-            <Button variant="primary" type="submit">
-              Renew password
-            </Button>
+              <Button variant="primary" type="submit">
+                Renew password
+              </Button>
 
-            <div className="flex justify-center">
-              <button
-                className="w-fit text-white/50 flex justify-center items-center gap-4"
-                onClick={() => {
-                  router.back();
-                }}
-              >
-                <ArrowLeftIcon colorGray />
-                Back
-              </button>
-            </div>
-          </form>
+              <div className="flex justify-center">
+                <button
+                  className="w-fit text-white/50 flex justify-center items-center gap-4"
+                  onClick={() => {
+                    router.back();
+                  }}
+                >
+                  <ArrowLeftIcon colorGray />
+                  Back
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </Modal>
     </section>

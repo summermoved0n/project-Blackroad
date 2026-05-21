@@ -11,12 +11,14 @@ type dbCreateUserProps = {
 type dbUpdateUserProps = {
   filter: UserWhereUniqueInput;
   data: {
-    name?: string;
+    name?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | null;
     password?: string;
     isVerify?: boolean;
     verificationToken?: string;
-    resetPasswordToken?: string;
-    resetPasswordExpire?: Date;
+    resetPasswordToken?: string | null;
+    resetPasswordExpire?: Date | null;
   };
 };
 

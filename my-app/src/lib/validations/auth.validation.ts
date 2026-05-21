@@ -20,6 +20,27 @@ export const forgotPassValidationSchema = z.object({
   email: z.string().email("Invalid email"),
 });
 
+export const resetPassValidationSchema = z
+  .object({
+    password: z.string().min(6, "Password is required"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const resetPasswordApiSchema = z
+  .object({
+    password: z.string().min(6),
+    confirmPassword: z.string(),
+    resetToken: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export const changePassValidationSchema = z
   .object({
     password: z.string().min(6, "Password is required"),
@@ -39,3 +60,5 @@ export type SignupSchema = z.infer<typeof signupValidationSchema>;
 export type LoginSchema = z.infer<typeof loginValidationSchema>;
 export type ChangePasswordSchema = z.infer<typeof changePassValidationSchema>;
 export type ForgotPasswordSchema = z.infer<typeof forgotPassValidationSchema>;
+export type ResetPasswordSchema = z.infer<typeof resetPassValidationSchema>;
+export type ResetPasswordApiSchema = z.infer<typeof resetPasswordApiSchema>;
