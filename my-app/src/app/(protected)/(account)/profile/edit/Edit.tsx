@@ -1,6 +1,5 @@
 "use client";
 
-import { IMaskInput } from "react-imask";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -14,8 +13,9 @@ import { handleApiError } from "@/lib/utility/handleApiError";
 import toast from "react-hot-toast";
 import { Text } from "@/components/Text";
 import Modal from "@/components/Modal";
-import React, { useState } from "react";
-import ButtonWithArrow from "@/components/ButtonWithArrow";
+import { useState } from "react";
+import MaskInput from "@/components/MaskInput";
+import { Button } from "@/components/Button";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -32,9 +32,10 @@ export default function LoginForm() {
 
   const onSubmit = async (data: EditUserInfoSchema) => {
     try {
-      const response = await axios.post("/api/auth/login", data);
-      router.replace("/tours");
-      router.refresh();
+      console.log(data);
+      const response = await axios.post("/api/auth/user-update", data);
+      // router.replace("/tours");
+      // router.refresh();
       toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
@@ -61,36 +62,35 @@ export default function LoginForm() {
             />
 
             <Controller
-              name="phoneNumber"
+              name="dateOfBirth"
               control={control}
-              defaultValue=""
               render={({ field }) => (
-                <IMaskInput
-                  {...field}
-                  mask="+{1} (000) 000-00-00"
-                  placeholder="+1 (555) 555-55-55"
-                  className=""
+                <MaskInput
+                  idName="dateOfBirth"
+                  lable="Date of birth"
+                  mask="00/00/0000"
+                  placeholder="DD/MM/YYYY"
+                  error={errors.dateOfBirth}
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
                 />
               )}
             />
 
-            <InputField
-              name="dateOfBirth"
-              lable="Date of birth"
-              placeholder="MM/DD/YYYY"
-              type="number"
-              register={register}
-              error={errors.dateOfBirth}
-            />
-
-            <InputField
+            <Controller
               name="phoneNumber"
-              lable="Phone number"
-              type="number"
-              placeholder="+1"
-              className=""
-              register={register}
-              error={errors.phoneNumber}
+              control={control}
+              render={({ field }) => (
+                <MaskInput
+                  idName="phoneNumber"
+                  lable="Phone number"
+                  mask="+1 (000) 000-00-00"
+                  placeholder="+1 (709) 123-45-67"
+                  error={errors.phoneNumber}
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                />
+              )}
             />
 
             <InputField
@@ -103,9 +103,16 @@ export default function LoginForm() {
           </div>
 
           <div className="w-full flex justify-center">
-            <ButtonWithArrow className="text-white" whiteArrow whiteCircle>
-              Confirm changes
-            </ButtonWithArrow>
+            <Button variant="secondary" type="submit">
+              <Text
+                as="p"
+                color="white"
+                size="sm"
+                className="hover:text-orange-300 transition"
+              >
+                Submit changes
+              </Text>
+            </Button>
           </div>
         </form>
       </div>

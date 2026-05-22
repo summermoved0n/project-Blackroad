@@ -32,6 +32,13 @@ type ResetPassProps = {
   resetToken: string;
 };
 
+type UserUpdateInfoProps = {
+  email?: string;
+  name?: string;
+  phoneNumber?: string;
+  dateOfBirth?: string;
+};
+
 type VerificationTokenProps = {
   verificationToken: string;
 };
@@ -177,5 +184,31 @@ export const userResetPassword = async ({
       resetPasswordToken: null,
       resetPasswordExpire: null,
     },
+  });
+};
+
+export const userUpdateInfo = async ({
+  email,
+  name,
+  phoneNumber,
+  dateOfBirth,
+}: UserUpdateInfoProps) => {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  let parsedDate = null;
+
+  if (dateOfBirth) {
+    const [month, day, year] = dateOfBirth!.split("/");
+
+    return (parsedDate = new Date(`${year}-${month}-${day}`));
+  }
+
+  await dbUpdateUser({
+    filter: { id: user.id },
+    data: { name, phoneNumber, dateOfBirth: parsedDate },
   });
 };

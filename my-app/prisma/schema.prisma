@@ -23,7 +23,7 @@ model User {
   password  String  
   name      String?
   phoneNumber String?
-  dateOfBirth DateTime?
+  dateOfBirth DateTime? @db.Date
   
   isVerify  Boolean @default(false)
   verificationToken  String @unique
