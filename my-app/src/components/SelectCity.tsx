@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Text } from "./Text";
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import { useClickOutside } from "@/hooks/useClickOutside";

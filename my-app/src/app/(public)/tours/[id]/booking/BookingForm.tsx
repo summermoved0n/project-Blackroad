@@ -1,8 +1,5 @@
 "use client";
 
-import InputField from "@/components/InputField";
-import MaskInput from "@/components/MaskInput";
-import { Text } from "@/components/Text";
 import {
   BookingSchema,
   bookingValidationSchema,
@@ -10,7 +7,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import BookingFormUserInfo from "./BookingFormUserInfo";
+import BookingFormAddress from "./BookingFormAddress";
+import InputField from "@/components/InputField";
+import BookingFormArrivalTime from "./BookingFormArrivalTime";
+import BookingFormPayment from "./BookingFormPayment";
+import BookingFormPolicy from "./BookingFormPolicy";
+import { Button } from "@/components/Button";
 
 type UserProps = {
   user: {
@@ -56,61 +60,34 @@ export default function BookingForm({ user }: UserProps) {
   }, [user, reset]);
 
   const onSubmit = async (data: BookingSchema) => {};
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-[#171717] mb-7.5 p-15"
+      className="bg-[#171717] mb-7.5 p-15 flex flex-col gap-17.5"
     >
-      <Text as="h2" color="white" size="md" className="mb-10">
-        Enter your data
-      </Text>
-      <div className="grid grid-cols-2 gap-12.5">
-        <div className="flex flex-col gap-10">
-          <InputField
-            name="name"
-            lable="Name"
-            placeholder="Name"
-            register={register}
-            error={errors.name}
-            darkThemeInput
-          />
-          <InputField
-            name="email"
-            lable="E-mail"
-            placeholder="email@gmail.com"
-            register={register}
-            error={errors.email}
-            darkThemeInput
-          />
-        </div>
-
-        <div className="flex flex-col gap-10">
-          <InputField
-            name="surname"
-            lable="Surname"
-            placeholder="Surname"
-            register={register}
-            error={errors.surname}
-            darkThemeInput
-          />
-          <Controller
-            name="phoneNumber"
-            control={control}
-            render={({ field }) => (
-              <MaskInput
-                idName="phoneNumber"
-                lable="Phone number"
-                mask="+1 (000) 000-00-00"
-                placeholder="+1 (709) 123-45-67"
-                error={errors.phoneNumber}
-                value={field.value ?? ""}
-                onChange={field.onChange}
-                darkThemeInput
-              />
-            )}
-          />
-        </div>
-      </div>
+      <BookingFormUserInfo
+        errors={errors}
+        register={register}
+        control={control}
+      />
+      <BookingFormAddress
+        errors={errors}
+        register={register}
+        control={control}
+      />
+      <InputField
+        name="specialWishes"
+        lable="Special wishes"
+        placeholder="Write your special wishes"
+        register={register}
+        error={errors.specialWishes}
+        darkThemeInput
+      />
+      <BookingFormArrivalTime />
+      <BookingFormPayment />
+      <BookingFormPolicy />
+      <Button variant="primary">Book and pay</Button>
     </form>
   );
 }

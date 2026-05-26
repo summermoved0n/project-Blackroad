@@ -1,0 +1,51 @@
+import InputField from "@/components/InputField";
+import { Text } from "@/components/Text";
+
+export default function BookingFormAddress({ ...props }) {
+  return (
+    <div>
+      <Text as="h2" color="white" size="md" className="mb-10">
+        Contact details
+      </Text>
+      <div className="grid grid-cols-2 gap-12.5">
+        <div className="flex flex-col gap-10">
+          <InputField
+            name="city"
+            lable="City"
+            placeholder="Enter the city"
+            register={props.register}
+            error={props.errors.city}
+            darkThemeInput
+          />
+          <InputField
+            name="region"
+            lable="Region"
+            placeholder="Enter region"
+            register={props.register}
+            error={props.errors.region}
+            darkThemeInput
+          />
+        </div>
+
+        <div className="flex flex-col gap-10">
+          <InputField
+            name="address"
+            lable="Address"
+            placeholder="Enter an address"
+            register={props.register}
+            error={props.errors.surname}
+            darkThemeInput
+          />
+          <InputField
+            name="country"
+            lable="Country"
+            placeholder="Enter country"
+            register={props.register}
+            error={props.errors.country}
+            darkThemeInput
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
