@@ -1,15 +1,8 @@
+import { TourPayload } from "@/types/tour.types";
 import ToursListItem from "./ToursListItem";
 
 type ToursListProps = {
-  paginateListData: {
-    id: number;
-    description: string;
-    category: string;
-    title: string;
-    imageUrl: string;
-    rating: number;
-    price: number;
-  }[];
+  paginateListData: TourPayload[];
 };
 
 export default function ToursList({ paginateListData }: ToursListProps) {

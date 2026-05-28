@@ -9,8 +9,8 @@ export default function BookingFormUserInfo({ ...props }) {
       <Text as="h2" color="white" size="md" className="mb-10">
         Enter your data
       </Text>
-      <div className="grid grid-cols-2 gap-12.5">
-        <div className="flex flex-col gap-10">
+      <div className="flex flex-wrap gap-10">
+        <div className="w-full flex gap-12.5">
           <InputField
             name="name"
             lable="Name"
@@ -20,22 +20,21 @@ export default function BookingFormUserInfo({ ...props }) {
             darkThemeInput
           />
           <InputField
-            name="email"
-            lable="E-mail"
-            placeholder="email@gmail.com"
-            register={props.register}
-            error={props.errors.email}
-            darkThemeInput
-          />
-        </div>
-
-        <div className="flex flex-col gap-10">
-          <InputField
             name="surname"
             lable="Surname"
             placeholder="Surname"
             register={props.register}
             error={props.errors.surname}
+            darkThemeInput
+          />
+        </div>
+        <div className="w-full flex gap-12.5">
+          <InputField
+            name="email"
+            lable="E-mail"
+            placeholder="email@gmail.com"
+            register={props.register}
+            error={props.errors.email}
             darkThemeInput
           />
           <Controller

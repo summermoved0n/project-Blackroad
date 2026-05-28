@@ -9,19 +9,12 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
+import { TourPayload } from "@/types/tour.types";
 
 const toursPerPage = 4;
 
 type ToursListProps = {
-  toursListData: {
-    id: number;
-    description: string;
-    category: string;
-    title: string;
-    imageUrl: string;
-    rating: number;
-    price: number;
-  }[];
+  toursListData: TourPayload[];
 };
 
 export default function ToursSearchForm({ toursListData }: ToursListProps) {

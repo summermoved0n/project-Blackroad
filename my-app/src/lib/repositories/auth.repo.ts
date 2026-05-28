@@ -28,6 +28,19 @@ export const dbFindUser = async (filter: UserWhereUniqueInput) => {
   });
 };
 
+export const dbGetUser = async (filter: UserWhereUniqueInput) => {
+  return prisma.user.findUnique({
+    where: filter,
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      phoneNumber: true,
+      dateOfBirth: true,
+    },
+  });
+};
+
 export const dbCreateUser = async (data: dbCreateUserProps) => {
   const hashPassword = await hashNewPassword(data.password);
   return prisma.user.create({ data: { ...data, password: hashPassword } });

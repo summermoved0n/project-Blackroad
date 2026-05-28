@@ -6,17 +6,10 @@ import Image from "next/image";
 import { Text } from "@/components/Text";
 import ReviewStars from "@/components/ReviewStars";
 import ButtonWithArrow from "@/components/ButtonWithArrow";
+import { TourPayload } from "@/types/tour.types";
 
 type ToursListItemProps = {
-  itemData: {
-    id: number;
-    description: string;
-    category: string;
-    title: string;
-    imageUrl: string;
-    rating: number;
-    price: number;
-  };
+  itemData: TourPayload;
 };
 
 export default function ToursListItem({ itemData }: ToursListItemProps) {

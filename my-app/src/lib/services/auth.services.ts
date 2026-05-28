@@ -104,15 +104,16 @@ export const userChangePassword = async ({
   password,
   newPassword,
 }: ChangePassProps) => {
-  const currentUser = await getCurrentUser();
+  const userId = await getCurrentUser();
+  const existedUser = await dbFindUser({ id: userId! });
 
-  if (!currentUser) {
+  if (!existedUser) {
     throw new Error("User not found");
   }
 
   const comparePassword = await validatePassword(
     password,
-    currentUser.password,
+    existedUser.password,
   );
 
   if (!comparePassword) {
@@ -121,7 +122,7 @@ export const userChangePassword = async ({
 
   const isSamePassword = await validatePassword(
     newPassword,
-    currentUser.password,
+    existedUser.password,
   );
 
   if (isSamePassword) {
@@ -131,7 +132,7 @@ export const userChangePassword = async ({
   const createNewPassword = await hashNewPassword(newPassword);
 
   await dbUpdateUser({
-    filter: { id: currentUser.id },
+    filter: { id: existedUser.id },
     data: { password: createNewPassword },
   });
 };
@@ -188,12 +189,13 @@ export const userResetPassword = async ({
 };
 
 export const userUpdateInfo = async ({
-  email,
+  // email,
   name,
   phoneNumber,
   dateOfBirth,
 }: UserUpdateInfoProps) => {
-  const user = await getCurrentUser();
+  const userId = await getCurrentUser();
+  const user = await dbFindUser({ id: userId! });
 
   if (!user) {
     throw new Error("User not found");

@@ -1,9 +1,10 @@
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import { Text } from "@/components/Text";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import  { useRef, useState } from "react";
+import { SetStateAction, useRef, useState } from "react";
 
 const arrivalTimeData = [
+  "Clear field",
   "11:00 - 12:00",
   "12:00 - 13:00",
   "13:00 - 14:00",
@@ -17,9 +18,14 @@ const arrivalTimeData = [
   "21:00 - 22:00",
 ];
 
-export default function BookingFormArrivalTime() {
+export default function BookingFormArrivalTime({
+  arrivalTime,
+  setArrivalTime,
+}: {
+  arrivalTime: string;
+  setArrivalTime: React.Dispatch<SetStateAction<string>>;
+}) {
   const [showList, setShowList] = useState(false);
-  const [arrivalTime, setArrivalTime] = useState("13:00 - 14:00");
 
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setShowList(false));
@@ -45,10 +51,10 @@ export default function BookingFormArrivalTime() {
             as="p"
             color="white"
             size="sm"
-            className="flex items-center justify-between py-5 md:py-0 md:pb-2.5 border-b-1 border-white/10"
+            className="flex items-center justify-between py-5 md:py-0 md:pb-2.5 border-b border-white/10"
           >
             {!arrivalTime || arrivalTime === "Clear field"
-              ? "Where are you going?"
+              ? "Select arrival time"
               : arrivalTime}
             <ArrowDownIcon />
           </Text>

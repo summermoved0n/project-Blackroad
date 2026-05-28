@@ -36,7 +36,7 @@ export default function ButtonWithArrow({
     >
       {children}
       {whiteCircle ? <CircleIcon whiteCircle /> : <CircleIcon />}
-      <div className="absolute right-[10px]">
+      <div className="absolute right-2.5">
         {whiteArrow ? <ArrowInCircle whiteArrow /> : <ArrowInCircle />}
       </div>
     </Button>

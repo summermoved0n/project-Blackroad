@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { dbFindUser } from "../repositories/auth.repo";
 
 type TokenPayload = {
   id: number;
@@ -15,5 +14,5 @@ export const getCurrentUser = async () => {
 
   const { id } = jwt.verify(token!, process.env.JWT_SECRET!) as TokenPayload;
 
-  return await dbFindUser({ id });
+  return id;
 };

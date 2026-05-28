@@ -2,11 +2,11 @@
 
 import {
   BookingSchema,
-  bookingValidationSchema,
+  bookingInterfaceSchema,
 } from "@/lib/validations/booking.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { notFound } from "next/navigation";
-import { useEffect } from "react";
+import { notFound, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BookingFormUserInfo from "./BookingFormUserInfo";
 import BookingFormAddress from "./BookingFormAddress";
@@ -15,28 +15,20 @@ import BookingFormArrivalTime from "./BookingFormArrivalTime";
 import BookingFormPayment from "./BookingFormPayment";
 import BookingFormPolicy from "./BookingFormPolicy";
 import { Button } from "@/components/Button";
+import { UserPayload } from "@/types/user.types";
 
 type UserProps = {
-  user: {
-    id: number;
-    email: string;
-    verificationToken: string;
-    resetPasswordToken: string | null;
-    password: string;
-    name: string | null;
-    phoneNumber: string | null;
-    dateOfBirth: Date | null;
-    isVerify: boolean;
-    resetPasswordExpire: Date | null;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
+  user: UserPayload;
 };
 
 export default function BookingForm({ user }: UserProps) {
   if (!user) {
     notFound();
   }
+
+  const [arrivalTime, setArrivalTime] = useState("");
+
+  const { id } = useParams();
 
   const {
     control,
@@ -45,7 +37,7 @@ export default function BookingForm({ user }: UserProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<BookingSchema>({
-    resolver: zodResolver(bookingValidationSchema),
+    resolver: zodResolver(bookingInterfaceSchema),
   });
 
   useEffect(() => {
@@ -59,7 +51,29 @@ export default function BookingForm({ user }: UserProps) {
     }
   }, [user, reset]);
 
-  const onSubmit = async (data: BookingSchema) => {};
+  const onSubmit = async (data: BookingSchema) => {
+    console.log(data);
+    const checkout = {
+      tourId: Number(id),
+      customerInfo: {
+        name: data.name,
+        surname: data.surname,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+      },
+      contactDetails: {
+        city: data.city,
+        address: data.address,
+        region: data.region,
+        country: data.country,
+      },
+      additional: {
+        specialWishes: data.specialWishes,
+        guestArrivalTime: arrivalTime,
+      },
+    };
+    console.log(checkout);
+  };
 
   return (
     <form
@@ -71,11 +85,7 @@ export default function BookingForm({ user }: UserProps) {
         register={register}
         control={control}
       />
-      <BookingFormAddress
-        errors={errors}
-        register={register}
-        control={control}
-      />
+      <BookingFormAddress errors={errors} register={register} />
       <InputField
         name="specialWishes"
         lable="Special wishes"
@@ -84,10 +94,19 @@ export default function BookingForm({ user }: UserProps) {
         error={errors.specialWishes}
         darkThemeInput
       />
-      <BookingFormArrivalTime />
-      <BookingFormPayment />
+      <BookingFormArrivalTime
+        arrivalTime={arrivalTime}
+        setArrivalTime={setArrivalTime}
+      />
+      <BookingFormPayment
+        errors={errors}
+        register={register}
+        control={control}
+      />
       <BookingFormPolicy />
-      <Button variant="primary">Book and pay</Button>
+      <Button type="submit" variant="primary">
+        Book and pay
+      </Button>
     </form>
   );
 }

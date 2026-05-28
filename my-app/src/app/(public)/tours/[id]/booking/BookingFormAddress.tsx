@@ -7,8 +7,8 @@ export default function BookingFormAddress({ ...props }) {
       <Text as="h2" color="white" size="md" className="mb-10">
         Contact details
       </Text>
-      <div className="grid grid-cols-2 gap-12.5">
-        <div className="flex flex-col gap-10">
+      <div className="flex flex-wrap gap-10">
+        <div className="w-full flex gap-12.5">
           <InputField
             name="city"
             lable="City"
@@ -27,7 +27,7 @@ export default function BookingFormAddress({ ...props }) {
           />
         </div>
 
-        <div className="flex flex-col gap-10">
+        <div className="w-full flex gap-12.5">
           <InputField
             name="address"
             lable="Address"

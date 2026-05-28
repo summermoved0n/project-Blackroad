@@ -28,7 +28,7 @@ export default function InputField<T extends FieldValues>({
   className,
 }: Props<T>) {
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex flex-col">
       <label
         className={darkThemeInput ? "text-white/60" : "text-white "}
         htmlFor={name}

@@ -2,21 +2,11 @@
 
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
+import { UserPayload } from "@/types/user.types";
 import { useRouter } from "next/navigation";
 
 type User = {
-  user: {
-    name: string | null;
-    email: string;
-    id: number;
-    verificationToken: string;
-    password: string;
-    phoneNumber: string | null;
-    dateOfBirth: Date | null;
-    isVerify: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
+  user: UserPayload
 };
 
 export default function ProfileInfo({ user }: User) {
