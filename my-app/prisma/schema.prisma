@@ -103,11 +103,12 @@ model Review {
 
 model BookingCustomer {
   id         Int      @id @default(autoincrement())
-  email     String  @unique
+  fullName   String  
+  email       String  @unique
   phoneNumber String
   city       String
   address    String
-  region     String
+  region     String?
   country    String
   specialWishes String?
   guestArrivalTime String?
@@ -135,9 +136,9 @@ model Booking {
   payments Payment[]
 
   guests     Int
-  room       RoomType @default(single)
-  totalPrice Decimal @db.Decimal(10, 2)
-  status     String
+  room       RoomType    @default(single)
+  totalPrice Decimal     @db.Decimal(10, 2)
+  status     BookingStatus
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

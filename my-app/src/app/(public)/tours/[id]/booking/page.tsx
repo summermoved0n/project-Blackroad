@@ -17,7 +17,6 @@ export default async function page({ params }: PageProps) {
   const getTourById = await dbFindTour({ id: Number(id) });
   const userId = await getCurrentUser();
   const user = await dbGetUser({ id: userId! });
-  console.log(user);
 
   return (
     <main className="pt-17 md:pt-20 bg-[#171717]">

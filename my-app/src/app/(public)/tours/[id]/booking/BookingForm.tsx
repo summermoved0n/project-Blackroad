@@ -16,6 +16,9 @@ import BookingFormPayment from "./BookingFormPayment";
 import BookingFormPolicy from "./BookingFormPolicy";
 import { Button } from "@/components/Button";
 import { UserPayload } from "@/types/user.types";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { handleApiError } from "@/lib/utility/handleApiError";
 
 type UserProps = {
   user: UserPayload;
@@ -52,27 +55,34 @@ export default function BookingForm({ user }: UserProps) {
   }, [user, reset]);
 
   const onSubmit = async (data: BookingSchema) => {
-    console.log(data);
-    const checkout = {
-      tourId: Number(id),
-      customerInfo: {
-        name: data.name,
-        surname: data.surname,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-      },
-      contactDetails: {
-        city: data.city,
-        address: data.address,
-        region: data.region,
-        country: data.country,
-      },
-      additional: {
-        specialWishes: data.specialWishes,
-        guestArrivalTime: arrivalTime,
-      },
-    };
-    console.log(checkout);
+    try {
+      const checkout = {
+        tourId: Number(id),
+        customerInfo: {
+          name: data.name,
+          surname: data.surname,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+        },
+        contactDetails: {
+          city: data.city,
+          address: data.address,
+          region: data.region ?? null,
+          country: data.country,
+        },
+        additional: {
+          specialWishes: data.specialWishes ?? null,
+          guestArrivalTime: arrivalTime === "" ? null : arrivalTime,
+        },
+      };
+      console.log(checkout);
+
+      const response = await axios.post("/api/booking", checkout);
+
+      toast.success(response.data.message);
+    } catch (error) {
+      handleApiError(error);
+    }
   };
 
   return (

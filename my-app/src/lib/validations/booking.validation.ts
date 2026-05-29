@@ -5,32 +5,40 @@ export const bookingInterfaceSchema = z.object({
   surname: z.string().min(1, "Must be at least 2 characters"),
   email: z.string().email("Invalid email"),
   phoneNumber: z.string(),
-  city: z.string().min(1, "Must be at least 2 characters"),
-  address: z.string().min(1, "Must be at least 2 characters"),
-  region: z.string().optional(),
-  country: z.string().min(1, "Must be at least 2 characters"),
-  specialWishes: z.string().optional(),
-  guestArrivalTime: z.string().optional(),
+  city: z.string().min(2, "Must be at least 2 characters"),
+  address: z.string().min(2, "Must be at least 2 characters"),
+  region: z
+    .string()
+    .min(2, "Must be at least 2 characters")
+    .or(z.literal(""))
+    .transform((value) => (value === "" ? undefined : value))
+    .optional(),
+  country: z.string().min(2, "Must be at least 2 characters"),
+  specialWishes: z
+    .string()
+    .or(z.literal(""))
+    .transform((value) => (value === "" ? undefined : value))
+    .optional(),
 });
 
 export const bookingAPISchema = z.object({
   tourId: z.number(),
-  customerInfo: {
-    name: z.string().min(1, "Must be at least 2 characters"),
-    surname: z.string().min(1, "Must be at least 2 characters"),
+  customerInfo: z.object({
+    name: z.string().min(2, "Must be at least 2 characters"),
+    surname: z.string().min(2, "Must be at least 2 characters"),
     email: z.string().email("Invalid email"),
     phoneNumber: z.string(),
-  },
-  contactDetails: {
-    city: z.string().min(1, "Must be at least 2 characters"),
-    address: z.string().min(1, "Must be at least 2 characters"),
-    region: z.string().min(1, "Must be at least 2 characters"),
-    country: z.string().min(1, "Must be at least 2 characters"),
-  },
-  additional: {
-    specialWishes: z.string().optional(),
-    guestArrivalTime: z.string().optional(),
-  },
+  }),
+  contactDetails: z.object({
+    city: z.string().min(2, "Must be at least 2 characters"),
+    address: z.string().min(2, "Must be at least 2 characters"),
+    region: z.string().nullable().optional(),
+    country: z.string().min(2, "Must be at least 2 characters"),
+  }),
+  additional: z.object({
+    specialWishes: z.string().nullable().optional(),
+    guestArrivalTime: z.string().nullable().optional(),
+  }),
 });
 
 export type BookingSchema = z.infer<typeof bookingInterfaceSchema>;

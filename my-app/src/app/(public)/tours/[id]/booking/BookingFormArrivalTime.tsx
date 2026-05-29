@@ -68,6 +68,9 @@ export default function BookingFormArrivalTime({
                 className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"
                 onClick={() => {
                   setShowList(false);
+                  if (item === "Clear field") {
+                    return setArrivalTime("");
+                  }
                   setArrivalTime(item);
                 }}
               >
