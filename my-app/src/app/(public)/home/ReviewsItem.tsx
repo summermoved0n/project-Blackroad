@@ -20,11 +20,12 @@ export default function ReviewsItem({
   return (
     <li
       className={clsx(
-        "flex flex-col items-center justify-between gap-7.5 md:gap-10 py-12.5 px-5 border border-l-0 border-r-0 md:border-l-1 md:border-r-1  border-[rgba(23,23,23,0.1)]",
+        "w-40 flex flex-col items-center justify-between gap-7.5 md:gap-10 py-12.5 md:px-5 border border-l-0 border-r-0 md:border-l md:border-r  border-[rgba(23,23,23,0.1)]",
 
-        "first:border-b-0 last:border-t-0 md:first:border-b-1 md:last:border-t-1 md:first:border-l-0 md:first:border-r-0 md:last:border-r-0 md:last:border-l-0",
+        "first:border-l-0 last:border-r-0 md:first:border-b md:last:border-t md:first:border-l-0 md:first:border-r-0 md:last:border-r-0 md:last:border-l-0",
 
         isDark && "border-white/20",
+        "flex-[0_0_100%] md:flex-[0_0_34%]",
       )}
     >
       <ReviewStars stars={stars} />
@@ -32,12 +33,17 @@ export default function ReviewsItem({
         as="p"
         color={isDark ? "white60" : "black60"}
         size="sm"
-        className="text-center"
+        className="text-center w-100 md:w-fit line-clamp-4 select-none"
       >
         {description}
       </Text>
       <div className="flex justify-center items-center gap-2.5">
-        <Text as="p" color={isDark ? "white" : "black"} size="sm">
+        <Text
+          as="p"
+          color={isDark ? "white" : "black"}
+          size="sm"
+          className="select-none"
+        >
           {author}
         </Text>
         <UserIcon />

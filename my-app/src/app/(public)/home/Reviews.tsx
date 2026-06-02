@@ -1,6 +1,15 @@
+"use client";
+
 import { Text } from "@/components/Text";
 import ReviewsItem from "./ReviewsItem";
 import clsx from "clsx";
+import { EmblaCarouselType } from "embla-carousel";
+import { useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { CarouselDotIcon } from "@/components/icons/CarouselDotIcon";
+import { Button } from "@/components/Button";
+import { ArrowRightIcon } from "@/components/icons/ArrowRightIcon";
+import { ArrowLeftIcon } from "@/components/icons/ArrowLeftIcon";
 
 type ReviewsProps = {
   isDark?: boolean;
@@ -18,6 +27,28 @@ type ReviewsProps = {
 };
 
 export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
+  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [selectedSnap, setSelectedSnap] = useState(0);
+
+  const goTo = (index: number) => emblaApi?.scrollTo(index);
+  const setupSnaps = (api: EmblaCarouselType) => {
+    setScrollSnaps(api.scrollSnapList());
+  };
+  const setActiveSnap = (api: EmblaCarouselType) =>
+    setSelectedSnap(api.selectedScrollSnap());
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setupSnaps(emblaApi);
+    setActiveSnap(emblaApi);
+
+    emblaApi.on("reInit", setupSnaps);
+    emblaApi.on("reInit", setActiveSnap);
+    emblaApi.on("select", setActiveSnap);
+  }, [emblaApi]);
+
   return (
     <section
       className={clsx(
@@ -35,12 +66,8 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
         REVIEWS
       </Text>
 
-      {tourReviews.length === 0 ? (
-        <Text as="p" color={isDark ? "white" : "black"} size="md">
-          No reviews yet.
-        </Text>
-      ) : (
-        <ul className="md:grid md:grid-cols-3">
+      <div className="relative overflow-hidden" ref={emblaRef}>
+        <ul className="flex touch-pan-y touch-pinch-zoom cursor-grab">
           {tourReviews.map(({ id, rating, comment, author }) => (
             <ReviewsItem
               key={id}
@@ -51,7 +78,19 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
             />
           ))}
         </ul>
-      )}
+
+        <div className="flex items-center justify-center mt-4 gap-2.5 md:hidden">
+          {scrollSnaps.map((_, index) => (
+            <button key={index} onClick={() => goTo(index)}>
+              {selectedSnap === index ? (
+                <CarouselDotIcon color="1" />
+              ) : (
+                <CarouselDotIcon />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

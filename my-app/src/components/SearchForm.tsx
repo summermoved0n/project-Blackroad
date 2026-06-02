@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import DatePicker from "./DatePicker";
 import { DateRange } from "react-day-picker";
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 
 type SearchFormProps = {
   pickDate: DateRange | undefined;
@@ -22,6 +23,7 @@ export default function SearchForm({
   showModal,
   setShowModal,
 }: SearchFormProps) {
+  const router = useRouter();
   return (
     <div className="hidden md:pl-10 md:h-17.5 md:w-full xl:pl-15 md:backdrop-blur-sm rounded-xl md:grid md:grid-cols-[1fr_1fr_1fr_180px] md:gap-12.5">
       <SelectCity />
@@ -30,6 +32,7 @@ export default function SearchForm({
       <button
         className="flex items-center justify-center border-l border-white/10"
         type="button"
+        onClick={() => router.push("/tours")}
       >
         <Text as="p" color="white" size="md">
           Search
