@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { Component, ReactNode } from "react";
+import { ReactNode } from "react";
 import { FieldError } from "react-hook-form";
 import { IMaskInput } from "react-imask";
 

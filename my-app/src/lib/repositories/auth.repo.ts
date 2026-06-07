@@ -11,6 +11,7 @@ type dbCreateUserProps = {
 type dbUpdateUserProps = {
   filter: UserWhereUniqueInput;
   data: {
+    email?: string;
     name?: string | null;
     phoneNumber?: string | null;
     dateOfBirth?: Date | null;
@@ -19,6 +20,7 @@ type dbUpdateUserProps = {
     verificationToken?: string;
     resetPasswordToken?: string | null;
     resetPasswordExpire?: Date | null;
+    subscribe?: boolean;
   };
 };
 

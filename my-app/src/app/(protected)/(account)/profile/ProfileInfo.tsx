@@ -6,11 +6,12 @@ import { UserPayload } from "@/types/user.types";
 import { useRouter } from "next/navigation";
 
 type User = {
-  user: UserPayload
+  user: UserPayload;
 };
 
 export default function ProfileInfo({ user }: User) {
   const router = useRouter();
+
   return (
     <div className="bg-[#171717] p-15">
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">
@@ -32,7 +33,9 @@ export default function ProfileInfo({ user }: User) {
             Date of birth
           </Text>
           <Text as="p" color="white" size="md">
-            {user?.dateOfBirth ? "12.12.2020" : "00:00:0000"}
+            {user?.dateOfBirth
+              ? new Date(user.dateOfBirth).toLocaleDateString("en-US")
+              : "DD/MM/YYYY"}
           </Text>
         </div>
 

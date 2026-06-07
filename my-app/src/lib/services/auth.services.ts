@@ -9,6 +9,7 @@ import {
 } from "../repositories/auth.repo";
 import { resend } from "../resend";
 import { getCurrentUser } from "../utility/getCurrentUser";
+import { Prisma } from "../../../generated/prisma/browser";
 
 const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
@@ -189,7 +190,7 @@ export const userResetPassword = async ({
 };
 
 export const userUpdateInfo = async ({
-  // email,
+  email,
   name,
   phoneNumber,
   dateOfBirth,
@@ -201,16 +202,23 @@ export const userUpdateInfo = async ({
     throw new Error("User not found");
   }
 
-  let parsedDate = null;
+  const editData: Prisma.UserUpdateInput = {};
 
+  if (email) {
+    editData.email = email;
+  }
+  if (name) {
+    editData.name = name;
+  }
+  if (phoneNumber) {
+    editData.phoneNumber = phoneNumber;
+  }
   if (dateOfBirth) {
-    const [month, day, year] = dateOfBirth!.split("/");
-
-    return (parsedDate = new Date(`${year}-${month}-${day}`));
+    editData.dateOfBirth = new Date(dateOfBirth);
   }
 
   await dbUpdateUser({
     filter: { id: user.id },
-    data: { name, phoneNumber, dateOfBirth: parsedDate },
+    data:  editData ,
   });
 };

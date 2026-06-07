@@ -33,9 +33,9 @@ export default function LoginForm() {
   const onSubmit = async (data: EditUserInfoSchema) => {
     try {
       const response = await axios.post("/api/auth/user-update", data);
+      toast.success(response.data.message);
       router.replace("/profile");
       router.refresh();
-      toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
     }

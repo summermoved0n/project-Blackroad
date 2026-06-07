@@ -53,7 +53,6 @@ model User {
   name      String?
   phoneNumber String?
   dateOfBirth DateTime? @db.Date
-  subscribe  Boolean @default(false)
   
   isVerify  Boolean @default(false)
   verificationToken  String @unique
@@ -175,4 +174,13 @@ model Payment {
   updatedAt  DateTime @updatedAt
 
   @@map("payments")
+}
+
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  confirmed Boolean  @default(false)
+  token     String?  @unique
+
+  @@map("newsletter_subscribers")
 }

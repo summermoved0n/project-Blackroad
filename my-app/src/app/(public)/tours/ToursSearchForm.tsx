@@ -6,7 +6,6 @@ import ToursList from "./ToursList";
 import SortBy from "./SortBy";
 import SearchFormMobile from "./SearchFormMobile";
 import { useState } from "react";
-import { DateRange } from "react-day-picker";
 import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
 import { TourPayload } from "@/types/tour.types";
@@ -22,7 +21,6 @@ export default function ToursSearchForm({ toursListData }: ToursListProps) {
 
   const { searchParams } = useFilters();
 
-  const [pickDate, setPickDate] = useState<DateRange | undefined>();
   const [showModal, setShowModal] = useState(false);
 
   const currentPage = Number(searchParams.get("page") || 1);
@@ -33,12 +31,7 @@ export default function ToursSearchForm({ toursListData }: ToursListProps) {
 
   return (
     <section className="bg-[#1e1e1f]">
-      <SearchFormMobile
-        pickDate={pickDate}
-        setPickDate={setPickDate}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+      <SearchFormMobile setShowModal={setShowModal} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">
         <div className="hidden xl:block bg-[#171717] rounded-xl md:mb-25">

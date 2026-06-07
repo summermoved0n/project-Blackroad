@@ -47,11 +47,14 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
     };
   }
 
-  if (filter.category) {
-    where.category = {
-      in: filter.category?.split(","),
-    };
-  }
+  // if (filter.category) {
+  //   const categories = filter.category.split(",");
+  //   where.category = {
+  //     in: Array.isArray(filter.category)
+  //       ? filter.category.split(",")
+  //       : filter.category,
+  //   };
+  // }
 
   if (filter.dates) {
     const [from, to] = filter.dates.split("_");
