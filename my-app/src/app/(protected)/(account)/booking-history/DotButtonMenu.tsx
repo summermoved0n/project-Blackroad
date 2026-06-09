@@ -43,8 +43,6 @@ export default function DotButtonMenu({
     return isUserAndTourMatch || isStatusComplited;
   };
 
-  console.log(`isDisabledReviewBtn ${tourId}`, isDisabledReviewBtn());
-
   return (
     <div ref={containerRef} className="relative w-8">
       <button

@@ -41,5 +41,23 @@ export const bookingAPISchema = z.object({
   }),
 });
 
+export const cancelBookingSchema = z.object({
+  bookingId: z.coerce.number().int().positive(),
+});
+
+export const createReviewSchema = z.object({
+  bookingId: z.number().int().positive(),
+
+  review: z
+    .string()
+    .trim()
+    .min(10, "Review must be at least 10 characters")
+    .max(1000, "Review is too long"),
+
+  rating: z.number().int().min(1, "Please select a rating").max(5),
+});
+
 export type BookingSchema = z.infer<typeof bookingInterfaceSchema>;
 export type BookingAPISchema = z.infer<typeof bookingAPISchema>;
+export type CancelBookingSchema = z.infer<typeof cancelBookingSchema>;
+export type CreateReviewSchema = z.infer<typeof createReviewSchema>;

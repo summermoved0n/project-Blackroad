@@ -1,19 +1,28 @@
 import { userSubscribe } from "@/lib/services/subscribe.services";
+import { subscribeEmailSchema } from "@/lib/validations/subscribe.validation";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const normalizedEmail = body.email.trim().toLowerCase();
+    const validatedBody = subscribeEmailSchema.safeParse(body);
 
-    const follower = await userSubscribe({ email: normalizedEmail });
+    if (!validatedBody.success) {
+      return NextResponse.json(
+        { message: validatedBody.error.issues[0].message },
+        { status: 400 },
+      );
+    }
 
-    if (follower?.confirmed)
-      NextResponse.json(
+    const follower = await userSubscribe(validatedBody.data);
+
+    if (follower?.confirmed) {
+      return NextResponse.json(
         { message: "Subscription successful" },
         { status: 200 },
       );
+    }
 
     return NextResponse.json(
       { message: "Approve your subscription in email" },

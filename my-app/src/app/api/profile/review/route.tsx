@@ -1,13 +1,21 @@
 import { leaveReview } from "@/lib/services/profile.services";
+import { createReviewSchema } from "@/lib/validations/booking.validation";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    console.log(body);
+    const validatedBody = createReviewSchema.safeParse(body);
 
-    await leaveReview(body);
+    if (!validatedBody.success) {
+      return NextResponse.json(
+        { message: validatedBody.error.issues[0].message },
+        { status: 400 },
+      );
+    }
+
+    await leaveReview(validatedBody.data);
 
     return NextResponse.json(
       {

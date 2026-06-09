@@ -11,10 +11,10 @@ export default async function page() {
   }
 
   const userBookingHistory = await dbFindAllUserBookings({ userId });
-  console.log("booking history", userBookingHistory);
+  // console.log("booking history", userBookingHistory);
 
   const findReview = await dbFindReview({ authorId: userId });
-  console.log("find review", findReview);
+  // console.log("find review", findReview);
 
   return (
     <main className="text-white">

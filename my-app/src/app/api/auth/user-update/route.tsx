@@ -14,8 +14,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log(validatedBody);
-
     await userUpdateInfo(validatedBody.data);
 
     return NextResponse.json(

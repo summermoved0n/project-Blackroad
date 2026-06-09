@@ -4,6 +4,7 @@ import {
   TourListHistoryPayload,
   UserReviewPayload,
 } from "@/types/profile.types";
+import Link from "next/link";
 
 type BookingHistoryListProps = {
   userId: number;
@@ -22,19 +23,34 @@ export default function BookingHistoryList({
         Booking History
       </Text>
 
-      <ul className="flex flex-col gap-10">
-        {bookingHistoryList.map(({ id, totalPrice, tour, status }) => (
-          <BookingHistoryItem
-            key={id}
-            userId={userId}
-            bookingId={id}
-            userReviews={userReviews}
-            totalPrice={totalPrice.toString()}
-            tour={tour}
-            status={status}
-          />
-        ))}
-      </ul>
+      {bookingHistoryList?.length === 0 ? (
+        <div>
+          <Text as="p" color="white60" size="sm" className="mb-7.5">
+            No reservations yet.
+          </Text>
+
+          <Link
+            className="w-50 h-12.5 flex justify-center items-center border border-[#ea9c3f] hover:bg-[#ea9c3f] transition"
+            href="/tours"
+          >
+            Book
+          </Link>
+        </div>
+      ) : (
+        <ul className="flex flex-col gap-10">
+          {bookingHistoryList.map(({ id, totalPrice, tour, status }) => (
+            <BookingHistoryItem
+              key={id}
+              userId={userId}
+              bookingId={id}
+              userReviews={userReviews}
+              totalPrice={totalPrice.toString()}
+              tour={tour}
+              status={status}
+            />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
