@@ -54,7 +54,7 @@ export default function Modal({
   return createPortal(
     <div
       className={clsx(
-        "fixed inset-0 z-50 bg-[#1e1e1f] transition-opacity duration-300",
+        "fixed inset-0 z-50 bg-secondary transition-opacity duration-300",
         openModal ? "opacity-100" : "opacity-0 pointer-events-none",
       )}
       onClick={() => setOpenModal(false)}

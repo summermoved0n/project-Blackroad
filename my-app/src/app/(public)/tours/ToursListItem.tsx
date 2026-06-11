@@ -18,7 +18,10 @@ export default function ToursListItem({ itemData }: ToursListItemProps) {
     itemData;
 
   return (
-    <li className="w-full h-fit bg-[#171717]">
+    <li
+      className="w-full h-fit bg-primary
+"
+    >
       <div className="relative w-full h-100">
         <Text
           as="p"

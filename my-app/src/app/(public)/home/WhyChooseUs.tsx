@@ -3,7 +3,10 @@ import { Text } from "@/components/Text";
 
 export default function WhyChooseUs() {
   return (
-    <section className="px-4 py-12.5 md:px-20 md:pt-25 md:pb-37.5 bg-[#1e1e1f]">
+    <section
+      className="px-4 py-12.5 md:px-20 md:pt-25 md:pb-37.5 bg-secondary
+"
+    >
       <Text
         as="h2"
         color="white"

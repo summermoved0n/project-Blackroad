@@ -14,7 +14,7 @@ export default function SelectPeopleAndRoomsItem({
   title,
   currentValue,
 }: SelectPeopleAndRoomsItem) {
-  const { setFilter, searchParams } = useFilters();
+  const { setFilter } = useFilters();
 
   return (
     <div className="flex justify-between">

@@ -17,7 +17,7 @@ export default function BookingInfoDates({ tour }: TourProps) {
 
   const { title, dateOfArrival, dateOfDeparture } = tour;
   return (
-    <div className="bg-[#171717] p-15 flex flex-col gap-10">
+    <div className="bg-primary p-15 flex flex-col gap-10">
       <Text as="p" color="white" size="md">
         Your booking information
       </Text>

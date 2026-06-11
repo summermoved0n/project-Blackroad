@@ -19,8 +19,11 @@ export default async function page({ params }: PageProps) {
   const user = await dbGetUser({ id: userId! });
 
   return (
-    <main className="pt-17 md:pt-20 bg-[#171717]">
-      <div className="bg-[#1e1e1f] px-20 pt-5 pb-37.5">
+    <main
+      className="pt-17 md:pt-20 bg-primary
+"
+    >
+      <div className="bg-secondary px-20 pt-5 pb-37.5">
         <BookingPathNames title={getTourById!.title} />
         <div className="grid grid-cols-[2fr_3fr] gap-7.5">
           <BookingInfo tour={getTourById} />

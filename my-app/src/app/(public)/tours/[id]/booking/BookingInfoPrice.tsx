@@ -12,7 +12,9 @@ export default function BookingInfoPrice({ tour }: TourProps) {
     notFound();
   }
   return (
-    <div className="bg-[#171717] p-15 flex flex-col gap-7.5">
+    <div
+      className="bg-primary p-15 flex flex-col gap-7.5"
+    >
       <Text as="h2" color="white" size="md">
         Price details
       </Text>

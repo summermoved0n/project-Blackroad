@@ -42,8 +42,14 @@ export default function ResetForm() {
   };
 
   return (
-    <main className="pt-17 sm:pt-20 bg-[#171717]">
-      <div className="bg-[#1e1e1f] p-20 flex flex-col justify-center items-center">
+    <main
+      className="pt-17 sm:pt-20 bg-primary
+"
+    >
+      <div
+        className="bg-secondary
+ p-20 flex flex-col justify-center items-center"
+      >
         <div className="md:w-130 mb-7.5">
           <Text
             as="p"

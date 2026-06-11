@@ -88,7 +88,7 @@ export default function BookingForm({ user }: UserProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-[#171717] mb-7.5 p-15 flex flex-col gap-17.5"
+      className="bg-primary mb-7.5 p-15 flex flex-col gap-17.5"
     >
       <BookingFormUserInfo
         errors={errors}

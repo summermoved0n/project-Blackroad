@@ -20,7 +20,7 @@ export default function BookingInfoRating({ tour }: TourProps) {
   const { rating, title, category } = tour;
 
   return (
-    <div className="bg-[#171717] p-15 flex flex-col gap-7.5">
+    <div className="bg-primary p-15 flex flex-col gap-7.5">
       <div className="flex justify-between">
         <ReviewStars stars={rating} />
         <Text as="p" color="white" size="sm">

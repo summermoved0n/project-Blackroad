@@ -79,7 +79,7 @@ export default function ToursTabelMobile({
           type="button"
           className={clsx(
             "h-12.5 w-full",
-            selectedRoom === "single" && "bg-[#ea9c3f]",
+            selectedRoom === "single" && "bg-accent",
           )}
           onClick={() => setSelectedRoom("single")}
         >
@@ -95,7 +95,7 @@ export default function ToursTabelMobile({
           type="button"
           className={clsx(
             "h-12.5 w-full",
-            selectedRoom === "double" && "bg-[#ea9c3f]",
+            selectedRoom === "double" && "bg-accent",
           )}
           onClick={() => setSelectedRoom("double")}
         >

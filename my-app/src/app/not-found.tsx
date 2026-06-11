@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 export default function NotFound() {
   const router = useRouter();
   return (
-    <main className="bg-[#171717] pt-17 md:pt-20">
-      <div className="bg-[#1e1e1f] py-70 flex flex-col justify-center items-center gap-20">
+    <main className="bg-primary pt-17 md:pt-20">
+      <div className="bg-secondary py-70 flex flex-col justify-center items-center gap-20">
         <div className="relative w-175 h-75">
           <Image
             src="/images/404.png"

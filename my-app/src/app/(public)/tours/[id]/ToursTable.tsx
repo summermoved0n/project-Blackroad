@@ -17,7 +17,10 @@ export default function ToursTable({ data }: { data: ToursTableProps[] }) {
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
-    <div className="hidden md:block overflow-x-auto py-15 px-15 bg-[#171717]">
+    <div
+      className="hidden md:block overflow-x-auto py-15 px-15 bg-primary
+"
+    >
       <table className="w-full">
         <thead className="text-white text-left text-md">
           <tr>
@@ -84,7 +87,7 @@ export default function ToursTable({ data }: { data: ToursTableProps[] }) {
                     type="button"
                     className={clsx(
                       "h-12.5 w-30",
-                      selectedRoom === "single" && "bg-[#ea9c3f]",
+                      selectedRoom === "single" && "bg-accent",
                     )}
                     onClick={() => setSelectedRoom("single")}
                   >
@@ -102,7 +105,7 @@ export default function ToursTable({ data }: { data: ToursTableProps[] }) {
                     type="button"
                     className={clsx(
                       "h-12.5 w-30",
-                      selectedRoom === "double" && "bg-[#ea9c3f]",
+                      selectedRoom === "double" && "bg-accent",
                     )}
                     onClick={() => setSelectedRoom("double")}
                   >

@@ -4,9 +4,9 @@ export const button = cva("text-base transition", {
   variants: {
     variant: {
       primary:
-        "h-[50px] text-white bg-transparent border-1 border-solid border-[#ea9c3f] hover:bg-[#ea9c3f]",
+        "h-[50px] text-white bg-transparent border-1 border-solid border-[#ea9c3f] hover:bg-accent",
       secondary: "h-[40px] text-black",
-      tertiary: "h-[74px] w-[74px] rounded-full bg-[#ea9c3f]",
+      tertiary: "h-[74px] w-[74px] rounded-full bg-accent",
     },
     size: {
       sm: "w-full md:w-[200px]",

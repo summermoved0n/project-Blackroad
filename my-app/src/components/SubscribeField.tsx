@@ -40,8 +40,8 @@ export default function SubscribeField({
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className={clsx(
-          isKeepInTouch && "border",
-          "w-full h-12.5 px-4 text-sm text-white placeholder-white/50 bg-transparent border-b border-white/10 focus:outline-none focus:border-b-orange-300",
+          isKeepInTouch && "border focus:border-accent",
+          "w-full h-12.5 px-4 text-sm text-white placeholder-white/50 bg-transparent border-b border-white/10 focus:outline-none focus:border-b-accent",
         )}
       />
 

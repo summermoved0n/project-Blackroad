@@ -32,11 +32,11 @@ const navList = [
     path: "/contacts",
     img: "/images/Contacts.jpg",
   },
-  {
-    name: "book a tour",
-    path: "/tours/id",
-    img: "/images/Keep_in_touch.jpg",
-  },
+  // {
+  //   name: "book a tour",
+  //   path: "/tours/id",
+  //   img: "/images/Keep_in_touch.jpg",
+  // },
 ];
 
 type NavigationProps = {
@@ -86,7 +86,7 @@ export default function Navigation({ setOpenDropMenu }: NavigationProps) {
 
       <div
         className={clsx(
-          "relative hidden md:block w-full h-[550px]",
+          "relative hidden md:block w-full h-137.5",
           !isHover && "bg-black/80",
         )}
       >

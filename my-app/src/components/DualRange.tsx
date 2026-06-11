@@ -56,7 +56,8 @@ export default function DualRange() {
             <div
               key={key}
               {...rest}
-              className="h-5 w-5 rounded-full bg-[#ea9c3f]"
+              className="h-5 w-5 rounded-full bg-accent
+"
             ></div>
           );
         }}

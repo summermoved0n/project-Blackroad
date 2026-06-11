@@ -30,9 +30,9 @@ export default function DatePicker({ setShowModal }: DatePickerProps) {
         today: `text-xl font-semibold text-red-500`,
         selected: `text-bold text-xl`,
         chevron: `fill-white`,
-        range_start: "bg-[#ea9c3f] rounded-l-full text-[22px] font-semibold",
-        range_middle: "bg-[#ea9c3f]/40 text-[18px] font-medium",
-        range_end: "bg-[#ea9c3f] rounded-r-full text-[22px] font-semibold",
+        range_start: "bg-accent rounded-l-full text-[22px] font-semibold",
+        range_middle: "bg-accent/40 text-[18px] font-medium",
+        range_end: "bg-accent rounded-r-full text-[22px] font-semibold",
       }}
       footer={
         <div className="flex justify-between">

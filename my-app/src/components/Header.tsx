@@ -35,13 +35,13 @@ export default function Header({ isAuth }: HeaderProps) {
       className={clsx(
         "text-white border-b border-white/10 h-17 sm:h-20 w-full px-4  md:px-0 transition flex items-center justify-between absolute top-0 left-0 z-10",
         openDropMenu
-          ? "bg-[#171717] transition backdrop-blur-none"
+          ? "bg-primary transition backdrop-blur-none"
           : " backdrop-blur-md",
       )}
     >
       <div
         className={clsx(
-          "absolute bg-[#1e1e1f] top-17 sm:top-20 left-0 w-full h-screen transform -translate-x-full transition z-10 px-4 md:px-20 pt-7.5 md:pt-15",
+          "absolute bg-secondary top-17 sm:top-20 left-0 w-full h-screen transform -translate-x-full transition z-10 px-4 md:px-20 pt-7.5 md:pt-15",
           openDropMenu && "translate-x-0 transition",
         )}
       >
@@ -71,14 +71,14 @@ export default function Header({ isAuth }: HeaderProps) {
       <Logo onClose={setOpenDropMenu} />
       {isAuth ? (
         <button
-          className="hover:text-orange-300 transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
+          className="hover:text-accent transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
           onClick={() => router.push("/profile")}
         >
           My Profile
         </button>
       ) : (
         <button
-          className="hover:text-orange-300 transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
+          className="hover:text-accent transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
           onClick={() => router.push("/login")}
         >
           Log in
@@ -93,7 +93,7 @@ export default function Header({ isAuth }: HeaderProps) {
           as="p"
           color="white"
           size="sm"
-          className="group-hover:text-orange-300 transition"
+          className="group-hover:text-accent transition"
         >
           Build trip
         </Text>

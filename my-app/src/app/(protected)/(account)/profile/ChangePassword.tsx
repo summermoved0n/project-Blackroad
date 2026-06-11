@@ -35,7 +35,10 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="bg-[#171717] p-15">
+    <div
+      className="bg-primary
+ p-15"
+    >
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">
         Change Password
       </Text>

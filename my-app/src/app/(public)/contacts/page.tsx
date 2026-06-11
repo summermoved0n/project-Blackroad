@@ -1,6 +1,5 @@
-export default async function page() {
-  // const users = await prisma.user.findFirst();
-  // console.log(users);
+import ComingSoon from "@/components/ComingSoon";
 
-  return <div className="pt-20 bg-[#171717]"></div>;
+export default function page() {
+  return <ComingSoon />;
 }

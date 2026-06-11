@@ -20,7 +20,7 @@ export default function ForgotPasswordBtn({
         as="p"
         color="white60"
         size="xs"
-        className="hover:text-orange-300 transition"
+        className="hover:text-accent transition"
       >
         Forgot password?
       </Text>

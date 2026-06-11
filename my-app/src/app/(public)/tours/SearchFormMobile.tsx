@@ -14,7 +14,10 @@ export default function SearchFormMobile({
   setShowModal,
 }: SearchFormMobileProps) {
   return (
-    <section className="xl:hidden py-5 px-4 bg-[#171717]">
+    <section
+      className="xl:hidden py-5 px-4 bg-primary
+"
+    >
       <div className="mb-5">
         <SelectCity />
         <SelectDate setShowModal={setShowModal} />

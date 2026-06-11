@@ -55,7 +55,7 @@ export default function SortBy() {
         </button>
 
         {showSortList && (
-          <div className="absolute w-full top-10 bg-[#171717] p-5 flex flex-col gap-2.5 z-20">
+          <div className="absolute w-full top-10 bg-primary p-5 flex flex-col gap-2.5 z-20">
             {sortOptions.map(({ id, label }) => (
               <SortByList
                 key={id}

@@ -10,7 +10,10 @@ export default function TourOrder() {
   const [showOrder, setShowOrder] = useState(false);
   return (
     <section>
-      <div className="p-5 md:p-15 bg-[#171717]">
+      <div
+        className="p-5 md:p-15 bg-primary
+"
+      >
         <button
           className={clsx(
             "flex items-center justify-between w-full",

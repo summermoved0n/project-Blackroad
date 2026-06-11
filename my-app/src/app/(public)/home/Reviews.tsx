@@ -7,9 +7,6 @@ import { EmblaCarouselType } from "embla-carousel";
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { CarouselDotIcon } from "@/components/icons/CarouselDotIcon";
-import { Button } from "@/components/Button";
-import { ArrowRightIcon } from "@/components/icons/ArrowRightIcon";
-import { ArrowLeftIcon } from "@/components/icons/ArrowLeftIcon";
 
 type ReviewsProps = {
   isDark?: boolean;

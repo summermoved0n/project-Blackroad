@@ -42,7 +42,7 @@ export default function InputField<T extends FieldValues>({
         className={clsx(
           className,
           darkThemeInput && "placeholder:text-white/20",
-          "border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none",
+          "border-b border-white/10 focus:border-accent text-white py-3 outline-none",
         )}
         placeholder={placeholder}
         type={type}

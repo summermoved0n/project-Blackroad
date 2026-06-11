@@ -18,7 +18,7 @@ export default function Checkbox({ checked, onChange, label }: Props) {
         className={`
           w-5 h-5 border rounded flex items-center justify-center
           transition
-          ${checked ? "bg-[#ea9c3f] border-[#ea9c3f]" : "border-gray-400"}
+          ${checked ? "bg-accent border-[#ea9c3f]" : "border-gray-400"}
         `}
       >
         {checked && (

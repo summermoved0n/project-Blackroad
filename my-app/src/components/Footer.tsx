@@ -20,7 +20,7 @@ export default function Footer() {
   return (
     <footer
       className={clsx(
-        "py-12.5 px-4 md:py-0 md:pt-17.5 md:pb-25 md:px-20 bg-[#1e1e1f] grid md:grid-cols-[1fr_1fr_2fr] gap-7.5 relative",
+        "py-12.5 px-4 md:py-0 md:pt-17.5 md:pb-25 md:px-20 bg-secondary grid md:grid-cols-[1fr_1fr_2fr] gap-7.5 relative",
         "after:content-[''] after:absolute after:left-0 after:top-0 after:w-full after:h-px after:bg-[#d0d0d0] md:after:left-[5%] md:after:w-[90%]",
       )}
     >
@@ -46,7 +46,12 @@ export default function Footer() {
           {navigationLinks.map(({ name, path }) => (
             <li key={name}>
               <Link href={`/${path}`}>
-                <Text as="p" color="white60" size="sm">
+                <Text
+                  as="p"
+                  color="white60"
+                  size="sm"
+                  className="hover:text-accent transition"
+                >
                   {name}
                 </Text>
               </Link>

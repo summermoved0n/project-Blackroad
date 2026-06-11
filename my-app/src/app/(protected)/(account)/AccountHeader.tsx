@@ -31,7 +31,10 @@ export default function AccountHeader() {
 
   return (
     <nav className="mb-4">
-      <div className="m-auto px-4 py-3 bg-[#171717] rounded-md w-fit flex justify-center items-center gap-2 mb-14">
+      <div
+        className="m-auto px-4 py-3 bg-primary
+ rounded-md w-fit flex justify-center items-center gap-2 mb-14"
+      >
         <Text as="p" color="white60" size="sm">
           Main
         </Text>

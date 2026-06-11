@@ -50,7 +50,7 @@ export default function MaskInput({
           className,
           icon && "pl-10",
           darkThemeInput && "placeholder:text-white/20",
-          "w-full border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none",
+          "w-full border-b border-white/10 focus:border-accent text-white py-3 outline-none",
         )}
       />
 

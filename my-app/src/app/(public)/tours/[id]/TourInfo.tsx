@@ -5,27 +5,12 @@ import ReviewStars from "@/components/ReviewStars";
 import { Text } from "@/components/Text";
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { EmptyHeartIcon } from "@/components/icons/EmptyHeartIcon";
+import { TourPayload } from "@/types/tour.types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type TourInfoProps = {
-  tourData: {
-    id: number;
-    category: string;
-    title: string;
-    imageUrl: string;
-    rating: number;
-    price: number;
-    createdAt: Date;
-    updatedAt: Date;
-    description: string;
-    route: string[];
-    tourDates: Date[];
-    duration: number;
-    food: string;
-    dateOfArrival: Date;
-    dateOfDeparture: Date;
-  } | null;
+  tourData: TourPayload | null;
 };
 
 export default function TourInfo({ tourData }: TourInfoProps) {
@@ -34,7 +19,7 @@ export default function TourInfo({ tourData }: TourInfoProps) {
   const { id, category, title, imageUrl, rating, price } = tourData || {};
   return (
     <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
-      <div className="py-3 px-5 bg-[#171717] rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5">
+      <div className="py-3 px-5 bg-primary rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5">
         <Text as="p" color="white60" size="xs">
           Main
         </Text>
@@ -56,7 +41,7 @@ export default function TourInfo({ tourData }: TourInfoProps) {
 
         <button
           type="button"
-          className="w-16 md:w-53.5 h-12 bg-[#171717] rounded-md text-white flex justify-center items-center gap-5"
+          className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5"
         >
           <Text as="span" color="white" size="sm" className="hidden md:block">
             Add to Favorites

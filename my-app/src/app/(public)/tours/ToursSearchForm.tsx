@@ -30,11 +30,14 @@ export default function ToursSearchForm({ toursListData }: ToursListProps) {
   );
 
   return (
-    <section className="bg-[#1e1e1f]">
+    <section
+      className="bg-secondary
+"
+    >
       <SearchFormMobile setShowModal={setShowModal} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">
-        <div className="hidden xl:block bg-[#171717] rounded-xl md:mb-25">
+        <div className="hidden xl:block bg-primary rounded-xl md:mb-25">
           <SearchForm showModal={showModal} setShowModal={setShowModal} />
         </div>
 

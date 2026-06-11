@@ -36,7 +36,7 @@ export default function InputPassword<T extends FieldValues>({
         <input
           id={name}
           {...register(name)}
-          className="w-full border-b border-white/10 focus:border-[#ea9c3f] text-white py-3 outline-none"
+          className="w-full border-b border-white/10 focus:border-accent text-white py-3 outline-none"
           placeholder={placeholder}
           type={showPassword ? "text" : "password"}
           autoComplete="current-password"

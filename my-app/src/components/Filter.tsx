@@ -16,7 +16,7 @@ export default function Filter() {
   const selectedRating = getSelected("rating");
 
   return (
-    <div className="flex flex-col gap-10 py-10 px-7.5 bg-[#171717] h-fit">
+    <div className="flex flex-col gap-10 py-10 px-7.5 bg-primary h-fit">
       <Text as="h4" color="white" size="md">
         All filters
       </Text>
@@ -126,7 +126,7 @@ export default function Filter() {
           as="p"
           color="white60"
           size="sm"
-          className="group-hover:text-[#ea9c3f] transition"
+          className="group-hover:text-accent transition"
         >
           Clear filters
         </Text>
