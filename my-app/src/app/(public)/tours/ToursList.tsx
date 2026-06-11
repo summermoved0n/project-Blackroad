@@ -4,9 +4,15 @@ import { Text } from "@/components/Text";
 
 type ToursListProps = {
   paginateListData: TourPayload[];
+  favoriteToursList:
+    | {
+        id: number;
+        tourId: number;
+      }[]
+    | null;
 };
 
-export default function ToursList({ paginateListData }: ToursListProps) {
+export default function ToursList({ paginateListData, favoriteToursList }: ToursListProps) {
   return (
     <ul className="grid md:grid-cols-2 gap-4 md:gap-7.5">
       {paginateListData.length === 0 ? (
@@ -17,7 +23,11 @@ export default function ToursList({ paginateListData }: ToursListProps) {
         </li>
       ) : (
         paginateListData.map((item) => (
-          <ToursListItem key={item.id} itemData={item} />
+          <ToursListItem
+            key={item.id}
+            itemData={item}
+            favoriteToursList={favoriteToursList}
+          />
         ))
       )}
     </ul>

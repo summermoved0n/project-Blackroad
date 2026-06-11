@@ -14,9 +14,18 @@ const toursPerPage = 4;
 
 type ToursListProps = {
   toursListData: TourPayload[];
+  favoriteToursList:
+    | {
+        id: number;
+        tourId: number;
+      }[]
+    | null;
 };
 
-export default function ToursSearchForm({ toursListData }: ToursListProps) {
+export default function ToursSearchForm({
+  toursListData,
+  favoriteToursList,
+}: ToursListProps) {
   const totalPages = Math.ceil(toursListData.length / toursPerPage);
 
   const { searchParams } = useFilters();
@@ -47,7 +56,10 @@ export default function ToursSearchForm({ toursListData }: ToursListProps) {
           <div className="hidden lg:block">
             <Filter />
           </div>
-          <ToursList paginateListData={paginateListData} />
+          <ToursList
+            paginateListData={paginateListData}
+            favoriteToursList={favoriteToursList}
+          />
         </div>
 
         <ToursPagination currentPage={currentPage} totalPages={totalPages} />

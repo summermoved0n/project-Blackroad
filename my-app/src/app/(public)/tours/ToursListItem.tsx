@@ -8,14 +8,53 @@ import ReviewStars from "@/components/ReviewStars";
 import ButtonWithArrow from "@/components/ButtonWithArrow";
 import { TourPayload } from "@/types/tour.types";
 import { capitalizeFirstLetter } from "@/lib/utility/helpers";
+import { handleApiError } from "@/lib/utility/handleApiError";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type ToursListItemProps = {
   itemData: TourPayload;
+  favoriteToursList:
+    | {
+        id: number;
+        tourId: number;
+      }[]
+    | null;
 };
 
-export default function ToursListItem({ itemData }: ToursListItemProps) {
+export default function ToursListItem({
+  itemData,
+  favoriteToursList,
+}: ToursListItemProps) {
+  const router = useRouter();
+
   const { id, category, title, imageUrl, rating, description, price } =
     itemData;
+  const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
+  console.log(favoriteTour);
+
+  const onAddToFavoriteClick = async (tourId: number) => {
+    try {
+      const response = await axios.post("/api/profile/favorites", { tourId });
+      toast.success(response.data.message);
+      router.refresh();
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+
+  const onRemoveFromFavoriteClick = async (favoriteId: number) => {
+    try {
+      const response = await axios.delete(
+        `/api/profile/favorites/${favoriteId}`,
+      );
+      toast.success(response.data.message);
+      router.refresh();
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
 
   return (
     <li
@@ -35,12 +74,23 @@ export default function ToursListItem({ itemData }: ToursListItemProps) {
         >
           {capitalizeFirstLetter(category)}
         </Text>
-        <button
-          type="button"
-          className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1"
-        >
-          <EmptyHeartIcon />
-        </button>
+        {!favoriteTour ? (
+          <button
+            type="button"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1"
+            onClick={() => onAddToFavoriteClick(id)}
+          >
+            <EmptyHeartIcon />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1"
+            onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
+          >
+            <EmptyHeartIcon active />
+          </button>
+        )}
         <Image
           src={imageUrl}
           alt={title}

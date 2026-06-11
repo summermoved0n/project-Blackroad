@@ -1,4 +1,5 @@
 import { BookingStatus } from "../../../generated/prisma/enums";
+import { FavoriteWhereUniqueInput } from "../../../generated/prisma/models";
 import { prisma } from "../prisma";
 
 type ReviewData = {
@@ -6,6 +7,11 @@ type ReviewData = {
   rating: number;
   instagram?: string;
   authorId: number;
+  tourId: number;
+};
+
+type FavorteTourProps = {
+  userId: number;
   tourId: number;
 };
 
@@ -59,4 +65,33 @@ export const dbCancelBooking = async (bookingId: number) =>
   prisma.booking.update({
     where: { id: bookingId },
     data: { status: BookingStatus.cancelled },
+  });
+
+export const dbCreateFavorteTour = async (data: FavorteTourProps) =>
+  prisma.favorite.create({
+    data,
+  });
+
+export const dbDeleteFavorteTours = async ({ id }: { id: number }) =>
+  prisma.favorite.delete({
+    where: { id },
+  });
+
+export const dbFindFavorteTours = async (userId: { userId: number }) =>
+  prisma.favorite.findMany({
+    where: userId,
+    select: {
+      id: true,
+      tourId: true,
+      tour: {
+        select: {
+          id: true,
+          category: true,
+          title: true,
+          description: true,
+          rating: true,
+          price: true,
+        },
+      },
+    },
   });

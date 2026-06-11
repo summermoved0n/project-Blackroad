@@ -63,6 +63,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  favorites Favorite[]
   bookings  Booking[]
   reviews   Review[]
 
@@ -92,6 +93,7 @@ model Tour {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
+  favorites           Favorite[]
   bookings            Booking[]
   reviews             Review[]
 
@@ -183,4 +185,18 @@ model NewsletterSubscriber {
   token     String?  @unique
 
   @@map("newsletter_subscribers")
+}
+
+model Favorite {
+  id           Int      @id @default(autoincrement())
+  userId    Int
+  tourId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tour Tour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tourId])
+
+  @@map("favorites")
 }
