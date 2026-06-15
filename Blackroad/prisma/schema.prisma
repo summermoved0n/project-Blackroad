@@ -1,0 +1,202 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RoomType {
+  single
+  double
+}
+enum BookingStatus {
+  pending
+  confirmed
+  cancelled
+  completed
+}
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+enum PaymentProvider {
+  stripe
+  paypal
+}
+enum PropertyType {
+  hotels
+  cottages
+  chalet
+}
+enum Categories {
+  mountains
+  lakes
+}
+enum ToursType {
+  individual
+  group
+}
+
+model User { 
+  id        Int     @id @default(autoincrement()) 
+  email     String  @unique
+  password  String  
+  name      String?
+  phoneNumber String?
+  dateOfBirth DateTime? @db.Date
+  
+  isVerify  Boolean @default(false)
+  verificationToken  String?
+
+  resetPasswordToken String?
+  resetPasswordExpire DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  favorites Favorite[]
+  bookings  Booking[]
+  reviews   Review[]
+
+  @@map("users")
+} 
+
+model Tour { 
+  id                  Int     @id @default(autoincrement()) 
+  title               String
+  description         String
+  imageUrl            String
+  category            Categories
+  rating              Float
+  price               Int
+  propertyType        PropertyType
+  toursType           ToursType
+
+  route               String[]
+  tourDates           DateTime[]
+
+  duration            Int
+  food                String
+
+  dateOfArrival       DateTime
+  dateOfDeparture     DateTime
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  favorites           Favorite[]
+  bookings            Booking[]
+  reviews             Review[]
+
+  @@map("tours")
+} 
+
+model Review {
+  id         Int @id @default(autoincrement())
+  rating     Int
+  comment    String
+  instagram  String?
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  authorId   Int
+  author     User     @relation(fields: [authorId], references: [id])
+
+  tourId     Int
+  tour       Tour     @relation(fields: [tourId], references: [id])
+
+  @@map("reviews")
+}
+
+model BookingCustomer {
+  id         Int      @id @default(autoincrement())
+  fullName   String  
+  email       String
+  phoneNumber String
+  city       String
+  address    String
+  region     String?
+  country    String
+  specialWishes String?
+  guestArrivalTime String?
+
+  booking   Booking[]
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("booking_customers")
+}
+
+model Booking {
+  id         Int      @id @default(autoincrement())
+
+  userId     Int     
+  user       User     @relation(fields: [userId], references: [id])
+
+  tourId     Int
+  tour       Tour     @relation(fields: [tourId], references: [id])
+
+  customerId Int
+  customer   BookingCustomer  @relation(fields: [customerId], references: [id])
+
+  payments Payment[]
+
+  guests     Int
+  room       RoomType    @default(single)
+  totalPrice Decimal     @db.Decimal(10, 2)
+  status     BookingStatus
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("bookings")
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+
+  bookingId     Int
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+
+  provider   PaymentProvider
+  status     PaymentStatus
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("payments")
+}
+
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  confirmed Boolean  @default(false)
+  verificationToken     String?  
+
+  @@map("newsletter_subscribers")
+}
+
+model Favorite {
+  id           Int      @id @default(autoincrement())
+  userId    Int
+  tourId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tour Tour @relation(fields: [tourId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tourId])
+
+  @@map("favorites")
+}
