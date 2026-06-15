@@ -45,3 +45,12 @@ export const dbFindAllUserBookings = async (filter: { userId: number }) =>
       },
     },
   });
+
+export const dbUpdateBooking = async (
+  filter: { id: number },
+  data: { status: BookingStatus },
+) =>
+  prisma.booking.update({
+    where: filter,
+    data,
+  });
