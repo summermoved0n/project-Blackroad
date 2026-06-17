@@ -22,11 +22,13 @@ export default function PaymentElementWrapper({ clientSecret }: Props) {
             colorText: "#ffffff",
             colorDanger: "#ef4444",
             borderRadius: "0px",
+            inputColorBorder: "transparent",
+            inputBoxShadow: "none",
           },
         },
       }}
     >
-      <PaymentForm />
+      <PaymentForm clientSecret={clientSecret} />
     </Elements>
   );
 }
