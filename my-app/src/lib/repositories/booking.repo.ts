@@ -18,7 +18,7 @@ export const dbFindBookingById = async (id: number) =>
 
 export const dbFindBookingByFilter = async (filter: {
   userId: number;
-  tourId: number;
+  tourId?: number;
 }) =>
   prisma.booking.findFirst({
     where: filter,
