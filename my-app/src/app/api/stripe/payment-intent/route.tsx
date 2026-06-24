@@ -1,24 +1,39 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { createPayment } from "@/lib/services/payment.services";
+import { createPayment, finishPayment } from "@/lib/services/payment.services";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  console.log(body);
+    const { amount } = await createPayment(body);
 
-  const data = await createPayment(body);
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "cad",
+      payment_method_types: ["card"],
+      metadata: {
+        bookingId: String(body.bookingId),
+        paymentId: String(body.paymentId),
+      },
+    });
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1000,
-    currency: "cad",
-    payment_method_types: ["card"],
-    metadata: {
-      bookingId: String(body),
-    },
-  });
+    const updateData = {
+      paymentId: body.paymentId,
+      paymentIntentId: paymentIntent.id,
+      amount: paymentIntent.amount,
+      client_secret: paymentIntent.client_secret,
+    };
 
-  return NextResponse.json({
-    clientSecret: paymentIntent.client_secret,
-  });
+    await finishPayment(updateData);
+
+    return NextResponse.json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
 }

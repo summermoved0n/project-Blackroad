@@ -172,6 +172,12 @@ model Payment {
   provider   PaymentProvider
   status     PaymentStatus
 
+  amount   Decimal? @db.Decimal(10, 2)
+  currency String  @default("CAD")
+
+  providerPaymentId String? @unique
+  clientSecret      String? 
+
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

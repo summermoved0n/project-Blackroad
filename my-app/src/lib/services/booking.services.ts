@@ -58,7 +58,7 @@ export const createBooking = async (data: BookingDataProps) => {
     tourId: tour.id,
   });
 
-  console.log(isThisBookingExist);
+  console.log("isThisBookingExist", isThisBookingExist);
 
   if (
     isThisBookingExist &&
@@ -72,7 +72,7 @@ export const createBooking = async (data: BookingDataProps) => {
 
   const { customerInfo, contactDetails, additional } = data;
 
-  // console.log("Creating new Customer...");
+  console.log("Creating new Customer...");
 
   const newCustomer = await dbCreateCustomer({
     email: customerInfo.email,
@@ -86,7 +86,7 @@ export const createBooking = async (data: BookingDataProps) => {
     guestArrivalTime: additional.guestArrivalTime ?? null,
   });
 
-  // console.log("Creating new booking...");
+  console.log("Creating new booking...");
 
   const booking = await dbCreateBooking({
     userId: user.id,

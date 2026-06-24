@@ -76,13 +76,14 @@ export default function BookingForm({ user }: UserProps) {
       };
 
       const booking = await axios.post("/api/booking/checkout", checkout);
-      console.log(booking);
+      console.log("Form booking", booking);
       const response = await axios.post("/api/stripe/payment-intent", {
         bookingId: booking.data.response.bookingId,
         paymentId: booking.data.response.paymentId,
       });
+      console.log("Form response", response);
 
-      toast.success(response.data.message);
+      // toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
     }
