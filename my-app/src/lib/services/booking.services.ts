@@ -65,8 +65,10 @@ export const createBooking = async (data: BookingDataProps) => {
   }
 
   if (isThisBookingExist?.status === BookingStatus.pending) {
-    const payment = await dbFindPayment({ bookingId: isThisBookingExist.id });
-
+    const payment = await dbFindPayment({
+      bookingId: isThisBookingExist.id,
+      status: PaymentStatus.pending,
+    });
     if (payment?.status === PaymentStatus.pending) {
       return {
         bookingId: isThisBookingExist.id,

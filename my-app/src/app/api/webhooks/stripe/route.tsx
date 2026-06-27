@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { dbUpdateBooking } from "@/lib/repositories/booking.repo";
 import {
-  BookingStatus,
-  PaymentStatus,
-} from "../../../../../generated/prisma/enums";
-import { dbUpdatePaymentById } from "@/lib/repositories/payment.repo";
+  dbPaymentSuccess,
+  dbRefundFailed,
+} from "@/lib/repositories/webhook.repo";
+import { dbUpdatePaymentByFilter } from "@/lib/repositories/payment.repo";
+import { PaymentStatus } from "../../../../../generated/prisma/enums";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -24,40 +24,74 @@ export async function POST(req: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Invalid webhook signature" },
       { status: 400 },
     );
   }
 
-  console.log(event.type);
-
   if (event.type === "payment_intent.succeeded") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-    const { bookingId, paymentId } = paymentIntent.metadata;
+    const bookingId = Number(paymentIntent.metadata.bookingId);
+    const paymentId = Number(paymentIntent.metadata.paymentId);
 
-    await dbUpdateBooking(
-      { id: Number(bookingId) },
-      { status: BookingStatus.confirmed },
-    );
+    if (!Number.isInteger(bookingId) || !Number.isInteger(paymentId)) {
+      throw new Error("Invalid PaymentIntent metadata");
+    }
 
-    await dbUpdatePaymentById(Number(paymentId), {
-      status: PaymentStatus.paid,
+    await dbPaymentSuccess({
+      bookingId,
+      paymentId,
+      providerPaymentId: paymentIntent.id,
     });
   } else if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-    const { bookingId, paymentId } = paymentIntent.metadata;
+    const bookingId = Number(paymentIntent.metadata.bookingId);
+    const paymentId = Number(paymentIntent.metadata.paymentId);
 
-    await dbUpdateBooking(
-      { id: Number(bookingId) },
-      { status: BookingStatus.pending },
+    if (!Number.isInteger(bookingId) || !Number.isInteger(paymentId)) {
+      throw new Error("Invalid PaymentIntent metadata");
+    }
+
+    await dbUpdatePaymentByFilter(
+      {
+        id: paymentId,
+        bookingId,
+        providerPaymentId: paymentIntent.id,
+        status: PaymentStatus.pending,
+      },
+      {
+        errorMessage:
+          paymentIntent.last_payment_error?.message || "Payment attempt failed",
+      },
     );
+  } else if (event.type === "refund.failed") {
+    const refund = event.data.object as Stripe.Refund;
 
-    await dbUpdatePaymentById(Number(paymentId), {
-      status: PaymentStatus.failed,
+    const bookingId = Number(refund.metadata?.bookingId);
+    const paymentId = Number(refund.metadata?.paymentId);
+
+    const providerPaymentId =
+      typeof refund.payment_intent === "string"
+        ? refund.payment_intent
+        : refund.payment_intent?.id;
+
+    if (
+      !Number.isInteger(bookingId) ||
+      !Number.isInteger(paymentId) ||
+      !providerPaymentId
+    ) {
+      throw new Error("Invalid refund metadata");
+    }
+
+    await dbRefundFailed({
+      bookingId,
+      paymentId,
+      providerPaymentId,
+      errorMessage: refund.failure_reason ?? "Stripe refund failed",
     });
   }
 

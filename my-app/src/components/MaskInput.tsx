@@ -43,7 +43,7 @@ export default function MaskInput({
         id={idName}
         mask={mask}
         value={value}
-        onAccept={(value) => onChange(value)}
+        onAccept={(value: string) => onChange(value)}
         inputMode="numeric"
         placeholder={placeholder}
         className={clsx(

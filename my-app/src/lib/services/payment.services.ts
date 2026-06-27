@@ -2,8 +2,8 @@ import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums";
 import { dbFindUser } from "../repositories/auth.repo";
 import { dbFindBookingById } from "../repositories/booking.repo";
 import {
+  dbAttachPaymentIntent,
   dbFindPaymentById,
-  dbUpdatePaymentById,
 } from "../repositories/payment.repo";
 import { getCurrentUser } from "../utility/getCurrentUser";
 
@@ -49,6 +49,7 @@ export const createPayment = async ({ bookingId, paymentId }: CreateProps) => {
 
   return {
     amount: Math.round(Number(booking.totalPrice) * 100),
+    payment,
   };
 };
 
@@ -64,9 +65,9 @@ export const finishPayment = async ({
     throw new Error("Payment does not exist");
   }
 
-  await dbUpdatePaymentById(paymentId, {
+  return dbAttachPaymentIntent(paymentId, {
     providerPaymentId: paymentIntentId,
-    amount,
+    amount: amount / 100,
     clientSecret: client_secret,
   });
 };

@@ -1,5 +1,4 @@
-import { BookingStatus } from "../../../generated/prisma/enums";
-import { FavoriteWhereUniqueInput } from "../../../generated/prisma/models";
+import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../prisma";
 
 type ReviewData = {
@@ -13,6 +12,11 @@ type ReviewData = {
 type FavorteTourProps = {
   userId: number;
   tourId: number;
+};
+
+type CancelBookingProps = {
+  bookingId: number;
+  paymentId: number;
 };
 
 export const dbCreateReview = async (data: ReviewData) =>
@@ -61,11 +65,20 @@ export const dbFindPopularReview = async () =>
     },
   });
 
-export const dbCancelBooking = async (bookingId: number) =>
-  prisma.booking.update({
-    where: { id: bookingId },
-    data: { status: BookingStatus.cancelled },
-  });
+export const dbCancelPaidBooking = async ({
+  bookingId,
+  paymentId,
+}: CancelBookingProps) =>
+  prisma.$transaction([
+    prisma.booking.update({
+      where: { id: bookingId },
+      data: { status: BookingStatus.cancelled },
+    }),
+    prisma.payment.update({
+      where: { id: paymentId },
+      data: { status: PaymentStatus.refunded },
+    }),
+  ]);
 
 export const dbCreateFavorteTour = async (data: FavorteTourProps) =>
   prisma.favorite.create({
@@ -96,3 +109,26 @@ export const dbFindFavorteTours = async (userId: { userId: number }) =>
       },
     },
   });
+
+export const dbCancelPendingBooking = async ({
+  bookingId,
+  paymentId,
+}: {
+  bookingId: number;
+  paymentId: number;
+}) =>
+  prisma.$transaction([
+    prisma.payment.update({
+      where: { id: paymentId },
+      data: {
+        status: PaymentStatus.failed,
+      },
+    }),
+
+    prisma.booking.update({
+      where: { id: bookingId },
+      data: {
+        status: BookingStatus.cancelled,
+      },
+    }),
+  ]);

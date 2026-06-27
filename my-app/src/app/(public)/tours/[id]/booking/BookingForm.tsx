@@ -43,7 +43,7 @@ export default function BookingForm({ user }: { user: UserPayload }) {
     reset,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<BookingSchema>({
     resolver: zodResolver(bookingInterfaceSchema),
   });
@@ -82,15 +82,12 @@ export default function BookingForm({ user }: { user: UserPayload }) {
       };
 
       const booking = await axios.post("/api/booking/checkout", checkout);
-      // console.log("Form booking", booking);
       const response = await axios.post("/api/stripe/payment-intent", {
         bookingId: booking.data.response.bookingId,
         paymentId: booking.data.response.paymentId,
       });
-      // console.log("Form response", response);
 
       const cardElement = elements!.getElement(CardNumberElement);
-      console.log("card element", cardElement);
 
       const result = await stripe!.confirmCardPayment(
         response.data.clientSecret,
@@ -106,8 +103,6 @@ export default function BookingForm({ user }: { user: UserPayload }) {
         },
       );
 
-      console.log("Confirm card", result);
-
       if (result.error) {
         toast.error(result.error.message || "Payment failed");
         return;
@@ -122,8 +117,6 @@ export default function BookingForm({ user }: { user: UserPayload }) {
       }
 
       toast.error("Payment was not completed");
-
-      // toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
     }
@@ -154,7 +147,11 @@ export default function BookingForm({ user }: { user: UserPayload }) {
       />
       <PaymentForm />
       <BookingFormPolicy />
-      <Button type="submit" variant="primary">
+      <Button
+        type="submit"
+        variant="primary"
+        disabled={isSubmitting || !stripe || !elements}
+      >
         Book and pay
       </Button>
     </form>

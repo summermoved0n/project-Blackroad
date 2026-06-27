@@ -6,17 +6,28 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { amount } = await createPayment(body);
+    const { amount, payment } = await createPayment(body);
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: "cad",
-      payment_method_types: ["card"],
-      metadata: {
-        bookingId: String(body.bookingId),
-        paymentId: String(body.paymentId),
+    if (payment.providerPaymentId && payment.clientSecret) {
+      return NextResponse.json({
+        clientSecret: payment.clientSecret,
+      });
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create(
+      {
+        amount,
+        currency: "cad",
+        payment_method_types: ["card"],
+        metadata: {
+          bookingId: String(body.bookingId),
+          paymentId: String(body.paymentId),
+        },
       },
-    });
+      {
+        idempotencyKey: `payment-${body.paymentId}`,
+      },
+    );
 
     const updateData = {
       paymentId: body.paymentId,
@@ -25,7 +36,12 @@ export async function POST(req: Request) {
       client_secret: paymentIntent.client_secret,
     };
 
-    await finishPayment(updateData);
+    const result = await finishPayment(updateData);
+
+    if (result.count === 0) {
+      await stripe.paymentIntents.cancel(paymentIntent.id);
+      throw new Error("Payment was cancelled while being created");
+    }
 
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,

@@ -1,15 +1,14 @@
 import { BookingStatus, PaymentStatus } from "../../../generated/prisma/client";
 import { dbFindUser } from "../repositories/auth.repo";
+import { dbFindBookingById } from "../repositories/booking.repo";
+import { dbFindPayment } from "../repositories/payment.repo";
 import {
-  dbFindBookingByFilter,
-  dbFindBookingById,
-} from "../repositories/booking.repo";
-import {
-  dbFindPayment,
-  dbUpdatePaymentById,
-} from "../repositories/payment.repo";
-import { dbCancelBooking, dbCreateReview } from "../repositories/profile.repo";
+  dbCancelPaidBooking,
+  dbCancelPendingBooking,
+  dbCreateReview,
+} from "../repositories/profile.repo";
 import { dbFindTour } from "../repositories/tour.repo";
+import { stripe } from "../stripe";
 import { getCurrentUser } from "../utility/getCurrentUser";
 
 type LeaveReviewProps = {
@@ -87,12 +86,55 @@ export const cancelBooking = async ({ bookingId }: { bookingId: number }) => {
     throw new Error("Only active bookings can be canceled");
   }
 
-  const payment = await dbFindPayment({ bookingId });
+  const pendingPayment = await dbFindPayment({
+    bookingId,
+    status: PaymentStatus.pending,
+  });
 
-  if (payment?.status !== PaymentStatus.paid) {
-    throw new Error("Payment wasn't paid");
+  if (pendingPayment) {
+    if (pendingPayment.providerPaymentId) {
+      await stripe.paymentIntents.cancel(pendingPayment.providerPaymentId);
+    }
+
+    await dbCancelPendingBooking({
+      bookingId,
+      paymentId: pendingPayment.id,
+    });
+
+    return;
   }
 
-  await dbUpdatePaymentById(payment.id, { status: PaymentStatus.refunded });
-  await dbCancelBooking(bookingId);
+  const payment = await dbFindPayment({
+    bookingId,
+    status: PaymentStatus.paid,
+  });
+
+  if (!payment || !payment.providerPaymentId || !payment.amount) {
+    throw new Error(
+      "Paid Stripe payment not found or payment amount is missing",
+    );
+  }
+
+  const refundAmount = Math.round(Number(payment.amount) * 100 * 0.75);
+
+  const refund = await stripe.refunds.create(
+    {
+      amount: refundAmount,
+      payment_intent: payment.providerPaymentId,
+      reason: "requested_by_customer",
+      metadata: {
+        bookingId: String(bookingId),
+        paymentId: String(payment.id),
+      },
+    },
+    {
+      idempotencyKey: `refund-payment-${payment.id}`,
+    },
+  );
+
+  if (refund.status === "failed" || refund.status === "canceled") {
+    throw new Error("Stripe refund failed");
+  }
+
+  await dbCancelPaidBooking({ bookingId, paymentId: payment.id });
 };
