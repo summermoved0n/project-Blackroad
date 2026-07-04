@@ -1,5 +1,7 @@
 "use client";
 
+import { CardIcon } from "@/components/icons";
+import { Text } from "@/components/Text";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -12,7 +14,9 @@ const elementOptions = {
       color: "#ffffff",
       fontSize: "16px",
       "::placeholder": {
-        color: "#777777",
+        color: "rgba(255, 255, 255, 0.2)",
+        fontSize: "16px",
+        fontWeight: "300",
       },
     },
     invalid: {
@@ -24,25 +28,37 @@ const elementOptions = {
 export default function PaymentForm() {
   return (
     <div>
-      <div className="grid grid-cols-[2fr] gap-7.5">
+      <Text as="h3" color="white" size="md" className="mb-7.5">
+        Payment Information
+      </Text>
+
+      <div className="grid gap-10">
         <div>
-          <label className="text-white">Card number</label>
-          <div className="border border-neutral-700 p-4">
+          <label className="text-white/60">Card number</label>
+          <div className="relative border-b border-white/20 px-7.5 py-3">
             <CardNumberElement options={elementOptions} />
+            <span className="absolute left-0 top-1/2 -translate-y-1/2">
+              <CardIcon />
+            </span>
           </div>
         </div>
 
-        <div>
-          <label className="text-white">Expiration date</label>
-          <div className="border border-neutral-700 p-4">
-            <CardExpiryElement options={elementOptions} />
+        <div className="grid grid-cols-2 gap-4 md:gap-10">
+          <div>
+            <label className="text-white/60">Expiration date</label>
+            <div className="border-b border-white/20 py-3">
+              <CardExpiryElement options={elementOptions} />
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label className="text-white">Security code</label>
-          <div className="border border-neutral-700 p-4">
-            <CardCvcElement options={elementOptions} />
+          <div>
+            <label className="text-white/60">CVC-code</label>
+            <div className="relative border-b border-white/20 px-7.5 py-3">
+              <CardCvcElement options={elementOptions} />
+              <span className="absolute left-0 top-1/2 -translate-y-1/2">
+                <CardIcon />
+              </span>
+            </div>
           </div>
         </div>
       </div>

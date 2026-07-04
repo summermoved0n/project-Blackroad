@@ -2,25 +2,21 @@ import { ParkingIcon } from "@/components/icons/ParkingIcon";
 import { WiFiIcon } from "@/components/icons/WiFiIcon";
 import ReviewStars from "@/components/ReviewStars";
 import { Text } from "@/components/Text";
-import { notFound } from "next/navigation";
+import { capitalizeFirstLetter } from "@/lib/utility/helpers";
 
 type TourProps = {
   tour: {
     title: string;
     category: string;
     rating: number;
-  } | null;
+  };
 };
 
 export default function BookingInfoRating({ tour }: TourProps) {
-  if (!tour) {
-    notFound();
-  }
-
   const { rating, title, category } = tour;
 
   return (
-    <div className="bg-primary p-15 flex flex-col gap-7.5">
+    <div className="bg-primary px-4 py-7.5 md:py-15 md:px-15 flex flex-col gap-7.5">
       <div className="flex justify-between">
         <ReviewStars stars={rating} />
         <Text as="p" color="white" size="sm">
@@ -33,7 +29,7 @@ export default function BookingInfoRating({ tour }: TourProps) {
       </Text>
 
       <Text as="p" color="white60" size="sm">
-        {category}
+        {capitalizeFirstLetter(category)}
       </Text>
 
       <div className="flex justify-between">

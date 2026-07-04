@@ -8,7 +8,7 @@ export default function BookingFormAddress({ ...props }) {
         Contact details
       </Text>
       <div className="flex flex-wrap gap-10">
-        <div className="w-full flex gap-12.5">
+        <div className="w-full flex flex-col md:flex-row gap-10 md:gap-12.5">
           <InputField
             name="city"
             lable="City"
@@ -27,7 +27,7 @@ export default function BookingFormAddress({ ...props }) {
           />
         </div>
 
-        <div className="w-full flex gap-12.5">
+        <div className="w-full flex flex-col md:flex-row gap-10 md:gap-12.5">
           <InputField
             name="address"
             lable="Address"

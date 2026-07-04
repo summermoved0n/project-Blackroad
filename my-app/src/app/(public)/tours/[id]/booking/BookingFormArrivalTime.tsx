@@ -25,10 +25,11 @@ export default function BookingFormArrivalTime({
   arrivalTime: string;
   setArrivalTime: React.Dispatch<SetStateAction<string>>;
 }) {
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setShowList(false));
+
   return (
     <div className="flex flex-col gap-7.5">
       <Text as="p" color="white" size="md">
@@ -39,7 +40,10 @@ export default function BookingFormArrivalTime({
         will be helped at any time!
       </Text>
 
-      <div ref={containerRef} className="relative flex w-50">
+      <div ref={containerRef} className="relative flex flex-col md:w-50">
+        <Text as="p" color="white" size="sm">
+          Select arrival time
+        </Text>
         <button
           type="button"
           className="w-full"
@@ -49,12 +53,12 @@ export default function BookingFormArrivalTime({
         >
           <Text
             as="p"
-            color="white"
+            color="white60"
             size="sm"
-            className="flex items-center justify-between py-5 md:py-0 md:pb-2.5 border-b border-white/10"
+            className="flex items-center justify-between py-3 md:py-5 border-b border-white/70"
           >
             {!arrivalTime || arrivalTime === "Clear field"
-              ? "Select arrival time"
+              ? "Default time"
               : arrivalTime}
             <ArrowDownIcon />
           </Text>

@@ -125,7 +125,7 @@ export default function BookingForm({ user }: { user: UserPayload }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-primary mb-7.5 p-15 flex flex-col gap-17.5"
+      className="bg-primary mb-7.5 px-4 py-12.5 md:px-15 md:py-15 flex flex-col gap-17.5"
     >
       <BookingFormUserInfo
         errors={errors}
@@ -139,7 +139,6 @@ export default function BookingForm({ user }: { user: UserPayload }) {
         placeholder="Write your special wishes"
         register={register}
         error={errors.specialWishes}
-        darkThemeInput
       />
       <BookingFormArrivalTime
         arrivalTime={arrivalTime}

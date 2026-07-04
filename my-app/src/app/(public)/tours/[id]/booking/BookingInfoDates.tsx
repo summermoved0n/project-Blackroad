@@ -7,17 +7,13 @@ type TourProps = {
     title: string;
     dateOfArrival: Date;
     dateOfDeparture: Date;
-  } | null;
+  };
 };
 
 export default function BookingInfoDates({ tour }: TourProps) {
-  if (!tour) {
-    notFound();
-  }
-
   const { title, dateOfArrival, dateOfDeparture } = tour;
   return (
-    <div className="bg-primary p-15 flex flex-col gap-10">
+    <div className="bg-primary py-7.5 px-4 md:py-15 md:px-15 flex flex-col gap-10">
       <Text as="p" color="white" size="md">
         Your booking information
       </Text>

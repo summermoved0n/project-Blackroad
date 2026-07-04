@@ -30,7 +30,9 @@ export default function InputField<T extends FieldValues>({
   return (
     <div className="w-full flex flex-col">
       <label
-        className={darkThemeInput ? "text-white/60" : "text-white "}
+        className={clsx(
+          darkThemeInput ? "text-white/60" : "text-white ",
+        )}
         htmlFor={name}
       >
         {lable}

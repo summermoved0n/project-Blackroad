@@ -1,20 +1,14 @@
 import { Text } from "@/components/Text";
-import { notFound } from "next/navigation";
 
 type TourProps = {
   tour: {
     price: number;
-  } | null;
+  };
 };
 
 export default function BookingInfoPrice({ tour }: TourProps) {
-  if (!tour) {
-    notFound();
-  }
   return (
-    <div
-      className="bg-primary p-15 flex flex-col gap-7.5"
-    >
+    <div className="bg-primary py-7.5 px-4 md:py-15 md:px-15 flex flex-col gap-7.5">
       <Text as="h2" color="white" size="md">
         Price details
       </Text>
