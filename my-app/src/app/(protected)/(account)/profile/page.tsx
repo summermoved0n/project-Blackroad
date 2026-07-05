@@ -6,7 +6,6 @@ import { dbGetUser } from "@/lib/repositories/auth.repo";
 export default async function page() {
   const userId = await getCurrentUser();
   const user = await dbGetUser({ id: userId! });
-  console.log(user);
 
   return (
     <section className="text-white flex flex-col gap-10">

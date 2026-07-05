@@ -38,18 +38,18 @@ export default function BookingHistoryItem({
 
   return (
     <>
-      <li className="bg-white h-35 flex ">
-        <div className="relative w-40 h-full">
+      <li className="bg-white md:h-35 flex flex-col md:flex-row">
+        <div className="relative md:w-40 h-75 md:h-full">
           <Image
             src={tour.imageUrl}
             alt={tour.title}
             fill
             loading="eager"
-            className="w-full h-48 object-cover mb-3"
+            className="w-full h-48 object-top md:object-center object-cover mb-3"
           />
         </div>
         <div className="w-full flex justify-between p-5">
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between gap-2">
             <Text as="h2" color="black" size="md">
               {tour.title}
             </Text>
@@ -64,6 +64,10 @@ export default function BookingHistoryItem({
                 day: "2-digit",
                 month: "short",
               })}
+            </Text>
+
+            <Text as="h2" color="black" size="md" className="md:hidden h-fit">
+              {totalPrice} CA$
             </Text>
 
             <Text
@@ -82,7 +86,12 @@ export default function BookingHistoryItem({
           </div>
 
           <div className="flex h-fit">
-            <Text as="h2" color="black" size="md" className="h-fit">
+            <Text
+              as="h2"
+              color="black"
+              size="md"
+              className="hidden md:block h-fit"
+            >
               {totalPrice} CA$
             </Text>
 

@@ -30,8 +30,8 @@ export default function AccountHeader() {
   };
 
   return (
-    <nav className="mb-4">
-      <div className="m-auto px-4 py-3 bg-primary rounded-md w-fit flex justify-center items-center gap-2 mb-14">
+    <section className="mb-4">
+      <div className="m-auto px-4 py-3 bg-primary rounded-md w-fit flex justify-center items-center gap-2 mb-7.5 md:mb-14">
         <Text as="p" color="white60" size="sm">
           Main
         </Text>
@@ -42,7 +42,7 @@ export default function AccountHeader() {
       </div>
 
       <nav className="flex justify-between items-center">
-        <div className="text-white/50 flex gap-10">
+        <div className="text-white/50 flex gap-4 md:gap-10">
           <button
             type="button"
             className={clsx("", pathname === "/profile" && "text-white")}
@@ -77,6 +77,6 @@ export default function AccountHeader() {
           Log Out
         </button>
       </nav>
-    </nav>
+    </section>
   );
 }

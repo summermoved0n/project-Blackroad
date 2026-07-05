@@ -43,6 +43,15 @@ export default function DotButtonMenu({
     return isUserAndTourMatch || isStatusComplited;
   };
 
+  const isDisabledCancelBookingBtn = () => {
+    const isUserAndTourMatch = userReviews.some(
+      (review) => review.tourId === tourId && review.author.id === userId,
+    );
+
+    const isStatusComplited = status === "cancelled";
+    return isUserAndTourMatch || isStatusComplited;
+  };
+
   return (
     <div ref={containerRef} className="relative w-8">
       <button
@@ -56,7 +65,7 @@ export default function DotButtonMenu({
       </button>
 
       {showMenu && (
-        <div className="absolute w-40 bg-white text-black right-0 top-10 shadow-lg">
+        <div className="absolute w-42 bg-white text-black right-0 top-10 shadow-lg">
           <button
             className="px-4 py-2 hover:bg-gray-200"
             type="button"
@@ -80,8 +89,9 @@ export default function DotButtonMenu({
             {MenuItem.LeaveReview}
           </button>
           <button
-            className="px-4 py-2 hover:bg-gray-200"
+            className="px-4 py-2 hover:bg-gray-200 disabled:text-gray-400"
             type="button"
+            disabled={isDisabledCancelBookingBtn()}
             onClick={() => {
               setMenuItem(MenuItem.CancelBooking);
               setShowMenu(false);

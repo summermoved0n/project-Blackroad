@@ -9,8 +9,8 @@ export default function NotFound() {
   const router = useRouter();
   return (
     <main className="bg-primary pt-17 md:pt-20">
-      <div className="bg-secondary py-70 flex flex-col justify-center items-center gap-20">
-        <div className="relative w-175 h-75">
+      <div className="bg-secondary px-4 py-35 md:py-70 flex flex-col justify-center items-center gap-20">
+        <div className="relative w-75 h-35 md:w-175 md:h-75">
           <Image
             src="/images/404.png"
             alt="404"

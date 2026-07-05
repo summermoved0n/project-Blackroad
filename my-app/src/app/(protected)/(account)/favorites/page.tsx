@@ -12,8 +12,6 @@ export default async function page() {
     favoriteToursList = data;
   }
 
-  console.log(favoriteToursList);
-
   return (
     <div>
       <Text as="p" color="white" size="lg" className="mt-15 mb-12.5">

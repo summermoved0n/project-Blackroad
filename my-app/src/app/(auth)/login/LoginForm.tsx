@@ -15,9 +15,7 @@ import { handleApiError } from "@/lib/utility/handleApiError";
 import toast from "react-hot-toast";
 import ForgotPasswordBtn from "@/components/ForgotPasswordBtn";
 import { Text } from "@/components/Text";
-import { GoogleIcon } from "@/components/icons/GoogleIcon";
-import { AppleIcon } from "@/components/icons/AppleIcon";
-import { FaceBookBlueIcon } from "@/components/icons/FaceBookBlueIcon";
+import SignWithSocialMedia from "@/components/SignWithSocialMedia";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -70,35 +68,14 @@ export default function LoginForm() {
       </div>
 
       <div className="flex gap-2 items-center justify-between mb-10">
-        <p className="border-t border-t-white/60 w-full"></p>
+        <p className="border-t border-t-white/10 w-full"></p>
         <Text as="p" color="white60" size="md" className="text-center w-140">
           Or sign in with
         </Text>
-        <p className="border-t border-t-white/60 w-full"></p>
+        <p className="border-t border-t-white/10 w-full"></p>
       </div>
 
-      <div className="flex gap-12.5 justify-center">
-        <button
-          className="h-12.5 w-12.5 rounded-full bg-white flex justify-center items-center"
-          type="button"
-        >
-          <GoogleIcon />
-        </button>
-
-        <button
-          className="h-12.5 w-12.5 rounded-full bg-white flex justify-center items-center"
-          type="button"
-        >
-          <AppleIcon />
-        </button>
-
-        <button
-          className="h-12.5 w-12.5 rounded-full bg-white flex justify-center items-center"
-          type="button"
-        >
-          <FaceBookBlueIcon />
-        </button>
-      </div>
+      <SignWithSocialMedia />
     </form>
   );
 }

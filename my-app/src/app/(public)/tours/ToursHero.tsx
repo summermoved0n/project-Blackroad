@@ -10,7 +10,7 @@ export default function ToursHero() {
   const searchPathname = usePathname();
 
   return (
-    <section className="relative w-full h-screen bg-black/30 flex items-center justify-center px-4">
+    <section className="relative w-full h-screen md:h-180 bg-black/30 flex items-center justify-center px-4">
       <div className="absolute rounded-lg top-25 px-5 py-3 backdrop-blur-md flex items-center justify-center gap-2">
         <Text as="p" color="white60" size="xs">
           Main

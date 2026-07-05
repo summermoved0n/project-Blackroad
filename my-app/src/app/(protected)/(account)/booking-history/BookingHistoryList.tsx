@@ -18,10 +18,7 @@ export default function BookingHistoryList({
   bookingHistoryList,
 }: BookingHistoryListProps) {
   return (
-    <section
-      className="p-15 bg-primary
-"
-    >
+    <section className="p-5 md:p-15 bg-primary">
       <Text as="h1" color="white" size="lg" className="uppercase mb-10">
         Booking History
       </Text>
@@ -33,8 +30,7 @@ export default function BookingHistoryList({
           </Text>
 
           <Link
-            className="w-50 h-12.5 flex justify-center items-center border border-[#ea9c3f] hover:bg-accent
- transition"
+            className="w-50 h-12.5 flex justify-center items-center border border-accent hover:bg-accent transition"
             href="/tours"
           >
             Book

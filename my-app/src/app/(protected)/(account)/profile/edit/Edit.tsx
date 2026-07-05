@@ -43,7 +43,7 @@ export default function LoginForm() {
 
   return (
     <Modal openModal={openModal} setOpenModal={setOpenModal}>
-      <div className="w-screen h-screen px-15 flex flex-col gap-20 justify-center items-center">
+      <div className="pt-20 md:pt-0 px-4 md:px-15 flex flex-col gap-10 md:gap-20 justify-center items-center">
         <Text as="h1" color="white" size="lg">
           Edit profile
         </Text>
@@ -51,7 +51,7 @@ export default function LoginForm() {
           onSubmit={handleSubmit(onSubmit)}
           className="w-full flex flex-col justify-center gap-10"
         >
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid md:grid-cols-2 gap-10">
             <InputField
               name="name"
               lable="Full name"
@@ -107,7 +107,7 @@ export default function LoginForm() {
                 as="p"
                 color="white"
                 size="sm"
-                className="hover:text-orange-300 transition"
+                className="hover:text-accent transition"
               >
                 Submit changes
               </Text>

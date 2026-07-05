@@ -11,7 +11,7 @@ import WhyChooseUs from "./(public)/home/WhyChooseUs";
 
 export default async function Home() {
   const tourReviews = await dbFindPopularReview();
-  console.log("tourReviews", tourReviews);
+  // console.log("tourReviews", tourReviews);
   return (
     <main>
       <HomeHero />

@@ -16,16 +16,13 @@ export default function ProfileInfo({ user }: User) {
   }).format(user.dateOfBirth!);
 
   return (
-    <div
-      className="bg-primary
- p-15"
-    >
+    <div className="bg-primary p-5 md:p-15">
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">
         My information
       </Text>
 
-      <div className="grid grid-cols-[1fr_2fr] grid-rows-2 gap-12.5 mb-12.5">
-        <div className="flex flex-col gap-4">
+      <div className="grid md:grid-cols-[1fr_2fr] md:grid-rows-2 gap-10 md:gap-12.5 mb-12.5">
+        <div className="flex flex-col gap-2 md:gap-4">
           <Text as="p" color="white60" size="sm">
             Full name
           </Text>
@@ -34,7 +31,7 @@ export default function ProfileInfo({ user }: User) {
           </Text>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 md:gap-4">
           <Text as="p" color="white60" size="sm">
             Date of birth
           </Text>
@@ -43,7 +40,7 @@ export default function ProfileInfo({ user }: User) {
           </Text>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 md:gap-4">
           <Text as="p" color="white60" size="sm">
             Phone number
           </Text>
@@ -52,7 +49,7 @@ export default function ProfileInfo({ user }: User) {
           </Text>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 md:gap-4">
           <Text as="p" color="white60" size="sm">
             E-mail
           </Text>

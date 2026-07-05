@@ -8,7 +8,7 @@ import { Text } from "@/components/Text";
 
 export default function Login() {
   const router = useRouter();
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState<boolean>(true);
 
   return (
     <section>
@@ -42,6 +42,7 @@ export default function Login() {
               </button>
             </Text>
           </div>
+
           <LoginForm />
         </div>
       </Modal>

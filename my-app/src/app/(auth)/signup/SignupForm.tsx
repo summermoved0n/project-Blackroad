@@ -1,56 +1,71 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import {
+  SignupSchema,
+  signupValidationSchema,
+} from "@/lib/validations/auth.validation";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { handleApiError } from "@/lib/utility/handleApiError";
+import InputField from "@/components/InputField";
+import InputPassword from "@/components/InputPassword";
+import { Button } from "@/components/Button";
 
 export default function SignupForm() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupSchema>({
+    resolver: zodResolver(signupValidationSchema),
+  });
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = { email, password, confirmPassword };
-    await axios.post("/api/auth/signup", formData);
-    router.replace("/");
-    router.refresh();
+  const onSubmit = async (data: SignupSchema) => {
+    try {
+      const response = await axios.post("/api/auth/signup", data);
+      router.replace("/");
+      router.refresh();
+      toast.success(response.data.message);
+    } catch (error) {
+      handleApiError(error);
+    }
   };
 
   return (
-    <form onSubmit={handleLogin} className="pt-20 flex flex-col gap-4">
-      <h1 className="text-white">Signup</h1>
-
-      <input
-        className="border border-amber-200 text-white"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full flex flex-col gap-7.5"
+    >
+      <InputField
+        name="email"
+        lable="E-mail"
+        placeholder="email@gmail.com"
+        register={register}
+        error={errors.email}
       />
 
-      <input
-        className="border border-amber-200 text-white"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+      <InputPassword
+        name="password"
+        lable="Password"
+        register={register}
+        error={errors.password}
       />
 
-      <input
-        className="border border-amber-200 text-white"
-        placeholder="confirmPassword"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+      <InputPassword
+        name="confirmPassword"
+        lable="Confirm Password"
+        register={register}
+        error={errors.confirmPassword}
       />
 
-      <button
-        className="bg-amber-500 text-white py-2 px-4 rounded"
-        type="submit"
-      >
-        Login
-      </button>
+      <Button variant="primary" type="submit">
+        Sign up
+      </Button>
     </form>
   );
 }

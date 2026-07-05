@@ -57,9 +57,8 @@ export default function Modal({
         "fixed inset-0 z-50 bg-secondary transition-opacity duration-300",
         openModal ? "opacity-100" : "opacity-0 pointer-events-none",
       )}
-      onClick={() => setOpenModal(false)}
     >
-      <div className="perspective-[1000px] relative w-full h-full flex items-center justify-center cursor-pointer">
+      <div className="perspective-[1000px] relative w-full h-full flex items-center justify-center">
         <button
           className="absolute z-10 top-10 right-10 hover:scale-125 transition"
           onClick={() => {

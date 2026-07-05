@@ -22,7 +22,7 @@ type Props<T extends FieldValues> = {
 export default function InputPassword<T extends FieldValues>({
   name,
   lable,
-  placeholder = "●  ●  ●  ●  ●  ●  ●",
+  placeholder = "Enter the password",
   register,
   error,
 }: Props<T>) {
