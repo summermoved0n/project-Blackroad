@@ -1,5 +1,6 @@
 "use client";
 
+import { useMediaQuery } from "react-responsive";
 import { useFilters } from "@/hooks/useFilters";
 import { FilterField } from "@/types/filter.types";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -13,29 +14,34 @@ type DatePickerProps = {
 export default function DatePicker({ setShowModal }: DatePickerProps) {
   const [selected, setSelected] = useState<DateRange | undefined>();
   const { setFilter } = useFilters();
+  const isTablet = useMediaQuery({ minWidth: 768 });
 
   return (
     <DayPicker
       animate
       mode="range"
-      numberOfMonths={2}
+      showOutsideDays
+      numberOfMonths={isTablet ? 2 : 1}
       selected={selected}
       onSelect={setSelected}
-      className="bg-white/30 p-4"
+      className="pt-25 w-screen h-screen p-4 flex flex-col items-center justify-start"
       classNames={{
-        months: "flex gap-5 relative",
+        months:
+          "flex gap-15 relative bg-white p-5 md:before:absolute md:before:content-[''] md:before:bg-black/20 md:before:w-px md:before:h-[90%] md:before:top-[5%] md:before:left-1/2",
         weekday: "font-medium text-white bg-black/10",
-        nav: "absolute w-full flex justify-between pt-4",
+        nav: "absolute w-full flex justify-between pt-3 pr-9",
         month_caption: "text-xl font-bold py-4 text-center",
         today: `text-xl font-semibold text-red-500`,
         selected: `text-bold text-xl`,
-        chevron: `fill-white`,
-        range_start: "bg-accent rounded-l-full text-[22px] font-semibold",
-        range_middle: "bg-accent/40 text-[18px] font-medium",
-        range_end: "bg-accent rounded-r-full text-[22px] font-semibold",
+        chevron: `fill-black`,
+        range_start: "bg-accent/70 rounded-l-full text-[18px] font-semibold",
+        range_middle:
+          "border border-accent/70 rounded-full text-[16px] font-medium",
+        range_end: "bg-accent/70 rounded-r-full text-[18px] font-semibold",
+        outside: "opacity-20",
       }}
       footer={
-        <div className="flex justify-between">
+        <div className="flex justify-between pt-10 ">
           <button
             type="button"
             onClick={() => {
