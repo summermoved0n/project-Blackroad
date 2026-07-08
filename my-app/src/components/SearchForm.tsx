@@ -38,7 +38,17 @@ export default function SearchForm({
       </button>
 
       <Modal openModal={showModal} setOpenModal={setShowModal}>
-        <DatePicker setShowModal={setShowModal} />
+        <div className="pt-40 md:pt-100 flex flex-col items-center justify-center gap-5">
+          <Text as="p" color="white" size="lg" className="uppercase">
+            your journey
+          </Text>
+
+          <Text as="p" color="white60" size="sm">
+            Great, now select the start and end dates for your trip.
+          </Text>
+
+          <DatePicker setShowModal={setShowModal} />
+        </div>
       </Modal>
     </div>
   );
