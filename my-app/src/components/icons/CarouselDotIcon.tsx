@@ -1,6 +1,10 @@
-import React from "react";
-
-export const CarouselDotIcon = ({ color = "0.2" }: { color?: string }) => {
+export const CarouselDotIcon = ({
+  colorOpacity = "0.2",
+  color,
+}: {
+  color?: string;
+  colorOpacity?: string;
+}) => {
   return (
     <svg
       width="6"
@@ -9,7 +13,7 @@ export const CarouselDotIcon = ({ color = "0.2" }: { color?: string }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="3" cy="3" r="3" fill="#171717" fillOpacity={color} />
+      <circle cx="3" cy="3" r="3" fill={color} fillOpacity={colorOpacity} />
     </svg>
   );
 };

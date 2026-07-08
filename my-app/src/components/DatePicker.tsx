@@ -5,6 +5,7 @@ import { useFilters } from "@/hooks/useFilters";
 import { FilterField } from "@/types/filter.types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
+import { Button } from "@/components/Button";
 import "react-day-picker/style.css";
 
 type DatePickerProps = {
@@ -34,26 +35,26 @@ export default function DatePicker({ setShowModal }: DatePickerProps) {
         today: `text-xl font-semibold text-red-500`,
         selected: `text-bold text-xl`,
         chevron: `fill-black`,
-        range_start: "bg-accent/70 rounded-l-full text-[18px] font-semibold",
-        range_middle:
-          "border border-accent/70 rounded-full text-[16px] font-medium",
-        range_end: "bg-accent/70 rounded-r-full text-[18px] font-semibold",
+        range_start: "bg-accent rounded-full text-[18px] font-semibold",
+        range_middle: "bg-accent/40 rounded-full text-[16px] font-medium",
+        range_end: "bg-accent rounded-full text-[18px] font-semibold",
         outside: "opacity-20",
       }}
       footer={
-        <div className="flex justify-between pt-10 ">
-          <button
-            type="button"
+        <div className="flex justify-between pt-10">
+          <Button
+            variant="primary"
+            className="w-50"
             onClick={() => {
               setShowModal(false);
               setFilter(
                 FilterField.dates,
-                `${selected!.from?.toISOString() || ""}_${selected!.to?.toISOString() || ""}`,
+                `${selected?.from?.toISOString() || ""}_${selected?.to?.toISOString() || ""}`,
               );
             }}
           >
             Select
-          </button>
+          </Button>
         </div>
       }
     />

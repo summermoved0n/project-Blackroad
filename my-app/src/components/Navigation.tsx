@@ -32,11 +32,6 @@ const navList = [
     path: "/contacts",
     img: "/images/Contacts.jpg",
   },
-  // {
-  //   name: "book a tour",
-  //   path: "/tours/id",
-  //   img: "/images/Keep_in_touch.jpg",
-  // },
 ];
 
 type NavigationProps = {

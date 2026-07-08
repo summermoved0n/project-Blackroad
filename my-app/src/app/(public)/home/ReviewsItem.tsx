@@ -1,7 +1,6 @@
 import ReviewStars from "@/components/ReviewStars";
 import { Text } from "@/components/Text";
 import { UserIcon } from "@/components/icons";
-import { InstagramIcon } from "@/components/icons/InstagramIcon";
 import clsx from "clsx";
 
 type ReviewsItemProps = {
@@ -20,12 +19,9 @@ export default function ReviewsItem({
   return (
     <li
       className={clsx(
-        "w-40 flex flex-col items-center justify-between gap-7.5 md:gap-10 py-12.5 md:px-5 border border-l-0 border-r-0 md:border-l md:border-r  border-[rgba(23,23,23,0.1)]",
-
-        "first:border-l-0 last:border-r-0 md:first:border-b md:last:border-t md:first:border-l-0 md:first:border-r-0 md:last:border-r-0 md:last:border-l-0",
-
-        isDark && "border-white/20",
-        "flex-[0_0_100%] md:flex-[0_0_34%]",
+        "flex min-h-55 flex-[0_0_100%] flex-col items-center justify-between px-6 py-7.5 md:min-h-55 md:flex-[0_0_33.333333%] md:px-7.5",
+        "border-y border-r last:border-r-0",
+        isDark ? "border-white/20" : "border-black/10",
       )}
     >
       <ReviewStars stars={stars} />
@@ -33,7 +29,7 @@ export default function ReviewsItem({
         as="p"
         color={isDark ? "white60" : "black60"}
         size="sm"
-        className="text-center w-100 md:w-fit line-clamp-4 select-none"
+        className="max-w-72 text-center text-sm leading-4.5 md:max-w-75 md:text-[15px] md:leading-5 line-clamp-4 select-none"
       >
         {description}
       </Text>
@@ -42,11 +38,14 @@ export default function ReviewsItem({
           as="p"
           color={isDark ? "white" : "black"}
           size="sm"
-          className="select-none"
+          className="text-sm leading-none select-none"
         >
           {author}
         </Text>
-        <UserIcon />
+
+        <span className="flex size-5 items-center justify-center">
+          <UserIcon />
+        </span>
       </div>
     </li>
   );

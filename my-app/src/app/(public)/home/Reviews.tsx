@@ -63,8 +63,8 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
         REVIEWS
       </Text>
 
-      <div className="relative overflow-hidden" ref={emblaRef}>
-        <ul className="flex touch-pan-y touch-pinch-zoom cursor-grab">
+      <div className="relative w-full overflow-hidden" ref={emblaRef}>
+        <ul className={clsx("flex touch-pan-y touch-pinch-zoom cursor-grab")}>
           {tourReviews.map(({ id, rating, comment, author }) => (
             <ReviewsItem
               key={id}
@@ -80,9 +80,12 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
           {scrollSnaps.map((_, index) => (
             <button key={index} onClick={() => goTo(index)}>
               {selectedSnap === index ? (
-                <CarouselDotIcon color="1" />
+                <CarouselDotIcon
+                  color={clsx(isDark ? "white" : "#171717")}
+                  colorOpacity="1"
+                />
               ) : (
-                <CarouselDotIcon />
+                <CarouselDotIcon color={clsx(isDark ? "white" : "#171717")} />
               )}
             </button>
           ))}
