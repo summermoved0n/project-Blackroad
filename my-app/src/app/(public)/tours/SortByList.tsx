@@ -32,7 +32,7 @@ export default function SortByList({
         as="p"
         color="white60"
         size="sm"
-        className="hover:text-orange-300 transition"
+        className="hover:text-accent transition"
       >
         {label}
       </Text>

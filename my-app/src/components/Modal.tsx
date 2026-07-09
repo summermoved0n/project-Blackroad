@@ -60,7 +60,7 @@ export default function Modal({
     >
       <div className="perspective-[1000px] relative w-full h-full flex items-center justify-center">
         <button
-          className="absolute z-10 top-10 right-10 hover:scale-125 transition"
+          className="absolute z-10 top-10 right-4 hover:scale-125 transition w-10 h-10 flex items-center justify-center"
           onClick={() => {
             setOpenModal(false);
           }}
@@ -70,7 +70,7 @@ export default function Modal({
         <div
           onClick={(e) => e.stopPropagation()}
           className={clsx(
-            "w-full h-full md:w-fit md:h-fit transition-all duration-300 cursor-auto overflow-auto",
+            "w-full h-full transition-all duration-300 cursor-auto overflow-auto",
             openModal
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-full rotate-x-45",

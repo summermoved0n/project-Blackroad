@@ -100,7 +100,7 @@ export default function SortBy() {
 
       <Modal openModal={openSortModal} setOpenModal={setOpenSortModal}>
         {openSortModal && (
-          <div className="absolute w-full top-10 p-4">
+          <div className="px-4 pt-10">
             <Text as="p" color="white" size="md" className="text-[20px] mb-10">
               Sort by
             </Text>
