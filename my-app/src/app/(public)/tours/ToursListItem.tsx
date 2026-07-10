@@ -63,10 +63,7 @@ export default function ToursListItem({
   };
 
   return (
-    <li
-      className="w-full h-fit bg-primary
-"
-    >
+    <li className="w-full h-fit bg-primary">
       <div className="relative w-full h-100">
         <Text
           as="p"

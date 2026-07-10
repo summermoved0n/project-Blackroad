@@ -8,17 +8,17 @@ import { useFilters } from "@/hooks/useFilters";
 import { FilterField } from "@/types/filter.types";
 
 const citiesList = [
+  "Clear field",
   "Oshawa",
   "Ajax",
   "Whitby",
   "Toronto",
   "Pickering",
   "Brampton",
-  "Clear field",
 ];
 
 export default function SelectCity() {
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState<boolean>(false);
 
   const { setFilter, searchParams } = useFilters();
 
@@ -40,7 +40,7 @@ export default function SelectCity() {
           as="p"
           color="white"
           size="sm"
-          className="flex items-center justify-between py-5 md:py-0 md:pb-2.5 border-b border-white/10"
+          className="flex items-center justify-between py-5 border-b border-white/10"
         >
           {!cityName || cityName === "Clear field"
             ? "Where are you going?"

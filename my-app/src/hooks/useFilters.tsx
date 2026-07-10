@@ -8,9 +8,9 @@ export function useFilters() {
 
   const setFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    console.log("setFilter", { key, value });
+    // console.log("setFilter", { key, value });
 
-    if (!value || value === "_") {
+    if (!value || value === "_" || value === "Clear field") {
       params.delete(key);
       return router.replace(`?${params}`, { scroll: false });
     }

@@ -15,24 +15,30 @@ import TourOrder from "./TourOrder";
 import TourSchedule from "./TourSchedule";
 import { TourPayload, TourReviewsPayload } from "@/types/tour.types";
 
+type TourDetailsProps = {
+  tourData: TourPayload | null;
+  tourReviews: TourReviewsPayload[];
+  favoriteToursList:
+    | {
+        id: number;
+        tourId: number;
+      }[]
+    | null;
+};
+
 export default function TourDetails({
   tourData,
   tourReviews,
-}: {
-  tourData: TourPayload | null;
-  tourReviews: TourReviewsPayload[];
-}) {
+  favoriteToursList,
+}: TourDetailsProps) {
   if (!tourData) {
     notFound();
   }
 
   return (
-    <main
-      className="pt-17 sm:pt-20 bg-primary
-"
-    >
+    <main className="pt-17 sm:pt-20 bg-primary">
       <div className="bg-secondary px-4 md:px-20 pt-4 md:pt-6.5 pb-12.5 md:pb-37.5">
-        <TourInfo tourData={tourData} />
+        <TourInfo tourData={tourData} favoriteToursList={favoriteToursList} />
         <TourDates />
         <TourInclude
           included={includedInTheTour}

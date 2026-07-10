@@ -25,7 +25,7 @@ export default function SelectDate({ setShowModal }: SelectDateProps) {
           as="p"
           color="white"
           size="sm"
-          className="flex items-center justify-between py-5 md:py-0 md:pb-2.5 border-b border-white/10"
+          className="flex items-center justify-between py-5 border-b border-white/10"
         >
           {!pickDate
             ? "Select date"

@@ -39,10 +39,7 @@ export default function ToursSearchForm({
   );
 
   return (
-    <section
-      className="bg-secondary
-"
-    >
+    <section className="bg-secondary">
       <SearchFormMobile setShowModal={setShowModal} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">
