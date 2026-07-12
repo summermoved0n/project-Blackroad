@@ -31,7 +31,7 @@ export default function SelectCity() {
     <div ref={containerRef} className="relative flex">
       <button
         type="button"
-        className="w-full"
+        className="w-full flex items-end pb-5"
         onClick={() => {
           setShowList(!showList);
         }}
@@ -40,7 +40,7 @@ export default function SelectCity() {
           as="p"
           color="white"
           size="sm"
-          className="flex items-center justify-between py-5 border-b border-white/10"
+          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10"
         >
           {!cityName || cityName === "Clear field"
             ? "Where are you going?"

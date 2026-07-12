@@ -12,7 +12,7 @@ export default function HomeHero() {
   const router = useRouter();
 
   return (
-    <section className="relative w-full h-screen md:h-180 px-4 lg:px-35 flex flex-col justify-center items-center gap-7.5">
+    <section className="relative w-full h-screen md:h-180 px-4 xl:px-35 flex flex-col justify-center items-center gap-7.5">
       <Image
         src="/images/Home_hero.jpg"
         alt="Trees and mountains"

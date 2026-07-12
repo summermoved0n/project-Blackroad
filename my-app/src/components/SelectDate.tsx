@@ -18,14 +18,14 @@ export default function SelectDate({ setShowModal }: SelectDateProps) {
     <div className="relative flex">
       <button
         type="button"
-        className="w-full"
+        className="w-full flex items-end pb-5"
         onClick={() => setShowModal(true)}
       >
         <Text
           as="p"
           color="white"
           size="sm"
-          className="flex items-center justify-between py-5 border-b border-white/10"
+          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10"
         >
           {!pickDate
             ? "Select date"
