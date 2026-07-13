@@ -43,7 +43,7 @@ export default function LoginForm() {
 
   return (
     <Modal openModal={openModal} setOpenModal={setOpenModal}>
-      <div className="pt-20 md:pt-0 px-4 md:px-15 flex flex-col gap-10 md:gap-20 justify-center items-center">
+      <div className="pt-20 px-4 md:px-15 flex flex-col gap-10 md:gap-20 justify-center items-center">
         <Text as="h1" color="white" size="lg">
           Edit profile
         </Text>

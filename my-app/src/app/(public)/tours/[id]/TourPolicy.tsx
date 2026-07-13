@@ -17,7 +17,7 @@ export default function TourPolicy() {
       >
         <button
           className={clsx(
-            "flex items-center justify-between w-full",
+            "flex items-center justify-between w-full text-white",
             showPolicy && "mb-7.5",
           )}
           type="button"

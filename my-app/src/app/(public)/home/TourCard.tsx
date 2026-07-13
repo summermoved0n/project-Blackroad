@@ -44,11 +44,7 @@ export default function TourCard({
         </Text>
 
         <div className="flex justify-between">
-          <ButtonWithArrow
-            path={`tours/${id}`}
-            className="text-white"
-            whiteArrow
-          >
+          <ButtonWithArrow path={`tours/${id}`} className="text-white">
             Book now
           </ButtonWithArrow>
 

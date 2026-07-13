@@ -40,7 +40,7 @@ export default function SelectCity() {
           as="p"
           color="white"
           size="sm"
-          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10"
+          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10 hover:border-accent transition"
         >
           {!cityName || cityName === "Clear field"
             ? "Where are you going?"

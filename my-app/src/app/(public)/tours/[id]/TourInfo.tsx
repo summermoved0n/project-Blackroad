@@ -55,7 +55,7 @@ export default function TourInfo({
 
   return (
     <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
-      <div className="py-3 px-5 bg-primary rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5">
+      <div className="py-3 px-5 bg-primary rounded-lg flex w-fit justify-center items-center gap-2 mb-7.5 md:mb-12.5 text-white/60">
         <Text as="p" color="white60" size="xs">
           Main
         </Text>
@@ -78,23 +78,19 @@ export default function TourInfo({
         {favoriteTour ? (
           <button
             type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5"
+            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 text-white hover:text-accent transition"
             onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
           >
-            <Text as="span" color="white" size="sm" className="hidden md:block">
-              Add to Favorites
-            </Text>
+            Add to Favorites
             <EmptyHeartIcon active />
           </button>
         ) : (
           <button
             type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5"
+            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 text-white hover:text-accent transition"
             onClick={() => onAddToFavoriteClick(id!)}
           >
-            <Text as="span" color="white" size="sm" className="hidden md:block">
-              Add to Favorites
-            </Text>
+            Add to Favorites
             <EmptyHeartIcon />
           </button>
         )}

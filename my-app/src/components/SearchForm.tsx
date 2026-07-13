@@ -32,7 +32,12 @@ export default function SearchForm({
         type="button"
         onClick={() => router.push(`/tours?${searchParams.toString()}`)}
       >
-        <Text as="p" color="white" size="md">
+        <Text
+          as="p"
+          color="white"
+          size="md"
+          className="hover:text-accent transition"
+        >
           Search
         </Text>
       </button>

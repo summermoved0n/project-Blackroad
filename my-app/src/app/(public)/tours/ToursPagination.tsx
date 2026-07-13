@@ -18,7 +18,7 @@ export default function ToursPagination({
   return (
     <div className="py-7.5 md:pt-14 md:py-0 flex items-center justify-center gap-10">
       <button
-        className="h-6 w-6 flex justify-center items-center"
+        className="h-10 w-10 flex justify-center items-center text-white hover:text-accent transition"
         onClick={() => {
           setPage(currentPage - 1);
         }}
@@ -33,7 +33,7 @@ export default function ToursPagination({
             key={page}
             onClick={() => setPage(page)}
             className={clsx(
-              "text-2xl h-full w-6",
+              "text-2xl h-full w-6 border-b border-transparent hover:border-accent transition",
               page === currentPage ? "text-white" : "text-white/50",
             )}
           >
@@ -43,7 +43,7 @@ export default function ToursPagination({
       </div>
 
       <button
-        className="h-6 w-6 flex justify-center items-center"
+        className="h-10 w-10 flex justify-center items-center text-white hover:text-accent transition"
         onClick={() => {
           setPage(currentPage + 1);
         }}

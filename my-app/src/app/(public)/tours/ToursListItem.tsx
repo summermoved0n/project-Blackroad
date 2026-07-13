@@ -80,7 +80,7 @@ export default function ToursListItem({
         {!favoriteTour ? (
           <button
             type="button"
-            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 text-white hover:text-accent transition"
             onClick={() => onAddToFavoriteClick(id)}
           >
             <EmptyHeartIcon />
@@ -88,7 +88,7 @@ export default function ToursListItem({
         ) : (
           <button
             type="button"
-            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 text-white"
             onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
           >
             <EmptyHeartIcon active />
@@ -116,12 +116,7 @@ export default function ToursListItem({
           {description}
         </Text>
         <div className="flex justify-between items-center">
-          <ButtonWithArrow
-            path={`/tours/${id}`}
-            className="text-white"
-            whiteCircle
-            whiteArrow
-          >
+          <ButtonWithArrow path={`/tours/${id}`} className="text-white">
             Book now
           </ButtonWithArrow>
           <Text as="p" color="white" size="md">

@@ -18,7 +18,7 @@ export default function Checkbox({ checked, onChange, label }: Props) {
         className={`
           w-5 h-5 border rounded flex items-center justify-center
           transition
-          ${checked ? "bg-accent border-[#ea9c3f]" : "border-gray-400"}
+          ${checked ? "bg-accent border-accent" : "border-gray-400"}
         `}
       >
         {checked && (
@@ -34,7 +34,9 @@ export default function Checkbox({ checked, onChange, label }: Props) {
         )}
       </div>
 
-      {label && <span className="text-white">{label}</span>}
+      {label && (
+        <span className="text-white hover:text-accent transition">{label}</span>
+      )}
     </label>
   );
 }

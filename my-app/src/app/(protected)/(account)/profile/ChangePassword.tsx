@@ -35,13 +35,13 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="bg-primary p-5 md:p-15">
+    <div className="bg-primary p-5 lg:p-15">
       <Text as="h2" color="white" size="lg" className="mb-12.5 uppercase">
         Change Password
       </Text>
 
       <form
-        className="grid md:grid-cols-3 gap-7.5 md:gap-15"
+        className="grid lg:grid-cols-3 gap-7.5 lg:gap-15"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-5">

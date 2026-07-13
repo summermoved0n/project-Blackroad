@@ -9,16 +9,12 @@ type ButtonWithArrowProps = {
   children: React.ReactNode;
   className?: string;
   path?: string;
-  whiteArrow?: boolean;
-  whiteCircle?: boolean;
 };
 
 export default function ButtonWithArrow({
   children,
   className,
   path,
-  whiteArrow,
-  whiteCircle,
   ...props
 }: ButtonWithArrowProps) {
   const router = useRouter();
@@ -30,14 +26,14 @@ export default function ButtonWithArrow({
   return (
     <Button
       variant="secondary"
-      className={`${className} relative flex items-center gap-0`}
+      className={`${className} relative flex items-center gap-0 hover:text-accent transition`}
       onClick={handleClick}
       {...props}
     >
       {children}
-      {whiteCircle ? <CircleIcon whiteCircle /> : <CircleIcon />}
+      <CircleIcon />
       <div className="absolute right-2.5">
-        {whiteArrow ? <ArrowInCircle whiteArrow /> : <ArrowInCircle />}
+        <ArrowInCircle />
       </div>
     </Button>
   );

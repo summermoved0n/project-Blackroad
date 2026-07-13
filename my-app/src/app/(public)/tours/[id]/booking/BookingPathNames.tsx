@@ -3,7 +3,7 @@ import { Text } from "@/components/Text";
 
 export default function BookingPathNames({ title }: { title: string }) {
   return (
-    <div className="w-fit m-auto flex gap-2 items-center py-3 px-5 bg-primary rounded-md mb-8">
+    <div className="w-fit m-auto flex gap-2 items-center py-3 px-5 bg-primary rounded-md mb-8 text-white/60">
       <Text as="p" color="white60" size="xs">
         Main
       </Text>
