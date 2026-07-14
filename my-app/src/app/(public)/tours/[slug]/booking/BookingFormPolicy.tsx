@@ -13,20 +13,30 @@ export default function BookingFormPolicy() {
           type="button"
           onClick={() => setShowPolicy(!showPolicy)}
         >
-          <Text as="h2" color="white" size="sm">
+          <Text
+            as="h2"
+            color="white"
+            size="sm"
+            className="hover:text-accent transition"
+          >
             Cancellation Policy
           </Text>
         </button>
 
         <button className="w-fit" type="button">
-          <Text as="h2" color="white" size="sm">
+          <Text
+            as="h2"
+            color="white"
+            size="sm"
+            className="hover:text-accent transition"
+          >
             Order Policy
           </Text>
         </button>
       </div>
 
       <Modal openModal={showPolicy} setOpenModal={setShowPolicy}>
-        <div className="px-20">
+        <div className="px-20 pt-20">
           <Text as="h2" color="white" size="md" className="mb-10">
             Cancellation Policy
           </Text>

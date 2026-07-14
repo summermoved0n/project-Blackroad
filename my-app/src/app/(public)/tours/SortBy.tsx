@@ -21,7 +21,7 @@ export default function SortBy() {
   useClickOutside(containerRef, () => setShowSortList(false));
 
   return (
-    <div className="flex flex-col md:flex-row lg:justify-between md:items-center mt-12.5 mb-7.5 md:mb-12.5 md:mt-0">
+    <div className="flex flex-col md:flex-row md:justify-between md:items-center mt-12.5 mb-7.5 md:mb-12.5 md:mt-0">
       <Text
         as="h3"
         color="white"
@@ -42,7 +42,7 @@ export default function SortBy() {
 
         <button
           type="button"
-          className="flex items-center gap-7.5 hover:border-b hover:border-b-accent transition"
+          className="flex items-center gap-7.5 border-b border-transparent hover:border-b-accent transition text-white"
           onClick={() => {
             setShowSortList(!showSortList);
           }}
@@ -68,7 +68,7 @@ export default function SortBy() {
         )}
       </div>
 
-      <div className="flex gap-2 w-full lg:hidden">
+      <div className="flex gap-2 w-full md:w-fit lg:hidden">
         <Button
           variant="primary"
           size="sm"

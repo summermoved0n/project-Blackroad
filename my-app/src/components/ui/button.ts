@@ -4,9 +4,10 @@ export const button = cva("text-base transition", {
   variants: {
     variant: {
       primary:
-        "h-[50px] text-white bg-transparent border-1 border-solid border-[#ea9c3f] hover:bg-accent",
+        "h-[50px] text-white bg-transparent border-1 border-solid border-accent hover:bg-accent",
       secondary: "h-[40px] text-black",
-      tertiary: "h-[74px] w-[74px] rounded-full bg-accent",
+      tertiary:
+        "h-[74px] w-[74px] rounded-full bg-accent border border-accent text-white hover:bg-transparent hover:text-accent transition",
     },
     size: {
       sm: "w-full md:w-[200px]",

@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     await signUpUser(validatedBody.data);
 
     return NextResponse.json(
-      { message: "User create success" },
+      { message: "User create success. Please check your email to verify" },
       { status: 201 },
     );
   } catch (error) {

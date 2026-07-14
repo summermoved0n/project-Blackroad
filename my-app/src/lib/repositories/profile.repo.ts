@@ -99,6 +99,7 @@ export const dbFindFavorteTours = async (userId: { userId: number }) =>
       tour: {
         select: {
           id: true,
+          slug: true,
           imageUrl: true,
           category: true,
           title: true,

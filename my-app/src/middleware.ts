@@ -10,12 +10,10 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/build-trip") ||
     req.nextUrl.pathname.includes("/booking");
 
-  // нема токена → на login
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // вже залогінений → не пускати в login
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/", req.url));
   }

@@ -9,12 +9,12 @@ import { getCurrentUser } from "@/lib/utility/getCurrentUser";
 
 type PageProps = {
   params: Promise<{
-    id: number;
+    slug: string;
   }>;
 };
 
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
+  const { slug } = await params;
 
   const userId = await getCurrentUser();
   let favoriteToursList = null;
@@ -24,14 +24,18 @@ export default async function Page({ params }: PageProps) {
     favoriteToursList = data;
   }
 
-  const getTourById = await dbFindTour({ id: Number(id) });
+  const getTourById = await dbFindTour({ slug });
 
-  const tourReviews = await dbFindReview({ tourId: Number(id) });
+  const tourReviews = await dbFindReview({ tourId: Number(getTourById?.id) });
   // console.log("tourReviews", tourReviews);
 
   return (
     <Suspense fallback={null}>
-      <TourDetails tourData={getTourById} tourReviews={tourReviews} favoriteToursList={favoriteToursList} />
+      <TourDetails
+        tourData={getTourById}
+        tourReviews={tourReviews}
+        favoriteToursList={favoriteToursList}
+      />
     </Suspense>
   );
 }

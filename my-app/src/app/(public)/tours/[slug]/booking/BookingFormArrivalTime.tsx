@@ -55,7 +55,7 @@ export default function BookingFormArrivalTime({
             as="p"
             color="white60"
             size="sm"
-            className="flex items-center justify-between py-3 md:py-5 border-b border-white/70"
+            className="flex items-center justify-between py-3 md:py-5 border-b border-white/70 hover:border-accent transition"
           >
             {!arrivalTime || arrivalTime === "Clear field"
               ? "Default time"

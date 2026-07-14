@@ -1,13 +1,14 @@
 "use client";
 
 import { Text } from "@/components/Text";
+import { cancellationPolicy } from "@/lib/data/toursPageData";
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { clsx } from "clsx";
 import { useState } from "react";
 
-export default function TourOrder() {
-  const [showOrder, setShowOrder] = useState(false);
+export default function TourPolicy() {
+  const [showPolicy, setShowPolicy] = useState(false);
   return (
     <section>
       <div
@@ -16,19 +17,17 @@ export default function TourOrder() {
       >
         <button
           className={clsx(
-            "flex items-center justify-between w-full text-white",
-            showOrder && "mb-7.5",
+            "flex items-center justify-between w-full text-white text-base sm:text-2xl font-normal hover:text-accent transition",
+            showPolicy && "mb-7.5",
           )}
           type="button"
-          onClick={() => setShowOrder(!showOrder)}
+          onClick={() => setShowPolicy(!showPolicy)}
         >
-          <Text as="h2" color="white" size="md">
-            Order Policy
-          </Text>
-          {showOrder ? <ArrowDownIcon isBig /> : <ChevronRightIcon />}
+          Cancellation Policy
+          {showPolicy ? <ArrowDownIcon isBig /> : <ChevronRightIcon />}
         </button>
 
-        {/* {showOrder && (
+        {showPolicy && (
           <ol className="pl-5 list-decimal marker:text-white/60 flex flex-col gap-4">
             {cancellationPolicy.map(({ id, text, points }) => (
               <li key={id}>
@@ -49,7 +48,7 @@ export default function TourOrder() {
               </li>
             ))}
           </ol>
-        )} */}
+        )}
       </div>
     </section>
   );

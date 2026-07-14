@@ -31,7 +31,7 @@ export default function AccountHeader() {
 
   return (
     <section className="mb-4">
-      <div className="m-auto px-4 py-3 bg-primary rounded-md w-fit flex justify-center items-center gap-2 mb-7.5 md:mb-14">
+      <div className="m-auto px-4 py-3 bg-primary rounded-md w-fit flex justify-center items-center gap-2 mb-7.5 md:mb-14 text-white/60">
         <Text as="p" color="white60" size="sm">
           Main
         </Text>

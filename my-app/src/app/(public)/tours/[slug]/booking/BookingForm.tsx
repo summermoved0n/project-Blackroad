@@ -5,7 +5,7 @@ import {
   bookingInterfaceSchema,
 } from "@/lib/validations/booking.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { notFound, useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BookingFormUserInfo from "./BookingFormUserInfo";
@@ -25,18 +25,18 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 
-export default function BookingForm({ user }: { user: UserPayload }) {
-  if (!user) {
-    notFound();
-  }
-
+export default function BookingForm({
+  user,
+  tourId,
+}: {
+  user: UserPayload;
+  tourId: number;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
 
   const [arrivalTime, setArrivalTime] = useState("");
-
-  const { id } = useParams();
 
   const {
     control,
@@ -62,7 +62,7 @@ export default function BookingForm({ user }: { user: UserPayload }) {
   const onSubmit = async (data: BookingSchema) => {
     try {
       const checkout = {
-        tourId: Number(id),
+        tourId,
         customerInfo: {
           name: data.name,
           surname: data.surname,
@@ -125,7 +125,7 @@ export default function BookingForm({ user }: { user: UserPayload }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-primary mb-7.5 px-4 py-12.5 md:px-15 md:py-15 flex flex-col gap-17.5"
+      className="bg-primary mb-7.5 px-4 py-12.5 lg:px-15 lg:py-15 flex flex-col gap-17.5"
     >
       <BookingFormUserInfo
         errors={errors}

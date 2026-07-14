@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 type TourInfoProps = {
-  tourData: TourPayload | null;
+  tourData: TourPayload;
   favoriteToursList:
     | {
         id: number;
@@ -27,7 +27,7 @@ export default function TourInfo({
   favoriteToursList,
 }: TourInfoProps) {
   const router = useRouter();
-  const { id, category, title, imageUrl, rating, price } = tourData || {};
+  const { id, slug, category, title, imageUrl, rating, price } = tourData || {};
 
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 
@@ -177,7 +177,7 @@ export default function TourInfo({
           </div>
 
           <Button
-            onClick={() => router.push(`${id}/booking`)}
+            onClick={() => router.push(`${slug}/booking`)}
             variant="primary"
           >
             Book now

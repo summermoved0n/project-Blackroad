@@ -36,7 +36,12 @@ export default function Login() {
                   router.push("/signup");
                 }}
               >
-                <Text as="span" color="white" size="md">
+                <Text
+                  as="span"
+                  color="white"
+                  size="md"
+                  className="hover:text-accent transition"
+                >
                   Sign up
                 </Text>
               </button>

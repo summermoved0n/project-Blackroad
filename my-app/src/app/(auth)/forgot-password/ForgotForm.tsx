@@ -84,12 +84,12 @@ export default function ForgotForm() {
 
               <div className="flex justify-center">
                 <button
-                  className="w-fit text-white/50 flex justify-center items-center gap-4"
+                  className="w-fit text-white/50 flex justify-center items-center gap-4 hover:text-accent transition"
                   onClick={() => {
                     router.back();
                   }}
                 >
-                  <ArrowLeftIcon colorGray />
+                  <ArrowLeftIcon />
                   Back
                 </button>
               </div>

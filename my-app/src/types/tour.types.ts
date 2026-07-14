@@ -1,5 +1,6 @@
 export type TourPayload = {
   id: number;
+  slug: string;
   title: string;
   description: string;
   imageUrl: string;

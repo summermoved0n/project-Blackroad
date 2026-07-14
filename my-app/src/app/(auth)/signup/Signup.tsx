@@ -27,12 +27,12 @@ export default function Signup() {
 
           <SignWithSocialMedia />
 
-          <div className="flex gap-2 items-center justify-between">
-            <p className="border-t border-t-white/10 w-44"></p>
+          <div className="w-full flex gap-2 items-center justify-between">
+            <p className="border-t border-t-white/10 w-full"></p>
             <Text as="p" color="white60" size="md" className="text-center w-10">
               Or
             </Text>
-            <p className="border-t border-t-white/10 w-44"></p>
+            <p className="border-t border-t-white/10 w-full"></p>
           </div>
 
           <div className="flex gap-5 flex-col items-center justify-between">
@@ -48,7 +48,12 @@ export default function Signup() {
                   router.push("/login");
                 }}
               >
-                <Text as="span" color="white" size="md">
+                <Text
+                  as="span"
+                  color="white"
+                  size="md"
+                  className="hover:text-accent transition"
+                >
                   Log in
                 </Text>
               </button>

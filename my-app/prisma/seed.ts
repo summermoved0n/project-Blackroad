@@ -5,6 +5,7 @@ async function main() {
     data: [
       {
         title: "Dzhurinsky waterfall",
+        slug: "dzhurinsky-waterfall",
         description:
           "The most full-flowing plain waterfall of Ukraine, which is considered one of the most picturesque and interesting places of Ternopil region.",
         imageUrl:
@@ -33,6 +34,7 @@ async function main() {
       },
       {
         title: "Rest in the canyon",
+        slug: "rest-in-the-canyon",
         description:
           "Moving to the picturesque rock canyon in the village of Buki. Excursion in the form of an easy walk, during which you will see what a large-scale natural event took place here.",
         imageUrl:
@@ -61,6 +63,7 @@ async function main() {
       },
       {
         title: "Blue lakes and ancient Lubech",
+        slug: "blue-lakes-and-ancient-lubech",
         description:
           "Excursion to Lubech, once a Viking trading post, or to the city of the future Slavutich. Swimming in the cleanest lakes with water of incredible color.",
         imageUrl:
@@ -89,6 +92,7 @@ async function main() {
       },
       {
         title: "Autumn in the mountains",
+        slug: "autumn-in-the-mountains",
         description:
           "Walking in the crowns of trees and watching bears. Rest in a mountain hotel and meeting dawn in the mountains.",
         imageUrl:
@@ -117,6 +121,7 @@ async function main() {
       },
       {
         title: "Unusual Rivne region",
+        slug: "unusual-rivne-region",
         description:
           "A journey in which we combined unique historical projects and locations! Riding on ancient boats in the park of historical reconstruction of boatbuilding.",
         imageUrl:
@@ -145,6 +150,7 @@ async function main() {
       },
       {
         title: "Secrets of Podolia and Gaidamak Yar",
+        slug: "secrets-of-podolia-and-gaidamak-yar",
         description:
           "Rare and very beautiful tour. Unknown to tourists Podolsk land. One of the oldest rock monasteries. Mysterious Gaydamak ravine with bizarre rocks and petrified creatures.",
         imageUrl:
@@ -173,6 +179,7 @@ async function main() {
       },
       {
         title: "Buchak - a place of power",
+        slug: "buchak-a-place-of-power",
         description:
           "A unique place of power is Lake Buchak, which may soon disappear. Hurry to see! The opportunity to swim in Lake Buchak.",
         imageUrl:
@@ -201,6 +208,7 @@ async function main() {
       },
       {
         title: "Franco-tour: nature and other masterpieces of Galicia",
+        slug: "franco-tour-nature-and-other-masterpieces-of-galicia",
         description:
           "Visit the incredible pharmacy-museum of the inventor of the oil industry Johann Zeg. You will see an ancient rock monastery and the only Greek Catholic Lavra.",
         imageUrl:

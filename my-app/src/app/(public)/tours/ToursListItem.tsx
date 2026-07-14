@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 type ToursListItemProps = {
   itemData: {
     id: number;
+    slug: string;
     category: string;
     title: string;
     imageUrl: string;
@@ -36,7 +37,7 @@ export default function ToursListItem({
 }: ToursListItemProps) {
   const router = useRouter();
 
-  const { id, category, title, imageUrl, rating, description, price } =
+  const { id, slug, category, title, imageUrl, rating, description, price } =
     itemData;
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 
@@ -116,7 +117,7 @@ export default function ToursListItem({
           {description}
         </Text>
         <div className="flex justify-between items-center">
-          <ButtonWithArrow path={`/tours/${id}`} className="text-white">
+          <ButtonWithArrow path={`/tours/${slug}`} className="text-white">
             Book now
           </ButtonWithArrow>
           <Text as="p" color="white" size="md">

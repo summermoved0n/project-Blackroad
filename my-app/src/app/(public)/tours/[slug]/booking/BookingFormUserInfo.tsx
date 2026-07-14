@@ -9,8 +9,8 @@ export default function BookingFormUserInfo({ ...props }) {
       <Text as="h2" color="white" size="md" className="mb-10">
         Enter your data
       </Text>
-      <div className="flex flex-col md:flex-wrap gap-10">
-        <div className="flex flex-col md:flex-row gap-10 md:gap-12.5">
+      <div className="flex flex-col lg:flex-wrap gap-10">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-12.5">
           <InputField
             name="name"
             lable="Name"
@@ -29,7 +29,7 @@ export default function BookingFormUserInfo({ ...props }) {
           />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10 md:gap-12.5">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-12.5">
           <InputField
             name="email"
             lable="E-mail"

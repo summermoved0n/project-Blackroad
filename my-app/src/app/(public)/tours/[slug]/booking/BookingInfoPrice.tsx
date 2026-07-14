@@ -8,7 +8,7 @@ type TourProps = {
 
 export default function BookingInfoPrice({ tour }: TourProps) {
   return (
-    <div className="bg-primary py-7.5 px-4 md:py-15 md:px-15 flex flex-col gap-7.5">
+    <div className="bg-primary py-7.5 px-4 lg:py-15 lg:px-15 flex flex-col gap-7.5">
       <Text as="h2" color="white" size="md">
         Price details
       </Text>

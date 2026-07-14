@@ -30,10 +30,12 @@ export default function BookingHistoryList({
           </Text>
 
           <Link
-            className="w-50 h-12.5 flex justify-center items-center border border-accent hover:bg-accent transition"
+            className="w-50 h-12.5 flex justify-center items-center border text-white border-accent hover:bg-accent transition"
             href="/tours"
           >
-            Book
+            <Text as="p" color="white" size="sm">
+              Book
+            </Text>
           </Link>
         </div>
       ) : (
