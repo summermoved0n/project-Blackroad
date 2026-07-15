@@ -33,7 +33,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => {
-                  router.push("/signup");
+                  router.replace("/signup");
                 }}
               >
                 <Text

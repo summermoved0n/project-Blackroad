@@ -30,7 +30,6 @@ export default function RootLayout({
         <HeaderServer />
         {children}
         <Footer />
-
         <Toaster position="bottom-right" reverseOrder={false} />
       </body>
     </html>

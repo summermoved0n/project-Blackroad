@@ -8,8 +8,8 @@ export function middleware(req: NextRequest) {
   const isProtectedRoute =
     req.nextUrl.pathname.startsWith("/profile") ||
     req.nextUrl.pathname.startsWith("/build-trip") ||
-    req.nextUrl.pathname.includes("/booking");
-
+    req.nextUrl.pathname.includes("/booking") ||
+    req.nextUrl.pathname.includes("/favorites");
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }

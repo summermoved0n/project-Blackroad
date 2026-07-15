@@ -2,6 +2,7 @@
 
 import { CrossIcon } from "@/components/icons/CrossIcon";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -16,9 +17,12 @@ export default function Modal({
   openModal,
   setOpenModal,
 }: ModalProps) {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // The inline server render prevents an empty first frame. Once hydrated,
+    // move the modal to body so nested overlays keep the correct stacking context.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
@@ -37,7 +41,7 @@ export default function Modal({
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenModal(false);
+      if (e.key === "Escape") router.back();
     };
     if (openModal) {
       document.addEventListener("keydown", onKeyDown);
@@ -47,11 +51,9 @@ export default function Modal({
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [openModal, setOpenModal]);
+  }, [openModal, setOpenModal, router]);
 
-  if (!mounted) return null;
-
-  return createPortal(
+  const content = (
     <div
       className={clsx(
         "fixed inset-0 z-50 bg-secondary transition-opacity duration-300",
@@ -62,7 +64,7 @@ export default function Modal({
         <button
           className="absolute z-10 top-10 right-4 hover:scale-125 transition w-10 h-10 flex items-center justify-center"
           onClick={() => {
-            setOpenModal(false);
+            router.back();
           }}
         >
           <CrossIcon />
@@ -79,7 +81,8 @@ export default function Modal({
           {children}
         </div>
       </div>
-    </div>,
-    window.document.body,
+    </div>
   );
+
+  return mounted ? createPortal(content, document.body) : content;
 }

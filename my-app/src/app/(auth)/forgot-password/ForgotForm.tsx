@@ -86,7 +86,7 @@ export default function ForgotForm() {
                 <button
                   className="w-fit text-white/50 flex justify-center items-center gap-4 hover:text-accent transition"
                   onClick={() => {
-                    router.back();
+                    router.replace("/login");
                   }}
                 >
                   <ArrowLeftIcon />

@@ -45,7 +45,7 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={() => {
-                  router.push("/login");
+                  router.replace("/login");
                 }}
               >
                 <Text

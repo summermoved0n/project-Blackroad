@@ -14,7 +14,7 @@ export default function ForgotPasswordBtn({
     <button
       className={clsx(className, "w-fit right-0")}
       type="button"
-      onClick={() => router.push("/forgot-password")}
+      onClick={() => router.replace("/forgot-password")}
     >
       <Text
         as="p"
