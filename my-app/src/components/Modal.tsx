@@ -10,19 +10,21 @@ type ModalProps = {
   children: React.ReactNode;
   openModal: boolean;
   setOpenModal: (arg: boolean) => void;
+  isUIModal?: boolean;
+  portal?: boolean;
 };
 
 export default function Modal({
   children,
   openModal,
   setOpenModal,
+  isUIModal,
+  portal = true,
 }: ModalProps) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // The inline server render prevents an empty first frame. Once hydrated,
-    // move the modal to body so nested overlays keep the correct stacking context.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
@@ -41,6 +43,9 @@ export default function Modal({
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isUIModal === true) {
+        return setOpenModal(false);
+      }
       if (e.key === "Escape") router.back();
     };
     if (openModal) {
@@ -51,7 +56,7 @@ export default function Modal({
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [openModal, setOpenModal, router]);
+  }, [openModal, setOpenModal, router, isUIModal]);
 
   const content = (
     <div
@@ -64,6 +69,10 @@ export default function Modal({
         <button
           className="absolute z-10 top-10 right-4 hover:scale-125 transition w-10 h-10 flex items-center justify-center"
           onClick={() => {
+            if (isUIModal) {
+              return setOpenModal(false);
+            }
+
             router.back();
           }}
         >
@@ -84,5 +93,7 @@ export default function Modal({
     </div>
   );
 
-  return mounted ? createPortal(content, document.body) : content;
+  if (!portal) return content;
+
+  return mounted ? createPortal(content, document.body) : null;
 }

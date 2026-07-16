@@ -25,7 +25,7 @@ export default function DatePicker({ setShowModal }: DatePickerProps) {
       numberOfMonths={isTablet ? 2 : 1}
       selected={selected}
       onSelect={setSelected}
-      className="pt-10 w-screen h-screen p-4 flex flex-col items-center justify-start"
+      className="pt-10 p-4 flex flex-col items-center justify-start"
       classNames={{
         months:
           "flex gap-15 relative bg-white p-5 md:before:absolute md:before:content-[''] md:before:bg-black/20 md:before:w-px md:before:h-[90%] md:before:top-[5%] md:before:left-1/2",

@@ -9,6 +9,7 @@ import { useState } from "react";
 import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
 import { TourPayload } from "@/types/tour.types";
+import { Text } from "@/components/Text";
 
 const toursPerPage = 4;
 
@@ -38,6 +39,8 @@ export default function ToursSearchForm({
     toursPerPage * currentPage,
   );
 
+  const isShowTours = !paginateListData || paginateListData.length === 0;
+
   return (
     <section className="bg-secondary">
       <SearchFormMobile setShowModal={setShowModal} />
@@ -53,13 +56,21 @@ export default function ToursSearchForm({
           <div className="hidden lg:block">
             <Filter />
           </div>
-          <ToursList
-            paginateListData={paginateListData}
-            favoriteToursList={favoriteToursList}
-          />
+          {isShowTours ? (
+            <Text as="p" color="white" size="md">
+              No tours with the specified criteria
+            </Text>
+          ) : (
+            <ToursList
+              paginateListData={paginateListData}
+              favoriteToursList={favoriteToursList}
+            />
+          )}
         </div>
 
-        <ToursPagination currentPage={currentPage} totalPages={totalPages} />
+        {!isShowTours && (
+          <ToursPagination currentPage={currentPage} totalPages={totalPages} />
+        )}
       </div>
     </section>
   );

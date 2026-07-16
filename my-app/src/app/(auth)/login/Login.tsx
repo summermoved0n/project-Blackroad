@@ -12,7 +12,7 @@ export default function Login() {
 
   return (
     <section>
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} portal={false}>
         <div className="px-4 pt-30 md:p-20 flex flex-col justify-center items-center">
           <div className="md:w-130 mb-7.5">
             <Text

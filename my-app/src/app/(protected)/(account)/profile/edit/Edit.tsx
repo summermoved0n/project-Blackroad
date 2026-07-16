@@ -17,7 +17,7 @@ import { useState } from "react";
 import MaskInput from "@/components/MaskInput";
 import { Button } from "@/components/Button";
 
-export default function LoginForm() {
+export default function Edit() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState<boolean>(true);
 
@@ -42,7 +42,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Modal openModal={openModal} setOpenModal={setOpenModal}>
+    <Modal openModal={openModal} setOpenModal={setOpenModal} portal={false}>
       <div className="pt-20 px-4 md:px-15 flex flex-col gap-10 md:gap-20 justify-center items-center">
         <Text as="h1" color="white" size="lg">
           Edit profile

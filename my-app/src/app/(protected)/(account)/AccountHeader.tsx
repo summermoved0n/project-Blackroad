@@ -26,7 +26,7 @@ export default function AccountHeader() {
   };
 
   const handleNavigate = (path: string) => {
-    router.replace(path);
+    router.push(path);
   };
 
   return (

@@ -14,7 +14,7 @@ export default function Signup() {
 
   return (
     <section>
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} portal={false}>
         <div className="px-4 pt-30 md:p-20 flex flex-col justify-center items-center gap-7.5">
           <Text
             as="p"

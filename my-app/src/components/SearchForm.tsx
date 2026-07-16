@@ -42,7 +42,7 @@ export default function SearchForm({
         </Text>
       </button>
 
-      <Modal openModal={showModal} setOpenModal={setShowModal}>
+      <Modal openModal={showModal} setOpenModal={setShowModal} isUIModal>
         <div className="pt-40 md:pt-50 flex flex-col items-center justify-center gap-5">
           <Text as="p" color="white" size="lg" className="uppercase">
             your journey

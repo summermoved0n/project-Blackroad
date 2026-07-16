@@ -44,7 +44,7 @@ export default function ForgotForm() {
 
   return (
     <section>
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} portal={false}>
         <div className="px-4 pt-30 md:p-20 flex flex-col justify-center items-center">
           <div className="md:w-130 mb-7.5">
             <Text
@@ -86,7 +86,7 @@ export default function ForgotForm() {
                 <button
                   className="w-fit text-white/50 flex justify-center items-center gap-4 hover:text-accent transition"
                   onClick={() => {
-                    router.replace("/login");
+                    router.back();
                   }}
                 >
                   <ArrowLeftIcon />

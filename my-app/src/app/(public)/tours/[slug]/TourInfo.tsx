@@ -100,8 +100,8 @@ export default function TourInfo({
         <div className="relative h-75 md:h-full mb-7.5 md:mb-0">
           <Image
             className="object-cover object-center"
-            src={imageUrl!}
-            alt={title!}
+            src={imageUrl}
+            alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
           />
@@ -113,7 +113,7 @@ export default function TourInfo({
           </Text>
 
           <div className="mb-10 md:mb-0 flex items-center justify-between">
-            <ReviewStars stars={rating!} />
+            <ReviewStars stars={rating} />
             <Text as="h3" color="white" size="md" className="md:hidden">
               {rating}
             </Text>

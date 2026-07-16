@@ -1,5 +1,5 @@
 import ForgotForm from "../../forgot-password/ForgotForm";
 
-export default function LoginModalPage() {
+export default function ForgotModalPage() {
   return <ForgotForm />;
 }

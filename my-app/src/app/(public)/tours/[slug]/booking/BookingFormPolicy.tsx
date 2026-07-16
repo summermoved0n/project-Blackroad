@@ -35,7 +35,7 @@ export default function BookingFormPolicy() {
         </button>
       </div>
 
-      <Modal openModal={showPolicy} setOpenModal={setShowPolicy}>
+      <Modal openModal={showPolicy} setOpenModal={setShowPolicy} isUIModal>
         <div className="px-20 pt-20">
           <Text as="h2" color="white" size="md" className="mb-10">
             Cancellation Policy
