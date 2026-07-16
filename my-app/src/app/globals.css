@@ -9,6 +9,14 @@
   --color-black-60: rgba(0, 0, 0, 0.6);
 }
 
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  box-shadow: 0 0 0 1px #ea9c3f;
+}
+
 *,
 ::before,
 ::after {

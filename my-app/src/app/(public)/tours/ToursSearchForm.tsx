@@ -39,7 +39,7 @@ export default function ToursSearchForm({
     toursPerPage * currentPage,
   );
 
-  const isShowTours = !paginateListData || paginateListData.length === 0;
+  const isShowTours = paginateListData && paginateListData.length > 0;
 
   return (
     <section className="bg-secondary">
@@ -56,7 +56,7 @@ export default function ToursSearchForm({
           <div className="hidden lg:block">
             <Filter />
           </div>
-          {isShowTours ? (
+          {!isShowTours ? (
             <Text as="p" color="white" size="md">
               No tours with the specified criteria
             </Text>
@@ -68,7 +68,7 @@ export default function ToursSearchForm({
           )}
         </div>
 
-        {!isShowTours && (
+        {isShowTours && toursListData.length > toursPerPage && (
           <ToursPagination currentPage={currentPage} totalPages={totalPages} />
         )}
       </div>

@@ -4,17 +4,25 @@ import { useRouter } from "next/navigation";
 
 type ForgotPasswordBtnProps = {
   className?: string;
+  fromLogin?: boolean;
 };
 
 export default function ForgotPasswordBtn({
   className,
+  fromLogin,
 }: ForgotPasswordBtnProps) {
   const router = useRouter();
   return (
     <button
       className={clsx(className, "w-fit right-0")}
       type="button"
-      onClick={() => router.push("/forgot-password")}
+      onClick={() => {
+        if (fromLogin) {
+          return router.replace("/forgot-password");
+        }
+
+        router.push("/forgot-password");
+      }}
     >
       <Text
         as="p"

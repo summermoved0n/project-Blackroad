@@ -94,11 +94,19 @@ export default function SortBy() {
         </Button>
       </div>
 
-      <Modal openModal={openFilterModal} setOpenModal={setOpenFilterModal}>
+      <Modal
+        openModal={openFilterModal}
+        setOpenModal={setOpenFilterModal}
+        isUIModal
+      >
         <Filter />
       </Modal>
 
-      <Modal openModal={openSortModal} setOpenModal={setOpenSortModal}>
+      <Modal
+        openModal={openSortModal}
+        setOpenModal={setOpenSortModal}
+        isUIModal
+      >
         {openSortModal && (
           <div className="px-4 pt-10">
             <Text as="p" color="white" size="md" className="text-[20px] mb-10">

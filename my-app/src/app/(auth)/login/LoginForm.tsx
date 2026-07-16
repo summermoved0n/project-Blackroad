@@ -64,7 +64,7 @@ export default function LoginForm() {
           Login
         </Button>
 
-        <ForgotPasswordBtn />
+        <ForgotPasswordBtn fromLogin/>
       </div>
 
       <div className="flex gap-2 items-center justify-between mb-10">
