@@ -9,7 +9,7 @@ import { BookingStatus } from "../../../../../generated/prisma/client";
 
 type DotButtonMenuProps = {
   userId: number;
-  tourId: number;
+  tourSlug: string;
   status: BookingStatus;
   setMenuItem: React.Dispatch<React.SetStateAction<string | null>>;
   userReviews: UserReviewPayload[];
@@ -24,7 +24,7 @@ export enum MenuItem {
 export default function DotButtonMenu({
   userReviews,
   userId,
-  tourId,
+  tourSlug,
   status,
   setMenuItem,
 }: DotButtonMenuProps) {
@@ -36,7 +36,7 @@ export default function DotButtonMenu({
 
   const isDisabledReviewBtn = () => {
     const isUserAndTourMatch = userReviews.some(
-      (review) => review.tourId === tourId && review.author.id === userId,
+      (review) => review.tour.slug === tourSlug && review.author.id === userId,
     );
 
     const isStatusComplited = status !== "completed";
@@ -45,7 +45,7 @@ export default function DotButtonMenu({
 
   const isDisabledCancelBookingBtn = () => {
     const isUserAndTourMatch = userReviews.some(
-      (review) => review.tourId === tourId && review.author.id === userId,
+      (review) => review.tour.slug === tourSlug && review.author.id === userId,
     );
 
     const isStatusComplited = status === "cancelled";
@@ -72,7 +72,7 @@ export default function DotButtonMenu({
             onClick={() => {
               setMenuItem(MenuItem.BookingAgain);
               setShowMenu(false);
-              router.push(`/tours/${tourId}`);
+              router.push(`/tours/${tourSlug}`);
             }}
           >
             {MenuItem.BookingAgain}

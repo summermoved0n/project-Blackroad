@@ -46,7 +46,7 @@ export default function Navigation({ setOpenDropMenu }: NavigationProps) {
     <div className="grid md:grid-cols-2">
       <ul className="flex flex-col gap-10">
         {navList.map(({ name, path, img }) => (
-          <li key={path}>
+          <li key={path} className="w-fit">
             <Link href={path} onClick={() => setOpenDropMenu(false)}>
               <Text
                 as="h2"

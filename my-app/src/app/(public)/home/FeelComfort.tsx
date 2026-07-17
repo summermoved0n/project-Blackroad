@@ -6,7 +6,7 @@ import { Button } from "@/components/Button";
 
 export default function FeelComfort() {
   return (
-    <section className="mx-4 pt-12.5 pb-35 md:pt-25 md:pb-37.5 md:mx-20">
+    <section className="px-4 pt-12.5 pb-35 md:pt-25 md:pb-37.5 md:px-20 bg-primary-white">
       <Text
         as="h2"
         color="black"

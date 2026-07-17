@@ -42,7 +42,7 @@ export default function ToursSearchForm({
   const isShowTours = paginateListData && paginateListData.length > 0;
 
   return (
-    <section className="bg-secondary">
+    <section>
       <SearchFormMobile setShowModal={setShowModal} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">

@@ -6,7 +6,7 @@ export default function AboutUsMiddleSection() {
     <section className="grid md:grid-cols-2 gap-7.5 md:gap-35">
       <div className="relative w-full h-191">
         <Image
-          className="object-cover object-center -z-10"
+          className="object-cover object-center"
           src="/images/We_change_big_house.jpg"
           alt="Forest"
           fill
@@ -25,7 +25,7 @@ export default function AboutUsMiddleSection() {
 
         <div className="relative w-full h-77">
           <Image
-            className="object-cover object-center -z-10"
+            className="object-cover object-center"
             src="/images/We_change_valley.jpg"
             alt="Forest"
             fill

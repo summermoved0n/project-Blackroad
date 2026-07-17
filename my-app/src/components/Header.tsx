@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import Link from "next/link";
 import Logo from "./Logo";
 import { MenuBurgerIcon } from "@/components/icons/MenuBurgerIcon";
 import { CrossIcon } from "@/components/icons/CrossIcon";
@@ -33,7 +32,7 @@ export default function Header({ isAuth }: HeaderProps) {
   return (
     <header
       className={clsx(
-        "text-white border-b border-white/10 h-17 sm:h-20 w-full px-4  md:px-0 transition flex items-center justify-between absolute top-0 left-0 z-10",
+        "text-white border-b border-white/10 h-17 sm:h-20 w-full px-4  md:px-0 transition flex items-center justify-between absolute top-0 left-0 z-50",
         openDropMenu
           ? "bg-primary transition backdrop-blur-none"
           : " backdrop-blur-md",
@@ -41,7 +40,7 @@ export default function Header({ isAuth }: HeaderProps) {
     >
       <div
         className={clsx(
-          "absolute bg-secondary top-17 sm:top-20 left-0 w-full h-screen transform -translate-x-full transition z-10 px-4 md:px-20 pt-7.5 md:pt-15",
+          "absolute bg-secondary top-17 sm:top-20 left-0 w-full h-screen transform -translate-x-full transition z-50 px-4 md:px-20 pt-7.5 md:pt-15",
           openDropMenu && "translate-x-0 transition",
         )}
       >

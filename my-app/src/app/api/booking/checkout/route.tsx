@@ -8,7 +8,6 @@ export async function POST(req: Request) {
 
     const validatedBody = bookingAPISchema.safeParse(body);
 
-    console.log(validatedBody);
     if (!validatedBody.success) {
       return NextResponse.json(
         { message: validatedBody.error.issues[0]?.message },

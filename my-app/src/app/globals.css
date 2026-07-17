@@ -4,17 +4,10 @@
   --color-primary: #171717;
   --color-secondary: #1e1e1f;
   --color-accent: #ea9c3f;
+  --color-primary-white: #fafafa;
 
   --color-white-60: rgba(255, 255, 255, 0.6);
   --color-black-60: rgba(0, 0, 0, 0.6);
-}
-
-*:focus {
-  outline: none;
-}
-
-*:focus-visible {
-  box-shadow: 0 0 0 1px #ea9c3f;
 }
 
 *,
@@ -50,6 +43,6 @@ img {
 
 body {
   margin: 0;
-  background-color: #fafafa;
+  background-color: #1e1e1f;
   color: #171717;
 }

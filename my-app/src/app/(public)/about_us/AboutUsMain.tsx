@@ -5,7 +5,7 @@ import AboutUsMiddleSection from "./AboutUsMiddleSection";
 
 export default function AboutUsMain() {
   return (
-    <section className="pt-12.5 pb-12.5 mx-4 md:pt-37.5 md:pb-50 md:mx-20">
+    <section className="pt-12.5 pb-12.5 px-4 md:pt-37.5 md:pb-50 md:px-20 bg-primary-white -z-10">
       <div className="mb-7.5 md:mb-50">
         <Text as="h2" color="black" size="xl" className="uppercase md:mb-25">
           We change the idea of traveling in Canada!

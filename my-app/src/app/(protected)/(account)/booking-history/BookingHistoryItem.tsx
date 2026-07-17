@@ -18,6 +18,7 @@ type BookingHistoryItemProps = {
   status: BookingStatus;
   tour: {
     id: number;
+    slug: string;
     title: string;
     imageUrl: string;
     dateOfArrival: Date;
@@ -97,7 +98,7 @@ export default function BookingHistoryItem({
 
             <DotButtonMenu
               userId={userId}
-              tourId={tour.id}
+              tourSlug={tour.slug}
               status={status}
               userReviews={userReviews}
               setMenuItem={setMenuItem}

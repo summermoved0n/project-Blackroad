@@ -3,7 +3,7 @@ import { Text } from "@/components/Text";
 
 export default function ExploreWithUs() {
   return (
-    <section className="py-12.5 mx-4 md:py-37.5 md:mx-20">
+    <section className="py-12.5 px-4 md:py-37.5 md:px-20 bg-primary-white">
       <Text className="mb-25" as="h2" color="black" size="xl" spacing="sm">
         EXPLORE CANADA WITH US
       </Text>

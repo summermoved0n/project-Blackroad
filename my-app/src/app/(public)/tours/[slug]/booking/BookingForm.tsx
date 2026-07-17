@@ -81,19 +81,27 @@ export default function BookingForm({
         },
       };
 
+      if (!elements || !stripe) {
+        return toast.error("Payment not ready");
+      }
+
       const booking = await axios.post("/api/booking/checkout", checkout);
       const response = await axios.post("/api/stripe/payment-intent", {
         bookingId: booking.data.response.bookingId,
         paymentId: booking.data.response.paymentId,
       });
 
-      const cardElement = elements!.getElement(CardNumberElement);
+      const cardElement = elements.getElement(CardNumberElement);
 
-      const result = await stripe!.confirmCardPayment(
+      if (!cardElement) {
+        return toast.error("Card wasn't get");
+      }
+
+      const result = await stripe.confirmCardPayment(
         response.data.clientSecret,
         {
           payment_method: {
-            card: cardElement!,
+            card: cardElement,
             billing_details: {
               name: `${data.name} ${data.surname}`,
               email: data.email,

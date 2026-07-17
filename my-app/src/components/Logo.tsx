@@ -19,7 +19,7 @@ export default function Logo({ onClose }: LogoProps) {
     <Link
       onClick={() => onClose && onClose(false)}
       href="/"
-      className={`text-2xl sm:text-5xl ${italiana.className}`}
+      className={`w-fit text-2xl sm:text-5xl ${italiana.className}`}
     >
       BLACKROAD
     </Link>

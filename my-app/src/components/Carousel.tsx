@@ -43,7 +43,7 @@ export default function Carousel({ tours, componentTitle }: CarouselProps) {
   const goToNext = () => emblaApi?.scrollNext();
 
   return (
-    <section className="relative mx-4 pt-12.5 md:mx-20 md:py-25 md:grid md:grid-cols-2 md:items-end">
+    <section className="relative px-4 pt-12.5 md:px-20 md:py-25 md:grid md:grid-cols-2 md:items-end bg-primary-white">
       <Text
         as="h2"
         color="black"
@@ -83,7 +83,7 @@ export default function Carousel({ tours, componentTitle }: CarouselProps) {
           ))}
         </div>
 
-        <div className="hidden md:flex md:absolute md:bottom-25 md:left-0 md:gap-10">
+        <div className="hidden md:flex md:absolute md:bottom-25 md:left-20 md:gap-10">
           <Button
             variant="tertiary"
             className="flex items-center justify-center"

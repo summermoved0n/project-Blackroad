@@ -28,7 +28,7 @@ export default function SignupForm() {
   const onSubmit = async (data: SignupSchema) => {
     try {
       const response = await axios.post("/api/auth/signup", data);
-      router.replace("/");
+      router.back();
       router.refresh();
       toast.success(response.data.message);
     } catch (error) {

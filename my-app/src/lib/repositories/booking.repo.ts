@@ -37,6 +37,7 @@ export const dbFindAllUserBookings = async (filter: { userId: number }) =>
       tour: {
         select: {
           id: true,
+          slug: true,
           title: true,
           imageUrl: true,
           dateOfArrival: true,

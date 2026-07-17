@@ -7,8 +7,6 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/login") ||
     req.nextUrl.pathname.startsWith("/signup");
 
-  console.log(isAuthPage);
-
   const isProtectedRoute =
     req.nextUrl.pathname.includes("/profile") ||
     req.nextUrl.pathname.startsWith("/build-trip") ||

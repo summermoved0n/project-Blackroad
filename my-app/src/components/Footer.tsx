@@ -44,7 +44,7 @@ export default function Footer() {
 
         <ul className="flex flex-col gap-5">
           {navigationLinks.map(({ name, path }) => (
-            <li key={name}>
+            <li key={name} className="w-fit">
               <Link href={`/${path}`}>
                 <Text
                   as="p"

@@ -46,11 +46,13 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
     emblaApi.on("select", setActiveSnap);
   }, [emblaApi]);
 
+  const isShowReviews = tourReviews && tourReviews.length > 0;
+
   return (
     <section
       className={clsx(
-        "flex flex-col items-center pt-12.5 pb-12.5 mx-4 md:pt-25 ",
-        isDark ? "md:mx-0  md:pb-25" : "md:mx-20 md:pb-37.5",
+        "flex flex-col items-center pt-12.5 pb-12.5 px-4 md:pt-25 bg-primary-white",
+        isDark ? "md:px-0  md:pb-25 bg-secondary" : "md:px-20 md:pb-37.5",
       )}
     >
       <Text
@@ -58,22 +60,35 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
         color={isDark ? "white" : "black"}
         size="lg"
         spacing="sm"
-        className={clsx(isDark ? "mb-25" : "mb-20")}
+        className={isDark ? "mb-25" : "mb-20"}
       >
         REVIEWS
       </Text>
 
       <div className="relative w-full overflow-hidden" ref={emblaRef}>
-        <ul className={clsx("flex touch-pan-y touch-pinch-zoom cursor-grab")}>
-          {tourReviews.map(({ id, rating, comment, author }) => (
-            <ReviewsItem
-              key={id}
-              stars={rating}
-              description={comment}
-              author={author.name || "Anonymous"}
-              isDark={isDark}
-            />
-          ))}
+        <ul className="flex touch-pan-y touch-pinch-zoom cursor-grab">
+          {isShowReviews ? (
+            tourReviews.map(({ id, rating, comment, author }) => (
+              <ReviewsItem
+                key={id}
+                stars={rating}
+                description={comment}
+                author={author.name || "Anonymous"}
+                isDark={isDark}
+              />
+            ))
+          ) : (
+            <li>
+              <Text
+                as="p"
+                color={isDark ? "white" : "black"}
+                size="md"
+                className={isDark ? "mb-25" : "mb-20"}
+              >
+                No any reviews yet
+              </Text>
+            </li>
+          )}
         </ul>
 
         <div className="flex items-center justify-center mt-4 gap-2.5 md:hidden">
@@ -81,11 +96,11 @@ export default function Reviews({ tourReviews, isDark }: ReviewsProps) {
             <button key={index} onClick={() => goTo(index)}>
               {selectedSnap === index ? (
                 <CarouselDotIcon
-                  color={clsx(isDark ? "white" : "#171717")}
+                  color={isDark ? "white" : "#171717"}
                   colorOpacity="1"
                 />
               ) : (
-                <CarouselDotIcon color={clsx(isDark ? "white" : "#171717")} />
+                <CarouselDotIcon color={isDark ? "white" : "#171717"} />
               )}
             </button>
           ))}

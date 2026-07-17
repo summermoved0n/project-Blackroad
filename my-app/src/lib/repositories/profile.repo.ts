@@ -39,7 +39,9 @@ export const dbFindReview = async (filter: {
           name: true,
         },
       },
-      tourId: true,
+      tour: {
+        select: { id: true, slug: true },
+      },
     },
   });
 

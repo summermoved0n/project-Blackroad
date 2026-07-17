@@ -34,7 +34,7 @@ export default function Edit() {
     try {
       const response = await axios.post("/api/auth/user-update", data);
       toast.success(response.data.message);
-      router.replace("/profile");
+      router.back();
       router.refresh();
     } catch (error) {
       handleApiError(error);

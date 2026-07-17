@@ -27,7 +27,7 @@ export default function ProfileInfo({ user }: User) {
             Full name
           </Text>
           <Text as="p" color="white" size="md">
-            {user?.name ? user.name : "Anonim"}
+            {user?.name ? user.name : "-"}
           </Text>
         </div>
 
@@ -36,7 +36,7 @@ export default function ProfileInfo({ user }: User) {
             Date of birth
           </Text>
           <Text as="p" color="white" size="md">
-            {user?.dateOfBirth ? formattedDate : "DD/MM/YYYY"}
+            {user?.dateOfBirth ? formattedDate : "-"}
           </Text>
         </div>
 
@@ -45,7 +45,7 @@ export default function ProfileInfo({ user }: User) {
             Phone number
           </Text>
           <Text as="p" color="white" size="md">
-            {user?.phoneNumber ? user.phoneNumber : "__-__-____"}
+            {user?.phoneNumber ? user.phoneNumber : "-"}
           </Text>
         </div>
 

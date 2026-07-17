@@ -31,7 +31,7 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginSchema) => {
     try {
       const response = await axios.post("/api/auth/login", data);
-      router.replace("/tours");
+      router.back();
       router.refresh();
       toast.success(response.data.message);
     } catch (error) {
@@ -64,7 +64,7 @@ export default function LoginForm() {
           Login
         </Button>
 
-        <ForgotPasswordBtn fromLogin/>
+        <ForgotPasswordBtn fromLogin />
       </div>
 
       <div className="flex gap-2 items-center justify-between mb-10">

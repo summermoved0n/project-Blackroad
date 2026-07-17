@@ -15,9 +15,9 @@ export default function AboutUsLastSection() {
         </Text>
 
         <div className="hidden md:block relative w-full h-95">
-          <div className="absolute bg-[#fafafa] h-97 w-7.5 -top-1 left-1/2 transform -translate-x-1/2"></div>
+          <div className="absolute bg-primary-white h-97 w-7.5 -top-1 left-1/2 transform -translate-x-1/2 z-1"></div>
           <Image
-            className="object-cover object-bottom -z-10"
+            className="object-cover object-bottom"
             src="/images/We_change_bottom_left.jpg"
             alt="Forest"
             fill
@@ -29,7 +29,7 @@ export default function AboutUsLastSection() {
 
       <div className="relative w-full h-191">
         <Image
-          className="object-cover object-center -z-10"
+          className="object-cover object-center"
           src="/images/We_change_bottom_right.jpg"
           alt="Forest"
           fill
