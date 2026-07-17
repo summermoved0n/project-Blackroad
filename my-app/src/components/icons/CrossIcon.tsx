@@ -4,7 +4,7 @@ export const CrossIcon = () => {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <rect
@@ -13,7 +13,7 @@ export const CrossIcon = () => {
         height="1"
         rx="0.5"
         transform="rotate(45 1 0)"
-        fill="white"
+        fill="currentColor"
       />
       <rect
         y="15"
@@ -21,7 +21,7 @@ export const CrossIcon = () => {
         height="1"
         rx="0.5"
         transform="rotate(-45 0 15)"
-        fill="white"
+        fill="currentColor"
       />
     </svg>
   );

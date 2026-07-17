@@ -67,7 +67,7 @@ export default function Modal({
     >
       <div className="perspective-[1000px] relative w-full h-full flex items-center justify-center">
         <button
-          className="absolute z-10 top-10 right-4 hover:scale-125 transition w-10 h-10 flex items-center justify-center"
+          className="absolute z-10 top-10 right-4 transition w-10 h-10 flex items-center justify-center text-white hover:text-accent"
           onClick={() => {
             if (isUIModal) {
               return setOpenModal(false);

@@ -26,7 +26,7 @@ export default function ButtonWithArrow({
   return (
     <Button
       variant="secondary"
-      className={`${className} relative flex items-center gap-0 hover:text-accent transition`}
+      className={`${className} relative flex items-center gap-0 hover:text-accent focus:text-accent transition`}
       onClick={handleClick}
       {...props}
     >

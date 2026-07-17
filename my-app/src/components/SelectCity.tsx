@@ -28,25 +28,18 @@ export default function SelectCity() {
   useClickOutside(containerRef, () => setShowList(false));
 
   return (
-    <div ref={containerRef} className="relative flex">
+    <div ref={containerRef} className="relative flex my-5">
       <button
         type="button"
-        className="w-full flex items-end pb-5"
+        className="w-full flex items-center justify-between py-5 border-b border-white/10 text-white hover:border-accent focus:border-accent transition"
         onClick={() => {
           setShowList(!showList);
         }}
       >
-        <Text
-          as="p"
-          color="white"
-          size="sm"
-          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10 hover:border-accent transition"
-        >
-          {!cityName || cityName === "Clear field"
-            ? "Where are you going?"
-            : cityName}
-          <ArrowDownIcon />
-        </Text>
+        {!cityName || cityName === "Clear field"
+          ? "Where are you going?"
+          : cityName}
+        <ArrowDownIcon />
       </button>
 
       {showList && (

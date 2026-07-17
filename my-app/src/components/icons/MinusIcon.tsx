@@ -4,7 +4,7 @@ export const MinusIcon = ({ color = "black" }: { color?: string }) => {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      fill={color}
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <rect
@@ -12,7 +12,7 @@ export const MinusIcon = ({ color = "black" }: { color?: string }) => {
         width="1"
         height="16"
         transform="rotate(-90 0 8.5)"
-        fill={color}
+        fill="currentColor"
       />
     </svg>
   );

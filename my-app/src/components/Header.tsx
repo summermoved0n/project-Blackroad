@@ -15,7 +15,8 @@ type HeaderProps = {
 
 export default function Header({ isAuth }: HeaderProps) {
   const router = useRouter();
-  const [openDropMenu, setOpenDropMenu] = useState(false);
+  const [openDropMenu, setOpenDropMenu] = useState<boolean>(false);
+  const [] = useState<boolean>(false);
 
   useEffect(() => {
     if (openDropMenu) {
@@ -46,38 +47,42 @@ export default function Header({ isAuth }: HeaderProps) {
       >
         <Navigation setOpenDropMenu={setOpenDropMenu} />
       </div>
-      <div className="md:h-full md:w-50 md:flex md:items-center md:justify-center">
+      <div className="md:h-full w-30 md:w-50 md:flex md:items-center md:justify-center">
         {!openDropMenu ? (
           <button
-            className="md:h-full md:w-20 flex items-center justify-center"
+            className="md:h-10 md:w-10flex items-center justify-center transition text-white hover:text-accent focus:text-accent"
             type="button"
             onClick={() => setOpenDropMenu(true)}
           >
             <MenuBurgerIcon />
           </button>
         ) : (
-          <button type="button" onClick={() => setOpenDropMenu(false)}>
+          <button
+            className="md:h-10 md:w-10 flex items-center justify-center transition text-white hover:text-accent focus:text-accent"
+            type="button"
+            onClick={() => setOpenDropMenu(false)}
+          >
             <CrossIcon />
           </button>
         )}
       </div>
       <button
         type="button"
-        className="hidden md:h-full md:w-30 md:flex md:items-center md:justify-center"
+        className="hidden md:h-full md:w-30 md:flex md:items-center md:justify-center transition hover:text-accent focus:text-accent"
       >
         Fr / En
       </button>
       <Logo onClose={setOpenDropMenu} />
       {isAuth ? (
         <button
-          className="hover:text-accent transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
+          className="hover:text-accent transition md:h-full w-30 md:flex md:items-center md:justify-center transition focus:text-accent"
           onClick={() => router.push("/profile")}
         >
           My Profile
         </button>
       ) : (
         <button
-          className="hover:text-accent transition md:h-full md:w-30 md:flex md:items-center md:justify-center"
+          className="hover:text-accent transition md:h-full w-30 md:flex md:items-center md:justify-center"
           onClick={() => router.push("/login")}
         >
           Log in
@@ -85,17 +90,10 @@ export default function Header({ isAuth }: HeaderProps) {
       )}
       <button
         type="button"
-        className="hidden md:flex border-l border-white/10 h-full md:w-50 justify-center  items-center group"
+        className="hidden md:flex border-l border-white/10 h-full md:w-50 justify-center items-center transition hover:text-accent focus:text-accent"
         onClick={() => router.push("/build-trip")}
       >
-        <Text
-          as="p"
-          color="white"
-          size="sm"
-          className="group-hover:text-accent transition"
-        >
-          Build trip
-        </Text>
+        Build trip
       </button>
     </header>
   );

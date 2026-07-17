@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Text } from "./Text";
 import Image from "next/image";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 const navList = [
   {
@@ -39,45 +40,53 @@ type NavigationProps = {
 };
 
 export default function Navigation({ setOpenDropMenu }: NavigationProps) {
+  const router = useRouter();
   const [activeImage, setActiveImage] = useState(navList[0].img);
-  const [isHover, setIsHover] = useState(false);
+  const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <div className="grid md:grid-cols-2">
-      <ul className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10">
         {navList.map(({ name, path, img }) => (
-          <li key={path} className="w-fit">
-            <Link href={path} onClick={() => setOpenDropMenu(false)}>
-              <Text
-                as="h2"
-                color="white"
-                size="lg"
-                spacing="sm"
-                onMouseEnter={() => {
-                  setActiveImage(img);
-                  setIsHover(true);
-                }}
-                onMouseLeave={() => setIsHover(false)}
-                className={clsx(
-                  "uppercase",
-                  // base
-                  "md:relative md:transition md:text-white/20",
-                  // hover text
-                  "md:hover:text-white md:hover:translate-x-20",
-                  // after element
-                  "md:hover:after:content-['']",
-                  "md:hover:after:absolute",
-                  "md:hover:after:-left-35 md:hover:after:top-1/2",
-                  "md:hover:after:w-25 md:hover:after:h-0.5",
-                  "md:hover:after:bg-white md:hover:after:transition-all",
-                )}
-              >
-                {name}
-              </Text>
-            </Link>
-          </li>
+          <button
+            key={path}
+            className="w-fit group"
+            onClick={() => {
+              setOpenDropMenu(false);
+              router.push(path);
+            }}
+          >
+            <Text
+              as="h2"
+              color="white"
+              size="lg"
+              spacing="sm"
+              onMouseEnter={() => {
+                setActiveImage(img);
+                setIsHover(true);
+              }}
+              onMouseLeave={() => setIsHover(false)}
+              className={clsx(
+                "uppercase",
+                // base
+                "md:relative transition md:text-white/20",
+                // hover text
+                "hover:text-accent md:hover:text-white md:hover:translate-x-20",
+                // after element
+                "md:hover:after:content-['']",
+                "md:hover:after:absolute",
+                "md:hover:after:-left-35 md:hover:after:top-1/2",
+                "md:hover:after:w-25 md:hover:after:h-0.5",
+                "md:hover:after:bg-white md:hover:after:transition-all",
+                // focus text
+                "group-focus:text-accent md:group-focus:text-white",
+              )}
+            >
+              {name}
+            </Text>
+          </button>
         ))}
-      </ul>
+      </div>
 
       <div
         className={clsx(

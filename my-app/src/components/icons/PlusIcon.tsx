@@ -12,9 +12,9 @@ export const PlusIcon = () => {
         width="1"
         height="16"
         transform="rotate(-90 0 8.5)"
-        fill="#171717"
+        fill="currentColor"
       />
-      <rect x="7.5" width="1" height="16" fill="#171717" />
+      <rect x="7.5" width="1" height="16" fill="currentColor" />
     </svg>
   );
-}
+};

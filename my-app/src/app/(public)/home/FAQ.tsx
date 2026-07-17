@@ -10,19 +10,21 @@ export default function FAQ() {
         FAQ
       </Text>
 
-      <ul>
-        {faqData.map(({ id, question, description }) => (
-          <FAQItem key={id} question={question} description={description} />
-        ))}
+      <div>
+        <ul>
+          {faqData.map(({ id, question, description }) => (
+            <FAQItem key={id} question={question} description={description} />
+          ))}
+        </ul>
 
-        <li className="border-t border-black/10 pt-7.5 ">
-          <Link href="/faq" className="w-fit">
-            <Text as="h3" color="black50" size="sm">
-              All questions
-            </Text>
-          </Link>
-        </li>
-      </ul>
+        <Link
+          className="inline-flex mt-10 text-black/50 transition hover:text-accent focus:text-accent"
+          type="button"
+          href="/faq"
+        >
+          All questions
+        </Link>
+      </div>
     </section>
   );
 }

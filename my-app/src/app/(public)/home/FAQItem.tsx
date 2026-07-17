@@ -11,13 +11,17 @@ export default function FAQItem({ question, description }: FAQItemProps) {
   const [showText, setShowText] = useState(false);
 
   return (
-    <li className="py-10 border-t border-t-black/10">
+    <li className="py-10 border-t last:border-b border-t-black/10 last:border-b-black/10 ">
       <div className="flex justify-between items-center gap-2 w-full">
         <Text as="h3" color="black" size="sm">
           {question}
         </Text>
 
-        <button type="button" onClick={() => setShowText(!showText)}>
+        <button
+          className="text-primary transition hover:text-accent focus:text-accent"
+          type="button"
+          onClick={() => setShowText(!showText)}
+        >
           {!showText ? <PlusIcon /> : <MinusIcon />}
         </button>
       </div>

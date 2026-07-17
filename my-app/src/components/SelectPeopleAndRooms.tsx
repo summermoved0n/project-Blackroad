@@ -21,21 +21,14 @@ export default function SelectPeopleAndRooms() {
   useClickOutside(containerRef, () => setShowModal(false));
 
   return (
-    <div ref={containerRef} className="relative flex">
+    <div ref={containerRef} className="relative flex my-5 ">
       <button
         type="button"
-        className="w-full flex items-end pb-5"
+        className="w-full flex items-center justify-between py-5 border-b border-white/10 text-white hover:border-accent focus:border-accent transition"
         onClick={() => setShowModal(!showModal)}
       >
-        <Text
-          as="p"
-          color="white"
-          size="sm"
-          className="w-full flex items-center justify-between py-5 md:py-2 border-b border-white/10 hover:border-accent transition"
-        >
-          {`${adults} adults, ${children} children, ${rooms} room`}
-          <ArrowDownIcon />
-        </Text>
+        {`${adults} adults, ${children} children, ${rooms} room`}
+        <ArrowDownIcon />
       </button>
 
       {showModal && (

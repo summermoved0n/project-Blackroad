@@ -9,11 +9,11 @@ import clsx from "clsx";
 import SubscribeField from "./SubscribeField";
 
 const navigationLinks = [
-  { name: "Tours", path: "tours" },
-  { name: "Hotels", path: "hotels" },
-  { name: "About Us", path: "about_us" },
-  { name: "FAQ", path: "faq" },
-  { name: "Contacts", path: "contacts" },
+  { name: "Tours", path: "/tours" },
+  { name: "Hotels", path: "/hotels" },
+  { name: "About Us", path: "/about_us" },
+  { name: "FAQ", path: "/faq" },
+  { name: "Contacts", path: "/contacts" },
 ];
 
 export default function Footer() {
@@ -44,16 +44,12 @@ export default function Footer() {
 
         <ul className="flex flex-col gap-5">
           {navigationLinks.map(({ name, path }) => (
-            <li key={name} className="w-fit">
-              <Link href={`/${path}`}>
-                <Text
-                  as="p"
-                  color="white60"
-                  size="sm"
-                  className="hover:text-accent transition"
-                >
-                  {name}
-                </Text>
+            <li key={name} className="w-fit text-white/60">
+              <Link
+                href={path}
+                className="hover:text-accent focus:text-accent transition"
+              >
+                {name}
               </Link>
             </li>
           ))}
