@@ -7,20 +7,11 @@ import { EmblaCarouselType } from "embla-carousel";
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { CarouselDotIcon } from "@/components/icons/CarouselDotIcon";
+import { TourReviewsPayload } from "@/types/tour.types";
 
 type ReviewsProps = {
   isDark?: boolean;
-  tourReviews: {
-    id: number;
-    author: {
-      id: number;
-      name: string | null;
-    };
-    rating: number;
-    comment: string;
-    instagram: string | null;
-    tourId: number;
-  }[];
+  tourReviews: TourReviewsPayload[];
 };
 
 export default function Reviews({ tourReviews, isDark }: ReviewsProps) {

@@ -43,6 +43,7 @@ export default function Signup() {
             <Text as="p" color="white60" size="md" className="text-center">
               Already have an account?{" "}
               <button
+                className="group"
                 type="button"
                 onClick={() => {
                   router.replace("/login");
@@ -52,7 +53,7 @@ export default function Signup() {
                   as="span"
                   color="white"
                   size="md"
-                  className="hover:text-accent transition"
+                  className="group-hover:text-accent group-focus:text-accent transition"
                 >
                   Log in
                 </Text>

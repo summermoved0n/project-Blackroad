@@ -46,7 +46,7 @@ export default function BookingFormArrivalTime({
         </Text>
         <button
           type="button"
-          className="w-full"
+          className="w-full group"
           onClick={() => {
             setShowList(!showList);
           }}
@@ -55,7 +55,7 @@ export default function BookingFormArrivalTime({
             as="p"
             color="white60"
             size="sm"
-            className="flex items-center justify-between py-3 md:py-5 border-b border-white/70 hover:border-accent transition"
+            className="flex items-center justify-between py-3 md:py-5 border-b border-white/70 group-hover:border-accent group-focus:border-accent transition"
           >
             {!arrivalTime || arrivalTime === "Clear field"
               ? "Default time"

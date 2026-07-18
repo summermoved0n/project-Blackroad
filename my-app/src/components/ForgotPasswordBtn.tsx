@@ -14,7 +14,7 @@ export default function ForgotPasswordBtn({
   const router = useRouter();
   return (
     <button
-      className={clsx(className, "w-fit right-0")}
+      className={clsx(className, "group w-fit right-0")}
       type="button"
       onClick={() => {
         if (fromLogin) {
@@ -28,7 +28,7 @@ export default function ForgotPasswordBtn({
         as="p"
         color="white60"
         size="xs"
-        className="hover:text-accent transition"
+        className="group-hover:text-accent group-focus:text-accent transition"
       >
         Forgot password?
       </Text>

@@ -81,7 +81,7 @@ export default function ToursListItem({
         {!favoriteTour ? (
           <button
             type="button"
-            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 text-white hover:text-accent transition"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 text-white hover:text-accent focus:text-accent  transition"
             onClick={() => onAddToFavoriteClick(id)}
           >
             <EmptyHeartIcon />
@@ -89,7 +89,7 @@ export default function ToursListItem({
         ) : (
           <button
             type="button"
-            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 text-white"
+            className="absolute h-10 w-10 bg-black/40 flex justify-center items-center rounded-full top-5 right-5 z-10 pt-1 border border-transparent transition text-white focus:border-accent"
             onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
           >
             <EmptyHeartIcon active />

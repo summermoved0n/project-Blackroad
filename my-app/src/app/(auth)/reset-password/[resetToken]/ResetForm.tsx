@@ -60,8 +60,9 @@ export default function ResetForm() {
             Reset password
           </Text>
           <Text as="p" color="white60" size="md" className="text-center mb-7.5">
-            Dont worry, we`ll help you recover it. Just enter your registered
-            email and youll receive a link to reset your old password.
+            Dont worry, we&apos;ll help you recover it. Just enter your
+            registered email and youll receive a link to reset your old
+            password.
           </Text>
         </div>
 

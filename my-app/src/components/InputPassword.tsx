@@ -43,7 +43,7 @@ export default function InputPassword<T extends FieldValues>({
         />
 
         <button
-          className="absolute right-0 top-1/2 -translate-y-1/2"
+          className="absolute right-0 top-1/2 -translate-y-1/2 hover:text-accent focus:text-accent"
           type="button"
           onClick={() => setShowPassword(!showPassword)}
         >

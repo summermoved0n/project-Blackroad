@@ -42,7 +42,7 @@ export default function SortBy() {
 
         <button
           type="button"
-          className="flex items-center gap-7.5 border-b border-transparent hover:border-b-accent transition text-white"
+          className="flex items-center gap-7.5 border-b border-transparent hover:border-b-accent focus:border-b-accent transition text-white"
           onClick={() => {
             setShowSortList(!showSortList);
           }}

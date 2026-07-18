@@ -7,7 +7,6 @@ import Logo from "./Logo";
 import { MenuBurgerIcon } from "@/components/icons/MenuBurgerIcon";
 import { CrossIcon } from "@/components/icons/CrossIcon";
 import Navigation from "./Navigation";
-import { Text } from "./Text";
 
 type HeaderProps = {
   isAuth: boolean;
@@ -75,7 +74,7 @@ export default function Header({ isAuth }: HeaderProps) {
       <Logo onClose={setOpenDropMenu} />
       {isAuth ? (
         <button
-          className="hover:text-accent transition md:h-full w-30 md:flex md:items-center md:justify-center transition focus:text-accent"
+          className="hover:text-accent md:h-full w-30 md:flex md:items-center md:justify-center transition focus:text-accent"
           onClick={() => router.push("/profile")}
         >
           My Profile

@@ -7,9 +7,9 @@ export const MenuDotIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="2" cy="2" r="2" fill="#171717" />
-      <circle cx="2" cy="9" r="2" fill="#171717" />
-      <circle cx="2" cy="16" r="2" fill="#171717" />
+      <circle cx="2" cy="2" r="2" fill="currentColor" />
+      <circle cx="2" cy="9" r="2" fill="currentColor" />
+      <circle cx="2" cy="16" r="2" fill="currentColor" />
     </svg>
   );
 };

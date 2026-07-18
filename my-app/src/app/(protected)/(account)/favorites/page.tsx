@@ -29,7 +29,7 @@ export default async function page() {
           ))
         ) : (
           <Text as="p" color="white60" size="md">
-            You don`t have any favorite tours yet
+            You don&apos;t have any favorite tours yet
           </Text>
         )}
       </ul>

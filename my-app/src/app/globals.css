@@ -10,9 +10,9 @@
   --color-black-60: rgba(0, 0, 0, 0.6);
 }
 
-/* :focus {
+*:focus {
   outline: none;
-} */
+}
 
 *,
 ::before,

@@ -55,7 +55,7 @@ export default function DotButtonMenu({
   return (
     <div ref={containerRef} className="relative w-8">
       <button
-        className="w-full h-full flex items-center justify-center"
+        className="w-full h-full flex items-center justify-center transition hover:text-accent focus:text-accent"
         type="button"
         onClick={() => {
           setShowMenu(!showMenu);
@@ -67,7 +67,7 @@ export default function DotButtonMenu({
       {showMenu && (
         <div className="absolute w-42 bg-white text-black right-0 top-10 shadow-lg">
           <button
-            className="px-4 py-2 hover:bg-gray-200"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200"
             type="button"
             onClick={() => {
               setMenuItem(MenuItem.BookingAgain);
@@ -78,7 +78,7 @@ export default function DotButtonMenu({
             {MenuItem.BookingAgain}
           </button>
           <button
-            className="px-4 py-2 hover:bg-gray-200 disabled:text-gray-400"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400"
             type="button"
             disabled={isDisabledReviewBtn()}
             onClick={() => {
@@ -89,7 +89,7 @@ export default function DotButtonMenu({
             {MenuItem.LeaveReview}
           </button>
           <button
-            className="px-4 py-2 hover:bg-gray-200 disabled:text-gray-400"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400"
             type="button"
             disabled={isDisabledCancelBookingBtn()}
             onClick={() => {

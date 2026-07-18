@@ -27,7 +27,7 @@ export default function TourInfo({
   favoriteToursList,
 }: TourInfoProps) {
   const router = useRouter();
-  const { id, slug, category, title, imageUrl, rating, price } = tourData || {};
+  const { id, slug, category, title, imageUrl, rating, price } = tourData;
 
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 
@@ -78,7 +78,7 @@ export default function TourInfo({
         {favoriteTour ? (
           <button
             type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 text-white hover:text-accent transition"
+            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
             onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
           >
             Add to Favorites
@@ -87,7 +87,7 @@ export default function TourInfo({
         ) : (
           <button
             type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 text-white hover:text-accent transition"
+            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
             onClick={() => onAddToFavoriteClick(id!)}
           >
             Add to Favorites

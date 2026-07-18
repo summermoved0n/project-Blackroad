@@ -29,8 +29,9 @@ export default function Login() {
               size="md"
               className="text-center mb-7.5"
             >
-              Don`t have an account?{" "}
+              Don&apos;t have an account?
               <button
+                className="group"
                 type="button"
                 onClick={() => {
                   router.replace("/signup");
@@ -40,7 +41,7 @@ export default function Login() {
                   as="span"
                   color="white"
                   size="md"
-                  className="hover:text-accent transition"
+                  className="group-hover:text-accent group-focus:text-accent transition"
                 >
                   Sign up
                 </Text>

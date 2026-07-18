@@ -126,7 +126,7 @@ export default function Filter() {
           as="p"
           color="white60"
           size="sm"
-          className="group-hover:text-accent transition"
+          className="group-hover:text-accent group-focus:text-accent transition"
         >
           Clear filters
         </Text>

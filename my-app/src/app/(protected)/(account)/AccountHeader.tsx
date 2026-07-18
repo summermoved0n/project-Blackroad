@@ -45,7 +45,10 @@ export default function AccountHeader() {
         <div className="text-white/50 flex gap-4 md:gap-10">
           <button
             type="button"
-            className={clsx("", pathname === "/profile" && "text-white")}
+            className={clsx(
+              "border border-transparent rounded-md focus:border-white",
+              pathname === "/profile" && "text-white",
+            )}
             onClick={() => handleNavigate("/profile")}
           >
             My Profile
@@ -53,8 +56,9 @@ export default function AccountHeader() {
           <button
             type="button"
             className={clsx(
-              "",
-              pathname === "/booking-history" && "text-white",
+              "border border-transparent rounded-md focus:border-white",
+              pathname === "/booking-history" &&
+                "text-white focus:outline-accent",
             )}
             onClick={() => handleNavigate("/booking-history")}
           >
@@ -62,7 +66,10 @@ export default function AccountHeader() {
           </button>
           <button
             type="button"
-            className={clsx("", pathname === "/favorites" && "text-white")}
+            className={clsx(
+              "border border-transparent rounded-md focus:border-white",
+              pathname === "/favorites" && "text-white focus:outline-accent",
+            )}
             onClick={() => handleNavigate("/favorites")}
           >
             Favorites
@@ -70,7 +77,7 @@ export default function AccountHeader() {
         </div>
 
         <button
-          className="text-white hover:text-accent"
+          className="text-white hover:text-accent focus:text-accent"
           type="button"
           onClick={onLogOut}
         >

@@ -9,7 +9,7 @@ export default function BookingFormPolicy() {
     <section>
       <div className="w-full flex flex-col gap-5">
         <button
-          className="w-fit"
+          className="w-fit group"
           type="button"
           onClick={() => setShowPolicy(!showPolicy)}
         >
@@ -17,18 +17,18 @@ export default function BookingFormPolicy() {
             as="h2"
             color="white"
             size="sm"
-            className="hover:text-accent transition"
+            className="group-hover:text-accent group-focus:text-accent transition"    
           >
             Cancellation Policy
           </Text>
         </button>
 
-        <button className="w-fit" type="button">
+        <button className="w-fit group" type="button">
           <Text
             as="h2"
             color="white"
             size="sm"
-            className="hover:text-accent transition"
+            className="group-hover:text-accent group-focus:text-accent transition"
           >
             Order Policy
           </Text>

@@ -62,7 +62,7 @@ export default function ForgotForm() {
               className="text-center mb-7.5"
             >
               {showForm
-                ? "Dont worry, we`ll help you recover it. Just enter your registered email and youll receive a link to reset your old password."
+                ? "Dont worry, we&apos;ll help you recover it. Just enter your registered email and youll receive a link to reset your old password."
                 : "An email with further instructions has been sent to your email address. Please check your email!"}
             </Text>
           </div>
