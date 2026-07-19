@@ -5,12 +5,11 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { UserReviewPayload } from "@/types/profile.types";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { BookingStatus } from "../../../../../generated/prisma/client";
 
 type DotButtonMenuProps = {
   userId: number;
   tourSlug: string;
-  status: BookingStatus;
+  status: string;
   setMenuItem: React.Dispatch<React.SetStateAction<string | null>>;
   userReviews: UserReviewPayload[];
 };

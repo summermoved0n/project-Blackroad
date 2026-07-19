@@ -85,8 +85,8 @@ model Tour {
   category            Categories
   propertyType        PropertyType
   toursType           ToursType
+  rating              Float @default(0) 
   price               Int
-
 
   route               String[]
   food                String
@@ -110,7 +110,7 @@ model TourDeparture {
 
   startDate   DateTime
   endDate     DateTime
-  departureCountry String 
+  departureCity String 
   status      DepartureStatus
 
   @@map("departures")

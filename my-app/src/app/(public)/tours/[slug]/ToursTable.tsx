@@ -1,26 +1,22 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import { Text } from "@/components/Text";
-import clsx from "clsx";
-import { useState } from "react";
+import ToursTableItem from "./ToursTableItem";
 
 type ToursTableProps = {
-  id: number;
-  departure: string;
-  return: string;
-  cityFrom: string;
-  price: number;
+  slug: string;
+  tourDates: {
+    id: number;
+    tourId: number;
+    startDate: Date;
+    endDate: Date;
+    departureCity: string;
+    status: string;
+  }[];
 };
 
-export default function ToursTable({ data }: { data: ToursTableProps[] }) {
-  const [selectedRoom, setSelectedRoom] = useState("single");
-
+export default function ToursTable({ tourDates, slug }: ToursTableProps) {
   return (
-    <div
-      className="hidden md:block overflow-x-auto py-15 px-15 bg-primary
-"
-    >
+    <div className="hidden md:block overflow-x-auto py-15 px-15 bg-primary">
       <table className="w-full">
         <thead className="text-white text-left text-md">
           <tr>
@@ -33,102 +29,9 @@ export default function ToursTable({ data }: { data: ToursTableProps[] }) {
         </thead>
 
         <tbody>
-          {data.map(
-            ({
-              id,
-              departure: departureDate,
-              return: returnDate,
-              cityFrom,
-              price,
-            }) => (
-              <tr key={id} className="border-y border-white/20">
-                <td className="py-5">
-                  <Text as="p" color="white60" size="sm">
-                    {new Date(departureDate).toLocaleDateString("en-US", {
-                      weekday: "long",
-                    })}
-                  </Text>
-                  <Text as="p" color="white" size="md">
-                    {new Date(departureDate).toLocaleDateString("en-US", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </Text>
-                  <Text as="p" color="white60" size="sm">
-                    Departure from{" "}
-                    <span className="text-[rgba(234,156,63,0.6)]">
-                      {cityFrom}
-                    </span>
-                  </Text>
-                </td>
-                <td className="py-5">
-                  <Text as="p" color="white60" size="sm">
-                    {new Date(returnDate).toLocaleDateString("en-US", {
-                      weekday: "long",
-                    })}
-                  </Text>
-                  <Text as="p" color="white" size="md">
-                    {new Date(returnDate).toLocaleDateString("en-US", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </Text>
-                  <Text as="p" color="white60" size="sm">
-                    Departure from{" "}
-                    <span className="text-[rgba(234,156,63,0.6)]">
-                      {cityFrom}
-                    </span>
-                  </Text>
-                </td>
-                <td className="py-5">
-                  <button
-                    type="button"
-                    className={clsx(
-                      "h-12.5 w-30",
-                      selectedRoom === "single" && "bg-accent",
-                    )}
-                    onClick={() => setSelectedRoom("single")}
-                  >
-                    <span
-                      className={
-                        selectedRoom === "single"
-                          ? "text-white"
-                          : "text-white/50"
-                      }
-                    >
-                      Single
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className={clsx(
-                      "h-12.5 w-30",
-                      selectedRoom === "double" && "bg-accent",
-                    )}
-                    onClick={() => setSelectedRoom("double")}
-                  >
-                    <span
-                      className={
-                        selectedRoom === "double"
-                          ? "text-white"
-                          : "text-white/50"
-                      }
-                    >
-                      Double
-                    </span>
-                  </button>
-                </td>
-                <td className="py-5 text-white">{price} CA$</td>
-                <td className="text-right py-5">
-                  <Button variant="primary" size="sm">
-                    Book now
-                  </Button>
-                </td>
-              </tr>
-            ),
-          )}
+          {tourDates.map((item) => (
+            <ToursTableItem key={item.id} tourDate={item} slug={slug} />
+          ))}
         </tbody>
       </table>
     </div>

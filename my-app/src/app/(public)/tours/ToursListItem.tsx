@@ -19,9 +19,9 @@ type ToursListItemProps = {
     category: string;
     title: string;
     imageUrl: string;
-    rating: number;
     description: string;
     price: number;
+    rating: number;
   };
   favoriteToursList:
     | {
@@ -37,7 +37,7 @@ export default function ToursListItem({
 }: ToursListItemProps) {
   const router = useRouter();
 
-  const { id, slug, category, title, imageUrl, rating, description, price } =
+  const { id, slug, rating, category, title, imageUrl, description, price } =
     itemData;
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 

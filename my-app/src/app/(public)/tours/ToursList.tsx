@@ -1,8 +1,8 @@
-import { TourPayload } from "@/types/tour.types";
+import { TourListPayload } from "@/types/tour.types";
 import ToursListItem from "./ToursListItem";
 
 type ToursListProps = {
-  paginateListData: TourPayload[];
+  paginateListData: TourListPayload[];
   favoriteToursList:
     | {
         id: number;

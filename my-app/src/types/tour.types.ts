@@ -10,14 +10,31 @@ export type TourPayload = {
   price: number;
   route: string[];
   food: string;
+  rating: number;
+
   departures: {
     id: number;
     tourId: number;
     startDate: Date;
     endDate: Date;
-    departureCountry: string;
+    departureCity: string;
     status: string;
   }[];
+};
+
+export type TourListPayload = {
+  slug: string;
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  propertyType: string;
+  toursType: string;
+  price: number;
+  route: string[];
+  food: string;
+  rating: number;
 };
 
 export type PopularToursProps = {

@@ -17,7 +17,7 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
   const userId = await getCurrentUser();
-    const getTourById = await dbFindTour({ slug });
+  const getTourById = await dbFindTour({ slug });
 
   let favoriteToursList = null;
 
@@ -28,7 +28,7 @@ export default async function Page({ params }: PageProps) {
 
   console.log(getTourById);
 
-  const tourReviews = await dbFindReview({ tourId: Number(getTourById?.id) });
+  const tourReviews = await dbFindReview({ tourId: getTourById?.id });
   // console.log("tourReviews", tourReviews);
 
   return (

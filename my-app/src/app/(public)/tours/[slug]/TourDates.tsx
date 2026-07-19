@@ -1,5 +1,4 @@
 import ToursTable from "./ToursTable";
-import { toursDatesData } from "@/lib/data/toursPageData";
 import ToursTabelMobile from "./ToursTabelMobile";
 import { Text } from "@/components/Text";
 
@@ -10,7 +9,7 @@ type TourDatesProps = {
     tourId: number;
     startDate: Date;
     endDate: Date;
-    departureCountry: string;
+    departureCity: string;
     status: string;
   }[];
 };
@@ -33,7 +32,7 @@ export default function TourDates({ tourDates, slug }: TourDatesProps) {
         ))}
       </div>
 
-      <ToursTable data={toursDatesData} />
+      <ToursTable tourDates={tourDates} slug={slug} />
     </section>
   );
 }

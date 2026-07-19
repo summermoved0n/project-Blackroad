@@ -29,6 +29,7 @@ export const dbFindTour = async (filter: TourWhereUniqueInput) => {
       price: true,
       route: true,
       food: true,
+      rating: true,
       departures: true,
     },
   });
@@ -43,6 +44,7 @@ export const dbFindPopularTours = async () => {
       description: true,
       imageUrl: true,
       price: true,
+      rating: true,
     },
   });
 };

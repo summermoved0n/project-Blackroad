@@ -7,7 +7,7 @@ import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { EmptyHeartIcon } from "@/components/icons/EmptyHeartIcon";
 import { handleApiError } from "@/lib/utility/handleApiError";
 import { calculateNights, capitalizeFirstLetter } from "@/lib/utility/helpers";
-import { TourPayload, TourReviewsPayload } from "@/types/tour.types";
+import { TourPayload } from "@/types/tour.types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,6 @@ import toast from "react-hot-toast";
 
 type TourInfoProps = {
   tourData: TourPayload;
-  tourReviews: TourReviewsPayload[];
   favoriteToursList:
     | {
         id: number;
@@ -26,12 +25,20 @@ type TourInfoProps = {
 
 export default function TourInfo({
   tourData,
-  tourReviews,
   favoriteToursList,
 }: TourInfoProps) {
   const router = useRouter();
-  const { id, route, category, title, imageUrl, price, food, departures } =
-    tourData;
+  const {
+    id,
+    rating,
+    route,
+    category,
+    title,
+    imageUrl,
+    price,
+    food,
+    departures,
+  } = tourData;
 
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 
@@ -56,16 +63,6 @@ export default function TourInfo({
       handleApiError(error);
     }
   };
-
-  const averageRating =
-    tourReviews.length > 0
-      ? Number(
-          (
-            tourReviews.reduce((sum, review) => sum + review.rating, 0) /
-            tourReviews.length
-          ).toFixed(1),
-        )
-      : 0;
 
   return (
     <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
@@ -127,9 +124,9 @@ export default function TourInfo({
           </Text>
 
           <div className="mb-10 md:mb-0 flex items-center justify-between">
-            <ReviewStars stars={averageRating} />
+            <ReviewStars stars={rating} />
             <Text as="h3" color="white" size="md" className="md:hidden">
-              {averageRating}
+              {rating}
             </Text>
           </div>
 

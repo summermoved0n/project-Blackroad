@@ -8,13 +8,13 @@ import SearchFormMobile from "./SearchFormMobile";
 import { useState } from "react";
 import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
-import { TourPayload } from "@/types/tour.types";
+import { TourListPayload } from "@/types/tour.types";
 import { Text } from "@/components/Text";
 
 const toursPerPage = 4;
 
 type ToursListProps = {
-  toursListData: TourPayload[];
+  toursListData: TourListPayload[];
   favoriteToursList:
     | {
         id: number;

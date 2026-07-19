@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Text } from "@/components/Text";
-import { BookingStatus } from "../../../../../generated/prisma/client";
 import { clsx } from "clsx";
 import { capitalizeFirstLetter } from "@/lib/utility/helpers";
 import DotButtonMenu, { MenuItem } from "./DotButtonMenu";
@@ -15,14 +14,20 @@ type BookingHistoryItemProps = {
   userId: number;
   bookingId: number;
   totalPrice: string;
-  status: BookingStatus;
+  status: string;
   tour: {
     id: number;
-    slug: string;
     title: string;
+    slug: string;
     imageUrl: string;
-    dateOfArrival: Date;
-    dateOfDeparture: Date;
+    departures: {
+      id: number;
+      tourId: number;
+      status: string;
+      startDate: Date;
+      endDate: Date;
+      departureCity: string;
+    }[];
   };
   userReviews: UserReviewPayload[];
 };
@@ -56,15 +61,21 @@ export default function BookingHistoryItem({
             </Text>
 
             <Text as="p" color="black60" size="sm">
-              {new Date(tour.dateOfArrival).toLocaleDateString("en-US", {
-                day: "2-digit",
-                month: "short",
-              })}{" "}
+              {new Date(tour.departures[0].startDate).toLocaleDateString(
+                "en-US",
+                {
+                  day: "2-digit",
+                  month: "short",
+                },
+              )}{" "}
               -{" "}
-              {new Date(tour.dateOfDeparture).toLocaleDateString("en-US", {
-                day: "2-digit",
-                month: "short",
-              })}
+              {new Date(tour.departures[0].endDate).toLocaleDateString(
+                "en-US",
+                {
+                  day: "2-digit",
+                  month: "short",
+                },
+              )}
             </Text>
 
             <Text as="h2" color="black" size="md" className="md:hidden h-fit">

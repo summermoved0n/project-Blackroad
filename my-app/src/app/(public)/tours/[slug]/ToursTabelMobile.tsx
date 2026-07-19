@@ -13,7 +13,7 @@ type ToursTabelMobileProps = {
     tourId: number;
     startDate: Date;
     endDate: Date;
-    departureCountry: string;
+    departureCity: string;
     status: string;
   };
 };
@@ -23,7 +23,7 @@ export default function ToursTabelMobile({
   slug,
 }: ToursTabelMobileProps) {
   const router = useRouter();
-  const { startDate, endDate, departureCountry } = tourDate;
+  const { startDate, endDate, departureCity } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
@@ -48,9 +48,7 @@ export default function ToursTabelMobile({
           </Text>
           <Text as="p" color="white60" size="sm">
             Departure from{" "}
-            <span className="text-[rgba(234,156,63,0.6)]">
-              {departureCountry}
-            </span>
+            <span className="text-accent/60">{departureCity}</span>
           </Text>
         </div>
 
@@ -72,10 +70,7 @@ export default function ToursTabelMobile({
             })}
           </Text>
           <Text as="p" color="white60" size="sm">
-            Return to{" "}
-            <span className="text-[rgba(234,156,63,0.6)]">
-              {departureCountry}
-            </span>
+            Return to <span className="text-accent/60">{departureCity}</span>
           </Text>
         </div>
       </div>

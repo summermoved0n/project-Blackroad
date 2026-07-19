@@ -4,13 +4,16 @@ import { calculateNights } from "@/lib/utility/helpers";
 type TourProps = {
   tour: {
     title: string;
-    dateOfArrival: Date;
-    dateOfDeparture: Date;
+    departures: {
+      id: number;
+      startDate: Date;
+      endDate: Date;
+    }[];
   };
 };
 
 export default function BookingInfoDates({ tour }: TourProps) {
-  const { title, dateOfArrival, dateOfDeparture } = tour;
+  const { title, departures } = tour;
   return (
     <div className="bg-primary py-7.5 px-4 lg:py-15 lg:px-15 flex flex-col gap-10">
       <Text as="p" color="white" size="md">
@@ -23,7 +26,7 @@ export default function BookingInfoDates({ tour }: TourProps) {
             Date of arrival
           </Text>
           <Text as="p" color="white" size="sm">
-            {new Date(dateOfArrival).toLocaleDateString("en-US", {
+            {new Date(departures[0].startDate).toLocaleDateString("en-US", {
               weekday: "short",
               day: "2-digit",
               month: "short",
@@ -37,7 +40,7 @@ export default function BookingInfoDates({ tour }: TourProps) {
             Date of departure
           </Text>
           <Text as="p" color="white" size="sm">
-            {new Date(dateOfDeparture).toLocaleDateString("en-US", {
+            {new Date(departures[0].endDate).toLocaleDateString("en-US", {
               weekday: "short",
               day: "2-digit",
               month: "short",
@@ -52,7 +55,8 @@ export default function BookingInfoDates({ tour }: TourProps) {
           Total stay:
         </Text>
         <Text as="p" color="white" size="sm">
-          {calculateNights(dateOfArrival, dateOfDeparture)} nights
+          {calculateNights(departures[0].startDate, departures[0].endDate)}{" "}
+          nights
         </Text>
       </div>
 

@@ -38,11 +38,7 @@ export default function TourDetails({
   return (
     <main className="pt-17 sm:pt-20 bg-primary">
       <div className="bg-secondary px-4 md:px-20 pt-4 md:pt-6.5 pb-12.5 md:pb-37.5">
-        <TourInfo
-          tourData={tourData}
-          favoriteToursList={favoriteToursList}
-          tourReviews={tourReviews}
-        />
+        <TourInfo tourData={tourData} favoriteToursList={favoriteToursList} />
         <TourDates tourDates={tourData.departures} slug={tourData.slug} />
         <TourInclude
           included={includedInTheTour}
