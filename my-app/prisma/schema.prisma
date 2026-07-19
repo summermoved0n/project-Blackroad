@@ -45,6 +45,12 @@ enum ToursType {
   individual
   group
 }
+enum DepartureStatus {
+  available
+  sold_out
+  cancelled
+  completed
+}
 
 model User { 
   id        Int     @id @default(autoincrement()) 
@@ -77,29 +83,38 @@ model Tour {
   description         String
   imageUrl            String
   category            Categories
-  rating              Float
-  price               Int
   propertyType        PropertyType
   toursType           ToursType
+  price               Int
+
 
   route               String[]
-  tourDates           DateTime[]
-
-  duration            Int
   food                String
-
-  dateOfArrival       DateTime
-  dateOfDeparture     DateTime
 
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
+  departures          TourDeparture[]
   favorites           Favorite[]
   bookings            Booking[]
   reviews             Review[]
 
   @@map("tours")
 } 
+
+model TourDeparture {
+  id          Int            @id @default(autoincrement())
+
+  tourId      Int
+  tour        Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
+
+  startDate   DateTime
+  endDate     DateTime
+  departureCountry String 
+  status      DepartureStatus
+
+  @@map("departures")
+}
 
 model Review {
   id         Int @id @default(autoincrement())

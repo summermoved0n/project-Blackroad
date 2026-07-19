@@ -17,18 +17,28 @@ type TourFilterProps = {
 export const dbFindTour = async (filter: TourWhereUniqueInput) => {
   return prisma.tour.findUnique({
     where: filter,
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      imageUrl: true,
+      category: true,
+      propertyType: true,
+      toursType: true,
+      price: true,
+      route: true,
+      food: true,
+      departures: true,
+    },
   });
 };
 
 export const dbFindPopularTours = async () => {
   return prisma.tour.findMany({
-    where: {
-      rating: {
-        gte: 4.5,
-      },
-    },
     select: {
       id: true,
+      slug: true,
       title: true,
       description: true,
       imageUrl: true,

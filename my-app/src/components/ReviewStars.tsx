@@ -56,6 +56,16 @@ export default function ReviewStars({ stars }: ReviewStarsProps) {
         <EmptyStarIcon />
       </div>
     );
+  } else if (stars < 1) {
+    return (
+      <div className="flex gap-1.5">
+        <EmptyStarIcon />
+        <EmptyStarIcon />
+        <EmptyStarIcon />
+        <EmptyStarIcon />
+        <EmptyStarIcon />
+      </div>
+    );
   } else {
     return <div>Something went wrong</div>;
   }

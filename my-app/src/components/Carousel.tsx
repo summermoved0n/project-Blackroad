@@ -57,15 +57,11 @@ export default function Carousel({ tours, componentTitle }: CarouselProps) {
       <div>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-5 touch-pan-y touch-pinch-zoom">
-            {tours.map(({ id, title, description, imageUrl, price }) => (
+            {tours.map((tour) => (
               <TourCard
-                key={id}
-                id={id}
+                key={tour.id}
+                tour={tour}
                 carouselClassName="flex-[0_0_100%] xl:flex-[0_0_49%] min-w-0"
-                title={title}
-                description={description}
-                imageUrl={imageUrl}
-                price={price}
               />
             ))}
           </div>

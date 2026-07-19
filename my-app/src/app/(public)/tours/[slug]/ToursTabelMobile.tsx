@@ -3,21 +3,27 @@
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type ToursTabelMobileProps = {
-  departureDate: string;
-  cityFrom: string;
-  returnDate: string;
-  price: number;
+  slug: string;
+  tourDate: {
+    id: number;
+    tourId: number;
+    startDate: Date;
+    endDate: Date;
+    departureCountry: string;
+    status: string;
+  };
 };
 
 export default function ToursTabelMobile({
-  departureDate,
-  cityFrom,
-  returnDate,
-  price,
+  tourDate,
+  slug,
 }: ToursTabelMobileProps) {
+  const router = useRouter();
+  const { startDate, endDate, departureCountry } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
@@ -29,12 +35,12 @@ export default function ToursTabelMobile({
           </Text>
 
           <Text as="p" color="white60" size="sm">
-            {new Date(departureDate).toLocaleDateString("en-US", {
+            {new Date(startDate).toLocaleDateString("en-US", {
               weekday: "long",
             })}
           </Text>
           <Text as="p" color="white" size="md">
-            {new Date(departureDate).toLocaleDateString("en-US", {
+            {new Date(startDate).toLocaleDateString("en-US", {
               day: "2-digit",
               month: "short",
               year: "numeric",
@@ -42,7 +48,9 @@ export default function ToursTabelMobile({
           </Text>
           <Text as="p" color="white60" size="sm">
             Departure from{" "}
-            <span className="text-[rgba(234,156,63,0.6)]">{cityFrom}</span>
+            <span className="text-[rgba(234,156,63,0.6)]">
+              {departureCountry}
+            </span>
           </Text>
         </div>
 
@@ -52,12 +60,12 @@ export default function ToursTabelMobile({
           </Text>
 
           <Text as="p" color="white60" size="sm">
-            {new Date(returnDate).toLocaleDateString("en-US", {
+            {new Date(endDate).toLocaleDateString("en-US", {
               weekday: "long",
             })}
           </Text>
           <Text as="p" color="white" size="md">
-            {new Date(returnDate).toLocaleDateString("en-US", {
+            {new Date(endDate).toLocaleDateString("en-US", {
               day: "2-digit",
               month: "short",
               year: "numeric",
@@ -65,7 +73,9 @@ export default function ToursTabelMobile({
           </Text>
           <Text as="p" color="white60" size="sm">
             Return to{" "}
-            <span className="text-[rgba(234,156,63,0.6)]">{cityFrom}</span>
+            <span className="text-[rgba(234,156,63,0.6)]">
+              {departureCountry}
+            </span>
           </Text>
         </div>
       </div>
@@ -115,11 +125,17 @@ export default function ToursTabelMobile({
         </Text>
 
         <Text as="p" color="white" className="text-xl mb-4">
-          {price} CA$
+          {(selectedRoom === "single" && 500) ||
+            (selectedRoom === "double" && 600)}{" "}
+          CA$
         </Text>
       </div>
 
-      <Button variant="primary" size="sm">
+      <Button
+        variant="primary"
+        size="sm"
+        onClick={() => router.push(`${slug}/booking`)}
+      >
         Book now
       </Button>
     </div>

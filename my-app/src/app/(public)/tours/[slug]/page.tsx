@@ -17,6 +17,8 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
   const userId = await getCurrentUser();
+    const getTourById = await dbFindTour({ slug });
+
   let favoriteToursList = null;
 
   if (userId) {
@@ -24,7 +26,7 @@ export default async function Page({ params }: PageProps) {
     favoriteToursList = data;
   }
 
-  const getTourById = await dbFindTour({ slug });
+  console.log(getTourById);
 
   const tourReviews = await dbFindReview({ tourId: Number(getTourById?.id) });
   // console.log("tourReviews", tourReviews);

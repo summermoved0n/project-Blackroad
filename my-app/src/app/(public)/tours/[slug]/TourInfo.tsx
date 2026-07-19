@@ -1,12 +1,13 @@
 'use client";';
 
-import { Button } from "@/components/Button";
+// import { Button } from "@/components/Button";
 import ReviewStars from "@/components/ReviewStars";
 import { Text } from "@/components/Text";
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { EmptyHeartIcon } from "@/components/icons/EmptyHeartIcon";
 import { handleApiError } from "@/lib/utility/handleApiError";
-import { TourPayload } from "@/types/tour.types";
+import { calculateNights, capitalizeFirstLetter } from "@/lib/utility/helpers";
+import { TourPayload, TourReviewsPayload } from "@/types/tour.types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ import toast from "react-hot-toast";
 
 type TourInfoProps = {
   tourData: TourPayload;
+  tourReviews: TourReviewsPayload[];
   favoriteToursList:
     | {
         id: number;
@@ -24,10 +26,12 @@ type TourInfoProps = {
 
 export default function TourInfo({
   tourData,
+  tourReviews,
   favoriteToursList,
 }: TourInfoProps) {
   const router = useRouter();
-  const { id, slug, category, title, imageUrl, rating, price } = tourData;
+  const { id, route, category, title, imageUrl, price, food, departures } =
+    tourData;
 
   const favoriteTour = favoriteToursList?.find((item) => item.tourId === id);
 
@@ -52,6 +56,16 @@ export default function TourInfo({
       handleApiError(error);
     }
   };
+
+  const averageRating =
+    tourReviews.length > 0
+      ? Number(
+          (
+            tourReviews.reduce((sum, review) => sum + review.rating, 0) /
+            tourReviews.length
+          ).toFixed(1),
+        )
+      : 0;
 
   return (
     <section className="flex flex-col items-center justify-center pb-12.5 md:pb-25">
@@ -81,7 +95,7 @@ export default function TourInfo({
             className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
             onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
           >
-            Add to Favorites
+            <span className="hidden md:block">Add to Favorites</span>
             <EmptyHeartIcon active />
           </button>
         ) : (
@@ -90,7 +104,7 @@ export default function TourInfo({
             className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
             onClick={() => onAddToFavoriteClick(id!)}
           >
-            Add to Favorites
+            <span className="hidden md:block">Add to Favorites</span>
             <EmptyHeartIcon />
           </button>
         )}
@@ -113,9 +127,9 @@ export default function TourInfo({
           </Text>
 
           <div className="mb-10 md:mb-0 flex items-center justify-between">
-            <ReviewStars stars={rating} />
+            <ReviewStars stars={averageRating} />
             <Text as="h3" color="white" size="md" className="md:hidden">
-              {rating}
+              {averageRating}
             </Text>
           </div>
 
@@ -125,8 +139,7 @@ export default function TourInfo({
                 Route:
               </Text>
               <Text as="p" color="white" size="sm">
-                Verkhovyna - Vizhnitsa - Kamenetz-Podolsky - Satanov -
-                Chernivtsi
+                {route.join(" - ")}
               </Text>
             </div>
 
@@ -135,7 +148,10 @@ export default function TourInfo({
                 Tour dates:
               </Text>
               <Text as="p" color="white" size="sm">
-                19.10, 09.11
+                {departures.map(
+                  (item) =>
+                    `${item.startDate.toISOString().slice(5, 10).replace("-", ".")} `,
+                )}
               </Text>
             </div>
 
@@ -144,7 +160,11 @@ export default function TourInfo({
                 Duration:
               </Text>
               <Text as="p" color="white" size="sm">
-                4 days
+                {calculateNights(
+                  departures[0].startDate,
+                  departures[0].endDate,
+                )}{" "}
+                days
               </Text>
             </div>
 
@@ -153,7 +173,7 @@ export default function TourInfo({
                 Food:
               </Text>
               <Text as="p" color="white" size="sm">
-                Breakfasts
+                {food || "Not included"}
               </Text>
             </div>
 
@@ -162,12 +182,12 @@ export default function TourInfo({
                 Category:
               </Text>
               <Text as="p" color="white" size="sm">
-                {category}
+                {capitalizeFirstLetter(category)}
               </Text>
             </div>
           </div>
 
-          <div className="pt-11 mb-10 border-t border-t-white/10 flex justify-between items-center">
+          <div className="pt-11 border-t border-t-white/10 flex justify-between items-center">
             <Text as="p" color="white" size="sm">
               Price for 1 person
             </Text>
@@ -176,12 +196,12 @@ export default function TourInfo({
             </Text>
           </div>
 
-          <Button
+          {/* <Button
             onClick={() => router.push(`${slug}/booking`)}
             variant="primary"
           >
             Book now
-          </Button>
+          </Button> */}
         </div>
       </div>
     </section>

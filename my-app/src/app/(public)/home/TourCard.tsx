@@ -2,24 +2,15 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Text } from "@/components/Text";
 import ButtonWithArrow from "@/components/ButtonWithArrow";
+import { PopularToursProps } from "@/types/tour.types";
 
 type TourCardProps = {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  price: number;
+  tour: PopularToursProps;
   carouselClassName: string;
 };
 
-export default function TourCard({
-  id,
-  title,
-  description,
-  imageUrl,
-  price,
-  carouselClassName,
-}: TourCardProps) {
+export default function TourCard({ tour, carouselClassName }: TourCardProps) {
+  const { slug, imageUrl, title, description, price } = tour;
   return (
     <div
       className={clsx(
@@ -44,7 +35,7 @@ export default function TourCard({
         </Text>
 
         <div className="flex justify-between">
-          <ButtonWithArrow path={`tours/${id}`} className="text-white">
+          <ButtonWithArrow path={`tours/${slug}`} className="text-white">
             Book now
           </ButtonWithArrow>
 
