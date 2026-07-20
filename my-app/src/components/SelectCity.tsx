@@ -17,12 +17,17 @@ const citiesList = [
   "Brampton",
 ];
 
-export default function SelectCity() {
+export default function SelectCity({
+  tours,
+}: {
+  tours: { id: number; slug: string; title: string }[];
+}) {
   const [showList, setShowList] = useState<boolean>(false);
 
   const { setFilter, searchParams } = useFilters();
 
   const cityName = searchParams.get(FilterField.city);
+  const text = tours.find((tour) => tour.slug === cityName);
 
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setShowList(false));
@@ -38,23 +43,35 @@ export default function SelectCity() {
       >
         {!cityName || cityName === "Clear field"
           ? "Where are you going?"
-          : cityName}
+          : text?.title}
         <ArrowDownIcon />
       </button>
 
       {showList && (
         <ul className="absolute top-full w-full z-20">
-          {citiesList.map((item) => (
+          <li
+            key={0}
+            className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"
+            onClick={() => {
+              setShowList(false);
+              setFilter(FilterField.city, "Clear field");
+            }}
+          >
+            <Text as="p" color="black" size="sm">
+              Clear field
+            </Text>
+          </li>
+          {tours.map(({ id, slug, title }) => (
             <li
-              key={item}
+              key={id}
               className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"
               onClick={() => {
                 setShowList(false);
-                setFilter(FilterField.city, item);
+                setFilter(FilterField.city, slug);
               }}
             >
               <Text as="p" color="black" size="sm">
-                {item}
+                {title}
               </Text>
             </li>
           ))}

@@ -8,18 +8,20 @@ import PopularTours from "./(public)/home/PopularTours";
 import Reviews from "./(public)/home/Reviews";
 import TravelWithUs from "./(public)/home/TravelWithUs";
 import WhyChooseUs from "./(public)/home/WhyChooseUs";
+import { dbFindPopularTours } from "@/lib/repositories/tour.repo";
 
 export default async function Home() {
+  const popularTours = await dbFindPopularTours();
   const tourReviews = await dbFindPopularReview();
   // console.log("tourReviews", tourReviews);
   return (
     <main>
-      <HomeHero />
+      <HomeHero popularTours={popularTours} />
       <ExploreWithUs />
       <WhyChooseUs />
-      <TravelWithUs />
+      <TravelWithUs popularTours={popularTours} />
       <FeelComfort />
-      <PopularTours />
+      <PopularTours popularTours={popularTours} />
       <Reviews tourReviews={tourReviews} />
       <KeepInTouch />
       <FAQ />

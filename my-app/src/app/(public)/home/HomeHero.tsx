@@ -7,7 +7,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function HomeHero() {
+export default function HomeHero({
+  popularTours,
+}: {
+  popularTours: { id: number; slug: string; title: string }[];
+}) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -41,7 +45,11 @@ export default function HomeHero() {
         Book
       </Button>
 
-      <SearchForm showModal={showModal} setShowModal={setShowModal} />
+      <SearchForm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        tours={popularTours}
+      />
     </section>
   );
 }

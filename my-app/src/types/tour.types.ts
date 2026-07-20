@@ -50,13 +50,10 @@ export type TourReviewsPayload = {
   id: number;
   rating: number;
   comment: string;
-  instagram: string | null;
-  tour: {
-    id: number;
-    slug: string;
-  };
   author: {
     id: number;
     name: string | null;
   };
+  instagram: string | null;
+  tourId: number;
 };

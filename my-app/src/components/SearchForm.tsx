@@ -11,11 +11,13 @@ import { useRouter } from "next/navigation";
 import { useFilters } from "@/hooks/useFilters";
 
 type SearchFormProps = {
+  tours: { id: number; slug: string; title: string }[];
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function SearchForm({
+  tours,
   showModal,
   setShowModal,
 }: SearchFormProps) {
@@ -24,7 +26,7 @@ export default function SearchForm({
 
   return (
     <div className="hidden rounded-xl md:pl-10 md:w-full md:gap-5 md:backdrop-blur-sm md:grid md:grid-cols-[1fr_1fr_1fr_180px] xl:pl-10 xl:gap-7.5">
-      <SelectCity />
+      <SelectCity tours={tours} />
       <SelectDate setShowModal={setShowModal} />
       <SelectPeopleAndRooms />
       <button

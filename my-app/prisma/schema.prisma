@@ -172,6 +172,8 @@ model Booking {
   room       RoomType    @default(single)
   totalPrice Decimal     @db.Decimal(10, 2)
   status     BookingStatus
+  startDate   DateTime
+  endDate     DateTime
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

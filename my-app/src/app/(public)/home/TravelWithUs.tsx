@@ -1,9 +1,11 @@
 import Carousel from "@/components/Carousel";
-import { dbFindPopularTours } from "@/lib/repositories/tour.repo";
+import { PopularToursProps } from "@/types/tour.types";
 
-export default async function TravelWithUs() {
-  const popularTours = await dbFindPopularTours();
-
+export default async function TravelWithUs({
+  popularTours,
+}: {
+  popularTours: PopularToursProps[];
+}) {
   return (
     <>
       <Carousel tours={popularTours} componentTitle="travel with us" />

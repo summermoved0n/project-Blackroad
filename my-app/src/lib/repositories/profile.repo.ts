@@ -47,11 +47,7 @@ export const dbFindReview = async (filter: {
 
 export const dbFindPopularReview = async () =>
   prisma.review.findMany({
-    where: {
-      rating: {
-        gte: 4,
-      },
-    },
+    where: {},
     select: {
       id: true,
       comment: true,
@@ -65,6 +61,10 @@ export const dbFindPopularReview = async () =>
       },
       tourId: true,
     },
+    orderBy: {
+      rating: "asc",
+    },
+    take: 10,
   });
 
 export const dbCancelPaidBooking = async ({
