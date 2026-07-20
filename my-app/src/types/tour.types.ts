@@ -46,7 +46,7 @@ export type PopularToursProps = {
   price: number;
 };
 
-export type TourReviewsPayload = {
+export type PopularReviewsPayload = {
   id: number;
   rating: number;
   comment: string;
@@ -56,4 +56,19 @@ export type TourReviewsPayload = {
   };
   instagram: string | null;
   tourId: number;
+};
+
+export type TourReviewsPayload = {
+  id: number;
+  tour: {
+    id: number;
+    slug: string;
+  };
+  rating: number;
+  comment: string;
+  instagram: string | null;
+  author: {
+    id: number;
+    name: string | null;
+  };
 };

@@ -1,4 +1,4 @@
-export const MinusIcon = ({ color = "black" }: { color?: string }) => {
+export const MinusIcon = () => {
   return (
     <svg
       width="16"

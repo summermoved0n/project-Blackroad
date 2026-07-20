@@ -25,14 +25,14 @@ export default function SearchForm({
   const { searchParams } = useFilters();
 
   return (
-    <div className="hidden rounded-xl md:pl-10 md:w-full md:gap-5 md:backdrop-blur-sm md:grid md:grid-cols-[1fr_1fr_1fr_180px] xl:pl-10 xl:gap-7.5">
+    <div className="md:pl-10 md:w-full md:gap-5 md:grid md:grid-cols-[1fr_1fr_1fr_180px] xl:pl-10 xl:gap-7.5">
       <SelectCity tours={tours} />
       <SelectDate setShowModal={setShowModal} />
       <SelectPeopleAndRooms />
       <button
         className="flex items-center justify-center border-l border-white/10 sm:text-2xl text-white hover:text-accent focus:text-accent transition"
         type="button"
-        onClick={() => router.push(`/tours?${searchParams.toString()}`)}
+        onClick={() => router.push(`/tours?${searchParams}`)}
       >
         Search
       </button>

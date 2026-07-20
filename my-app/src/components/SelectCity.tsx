@@ -7,16 +7,6 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { useFilters } from "@/hooks/useFilters";
 import { FilterField } from "@/types/filter.types";
 
-const citiesList = [
-  "Clear field",
-  "Oshawa",
-  "Ajax",
-  "Whitby",
-  "Toronto",
-  "Pickering",
-  "Brampton",
-];
-
 export default function SelectCity({
   tours,
 }: {
@@ -27,7 +17,7 @@ export default function SelectCity({
   const { setFilter, searchParams } = useFilters();
 
   const cityName = searchParams.get(FilterField.city);
-  const text = tours.find((tour) => tour.slug === cityName);
+  const tour = tours.find((item) => item.slug === cityName);
 
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setShowList(false));
@@ -43,12 +33,12 @@ export default function SelectCity({
       >
         {!cityName || cityName === "Clear field"
           ? "Where are you going?"
-          : text?.title}
+          : tour?.title}
         <ArrowDownIcon />
       </button>
 
       {showList && (
-        <ul className="absolute top-full w-full z-20">
+        <ul className="absolute top-full w-full z-10">
           <li
             key={0}
             className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"

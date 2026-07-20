@@ -43,11 +43,15 @@ export default function ToursSearchForm({
 
   return (
     <section>
-      <SearchFormMobile setShowModal={setShowModal} />
+      <SearchFormMobile setShowModal={setShowModal} tours={toursListData} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">
         <div className="hidden xl:block bg-primary rounded-xl md:mb-25">
-          <SearchForm showModal={showModal} setShowModal={setShowModal} />
+          <SearchForm
+            showModal={showModal}
+            setShowModal={setShowModal}
+            tours={toursListData}
+          />
         </div>
 
         <SortBy />

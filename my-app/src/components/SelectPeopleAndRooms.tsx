@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { useFilters } from "@/hooks/useFilters";
-import { Text } from "./Text";
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import SelectPeopleAndRoomsItem from "./SelectPeopleAndRoomsItem";
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -21,7 +20,7 @@ export default function SelectPeopleAndRooms() {
   useClickOutside(containerRef, () => setShowModal(false));
 
   return (
-    <div ref={containerRef} className="relative flex my-5 ">
+    <div ref={containerRef} className="relative flex my-5">
       <button
         type="button"
         className="w-full flex items-center justify-between py-5 border-b border-white/10 text-white hover:border-accent focus:border-accent transition"
@@ -32,7 +31,7 @@ export default function SelectPeopleAndRooms() {
       </button>
 
       {showModal && (
-        <div className="absolute top-full w-full px-2.5 py-2.5 xl:px-7.5 xl:py-7.5 flex flex-col gap-5 bg-white z-20">
+        <div className="absolute top-full w-full px-2.5 py-2.5 xl:px-7.5 xl:py-7.5 flex flex-col gap-5 bg-white z-10">
           <SelectPeopleAndRoomsItem
             title={FilterField.adults}
             currentValue={adults}

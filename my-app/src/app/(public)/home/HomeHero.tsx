@@ -45,11 +45,13 @@ export default function HomeHero({
         Book
       </Button>
 
-      <SearchForm
-        showModal={showModal}
-        setShowModal={setShowModal}
-        tours={popularTours}
-      />
+      <div className="hidden w-full md:block md:backdrop-blur-sm rounded-xl">
+        <SearchForm
+          showModal={showModal}
+          setShowModal={setShowModal}
+          tours={popularTours}
+        />
+      </div>
     </section>
   );
 }

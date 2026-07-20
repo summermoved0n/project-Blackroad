@@ -23,6 +23,7 @@ export default function SelectPeopleAndRoomsItem({
       </Text>
       <div className="flex gap-2 xl:gap-5">
         <button
+          className="h-full w-full transition hover:text-accent focus:text-accent"
           type="button"
           onClick={() => {
             setFilter(title, (parseInt(currentValue) - 1).toString());
@@ -35,6 +36,7 @@ export default function SelectPeopleAndRoomsItem({
           {currentValue}
         </Text>
         <button
+          className="h-full w-full transition hover:text-accent focus:text-accent"
           type="button"
           onClick={() => {
             setFilter(title, (parseInt(currentValue) + 1).toString());
