@@ -1,9 +1,9 @@
-import React from "react";
 import { useFilters } from "@/hooks/useFilters";
 import { Text } from "./Text";
 import { MinusIcon } from "@/components/icons/MinusIcon";
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { capitalizeFirstLetter } from "@/lib/utility/helpers";
+import { FilterField } from "@/types/filter.types";
 
 type SelectPeopleAndRoomsItem = {
   title: string;
@@ -28,7 +28,11 @@ export default function SelectPeopleAndRoomsItem({
           onClick={() => {
             setFilter(title, (parseInt(currentValue) - 1).toString());
           }}
-          disabled={currentValue === "0"}
+          disabled={
+            title === FilterField.adults || title === FilterField.rooms
+              ? currentValue === "1"
+              : currentValue === "0"
+          }
         >
           <MinusIcon />
         </button>
@@ -41,6 +45,13 @@ export default function SelectPeopleAndRoomsItem({
           onClick={() => {
             setFilter(title, (parseInt(currentValue) + 1).toString());
           }}
+          disabled={
+            title === FilterField.adults ||
+            title === FilterField.rooms ||
+            title === FilterField.children
+              ? currentValue === "10"
+              : currentValue === "0"
+          }
         >
           <PlusIcon />
         </button>

@@ -3,6 +3,7 @@ import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { useFilters } from "@/hooks/useFilters";
 
 type ToursTableProps = {
   slug: string;
@@ -18,7 +19,9 @@ type ToursTableProps = {
 
 export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
   const router = useRouter();
-  const { startDate, endDate, departureCity } = tourDate;
+  const { searchParams, setFilter } = useFilters();
+
+  const { id, startDate, endDate, departureCity } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
@@ -61,7 +64,7 @@ export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
         <button
           type="button"
           className={clsx(
-            "h-12.5 w-30",
+            "h-12.5 w-30 border border-transparent transition focus:border-white",
             selectedRoom === "single" && "bg-accent",
           )}
           onClick={() => setSelectedRoom("single")}
@@ -77,7 +80,7 @@ export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
         <button
           type="button"
           className={clsx(
-            "h-12.5 w-30",
+            "h-12.5 w-30 border border-transparent transition focus:border-white",
             selectedRoom === "double" && "bg-accent",
           )}
           onClick={() => setSelectedRoom("double")}
@@ -100,7 +103,11 @@ export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
         <Button
           variant="primary"
           size="sm"
-          onClick={() => router.push(`${slug}/booking`)}
+          onClick={() =>
+            router.push(
+              `${slug}/booking?departureDates=${id}&roomType=${selectedRoom}`,
+            )
+          }
         >
           Book now
         </Button>

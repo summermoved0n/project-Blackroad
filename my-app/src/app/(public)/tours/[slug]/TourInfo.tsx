@@ -2,6 +2,7 @@
 
 // import { Button } from "@/components/Button";
 import ReviewStars from "@/components/ReviewStars";
+import SelectPeopleAndRooms from "@/components/SelectPeopleAndRooms";
 import { Text } from "@/components/Text";
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
 import { EmptyHeartIcon } from "@/components/icons/EmptyHeartIcon";
@@ -142,13 +143,10 @@ export default function TourInfo({
 
             <div className="flex justify-between items-center">
               <Text as="h4" color="white60" size="sm">
-                Tour dates:
+                Tour capacity:
               </Text>
               <Text as="p" color="white" size="sm">
-                {departures.map(
-                  (item) =>
-                    `${item.startDate.toISOString().slice(5, 10).replace("-", ".")} `,
-                )}
+                35
               </Text>
             </div>
 
@@ -193,12 +191,7 @@ export default function TourInfo({
             </Text>
           </div>
 
-          {/* <Button
-            onClick={() => router.push(`${slug}/booking`)}
-            variant="primary"
-          >
-            Book now
-          </Button> */}
+          <SelectPeopleAndRooms />
         </div>
       </div>
     </section>

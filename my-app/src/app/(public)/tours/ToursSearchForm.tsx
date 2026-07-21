@@ -51,6 +51,7 @@ export default function ToursSearchForm({
             showModal={showModal}
             setShowModal={setShowModal}
             tours={toursListData}
+            fromTours
           />
         </div>
 

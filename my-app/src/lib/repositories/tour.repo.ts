@@ -75,18 +75,17 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
 
   if (filter.dates) {
     const [from, to] = filter.dates.split("_");
-    where.AND = [
-      {
-        dateOfArrival: {
+
+    where.departures = {
+      some: {
+        startDate: {
           lte: new Date(to),
         },
-      },
-      {
-        dateOfDeparture: {
+        endDate: {
           gte: new Date(from),
         },
       },
-    ];
+    };
   }
 
   if (filter.price) {

@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/Button";
 import SelectCity from "@/components/SelectCity";
 import SelectDate from "@/components/SelectDate";
 import SelectPeopleAndRooms from "@/components/SelectPeopleAndRooms";
@@ -23,10 +22,6 @@ export default function SearchFormMobile({
         <SelectDate setShowModal={setShowModal} />
         <SelectPeopleAndRooms />
       </div>
-
-      <Button variant="primary" size="sm">
-        Search
-      </Button>
     </section>
   );
 }

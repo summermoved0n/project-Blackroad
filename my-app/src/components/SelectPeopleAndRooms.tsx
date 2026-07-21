@@ -8,7 +8,7 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { FilterField } from "@/types/filter.types";
 
 export default function SelectPeopleAndRooms() {
-  const { searchParams } = useFilters();
+  const { searchParams, setFilter } = useFilters();
 
   const adults = searchParams.get(FilterField.adults) || "2";
   const children = searchParams.get(FilterField.children) || "0";
@@ -31,7 +31,7 @@ export default function SelectPeopleAndRooms() {
       </button>
 
       {showModal && (
-        <div className="absolute top-full w-full px-2.5 py-2.5 xl:px-7.5 xl:py-7.5 flex flex-col gap-5 bg-white z-10">
+        <div className="absolute top-full w-full px-2.5 py-2.5 xl:px-7.5 xl:py-7.5 flex flex-col gap-5 bg-white z-20">
           <SelectPeopleAndRoomsItem
             title={FilterField.adults}
             currentValue={adults}

@@ -108,6 +108,9 @@ model TourDeparture {
   tourId      Int
   tour        Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
 
+  bookings          Booking[]
+
+
   startDate   DateTime
   endDate     DateTime
   departureCity String 
@@ -166,14 +169,16 @@ model Booking {
   customerId Int
   customer   BookingCustomer  @relation(fields: [customerId], references: [id])
 
+  departureId  Int
+  departure    TourDeparture    @relation(fields: [departureId], references: [id], onDelete: Cascade)
+
+
   payments Payment[]
 
   guests     Int
   room       RoomType    @default(single)
   totalPrice Decimal     @db.Decimal(10, 2)
   status     BookingStatus
-  startDate   DateTime
-  endDate     DateTime
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
