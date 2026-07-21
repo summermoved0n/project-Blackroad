@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
+import { useFilters } from "@/hooks/useFilters";
+import { FilterField } from "@/types/filter.types";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,7 +25,13 @@ export default function ToursTabelMobile({
   slug,
 }: ToursTabelMobileProps) {
   const router = useRouter();
-  const { startDate, endDate, departureCity } = tourDate;
+  const { searchParams } = useFilters();
+
+  const adults = searchParams.get(FilterField.adults) || "2";
+  const children = searchParams.get(FilterField.children) || "0";
+  const rooms = searchParams.get(FilterField.rooms) || "1";
+
+  const { id, startDate, endDate, departureCity } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
@@ -129,7 +137,11 @@ export default function ToursTabelMobile({
       <Button
         variant="primary"
         size="sm"
-        onClick={() => router.push(`${slug}/booking`)}
+        onClick={() =>
+          router.push(
+            `${slug}/booking?departureDates=${id}&roomType=${selectedRoom}&adults=${adults}&children=${children}&rooms=${rooms}`,
+          )
+        }
       >
         Book now
       </Button>

@@ -175,7 +175,8 @@ model Booking {
 
   payments Payment[]
 
-  guests     Int
+  adults     Int
+  children     Int
   room       RoomType    @default(single)
   totalPrice Decimal     @db.Decimal(10, 2)
   status     BookingStatus

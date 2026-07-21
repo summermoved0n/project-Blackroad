@@ -1,5 +1,9 @@
+"use client";
+
 import { Text } from "@/components/Text";
+import { useFilters } from "@/hooks/useFilters";
 import { calculateNights } from "@/lib/utility/helpers";
+import { FilterField } from "@/types/filter.types";
 
 type TourProps = {
   tour: {
@@ -14,6 +18,18 @@ type TourProps = {
 
 export default function BookingInfoDates({ tour }: TourProps) {
   const { title, departures } = tour;
+  const { searchParams } = useFilters();
+
+  const adults = searchParams.get(FilterField.adults) || "2";
+  const children = searchParams.get(FilterField.children) || "0";
+  const rooms = searchParams.get(FilterField.rooms) || "1";
+
+  const departureDateId = searchParams.get("departureDates");
+  const departureDates = departures.find(
+    (item) => item.id === Number(departureDateId),
+  );
+  console.log(departureDates);
+
   return (
     <div className="bg-primary py-7.5 px-4 lg:py-15 lg:px-15 flex flex-col gap-10">
       <Text as="p" color="white" size="md">
@@ -26,12 +42,17 @@ export default function BookingInfoDates({ tour }: TourProps) {
             Date of arrival
           </Text>
           <Text as="p" color="white" size="sm">
-            {new Date(departures[0].startDate).toLocaleDateString("en-US", {
-              weekday: "short",
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
+            {departureDates
+              ? new Date(departureDates?.startDate).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  },
+                )
+              : "Please back to prev page to pick the tour date"}
           </Text>
         </div>
 
@@ -40,12 +61,14 @@ export default function BookingInfoDates({ tour }: TourProps) {
             Date of departure
           </Text>
           <Text as="p" color="white" size="sm">
-            {new Date(departures[0].endDate).toLocaleDateString("en-US", {
-              weekday: "short",
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })}
+            {departureDates
+              ? new Date(departureDates?.endDate).toLocaleDateString("en-US", {
+                  weekday: "short",
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })
+              : "Please back to prev page to pick the tour date"}
           </Text>
         </div>
       </div>
@@ -65,10 +88,11 @@ export default function BookingInfoDates({ tour }: TourProps) {
           You have chosen:
         </Text>
         <Text as="p" color="white" size="sm">
-          Tour for 2 adults
+          Tour for {adults} adults and {children}{" "}
+          {Number(children) > 1 ? "children" : "child"}
         </Text>
         <Text as="p" color="white" size="sm">
-          {title}
+          Total {rooms} {Number(rooms) > 1 ? "rooms" : "room"}
         </Text>
       </div>
     </div>

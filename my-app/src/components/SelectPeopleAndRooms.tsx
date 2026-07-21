@@ -1,18 +1,38 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFilters } from "@/hooks/useFilters";
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import SelectPeopleAndRoomsItem from "./SelectPeopleAndRoomsItem";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { FilterField } from "@/types/filter.types";
+import { useRouter } from "next/navigation";
 
 export default function SelectPeopleAndRooms() {
-  const { searchParams, setFilter } = useFilters();
+  const { searchParams } = useFilters();
+  const router = useRouter();
 
   const adults = searchParams.get(FilterField.adults) || "2";
   const children = searchParams.get(FilterField.children) || "0";
   const rooms = searchParams.get(FilterField.rooms) || "1";
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+
+    if (!params.has(FilterField.adults)) {
+      params.set(FilterField.adults, "2");
+    }
+
+    if (!params.has(FilterField.children)) {
+      params.set(FilterField.children, "0");
+    }
+
+    if (!params.has(FilterField.rooms)) {
+      params.set(FilterField.rooms, "1");
+    }
+
+    router.replace(`?${params.toString()}`);
+  }, []);
 
   const [showModal, setShowModal] = useState(false);
 

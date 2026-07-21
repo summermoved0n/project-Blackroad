@@ -4,6 +4,7 @@ import { Text } from "@/components/Text";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useFilters } from "@/hooks/useFilters";
+import { FilterField } from "@/types/filter.types";
 
 type ToursTableProps = {
   slug: string;
@@ -19,7 +20,11 @@ type ToursTableProps = {
 
 export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
   const router = useRouter();
-  const { searchParams, setFilter } = useFilters();
+  const { searchParams } = useFilters();
+
+  const adults = searchParams.get(FilterField.adults) || "2";
+  const children = searchParams.get(FilterField.children) || "0";
+  const rooms = searchParams.get(FilterField.rooms) || "1";
 
   const { id, startDate, endDate, departureCity } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
@@ -105,7 +110,7 @@ export default function ToursTableItem({ slug, tourDate }: ToursTableProps) {
           size="sm"
           onClick={() =>
             router.push(
-              `${slug}/booking?departureDates=${id}&roomType=${selectedRoom}`,
+              `${slug}/booking?departureDates=${id}&roomType=${selectedRoom}&adults=${adults}&children=${children}&rooms=${rooms}`,
             )
           }
         >
