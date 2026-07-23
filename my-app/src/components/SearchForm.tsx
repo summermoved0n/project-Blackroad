@@ -13,7 +13,7 @@ import clsx from "clsx";
 
 type SearchFormProps = {
   tours: { id: number; slug: string; title: string }[];
-  fromTours: boolean;
+  fromTours?: boolean;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };

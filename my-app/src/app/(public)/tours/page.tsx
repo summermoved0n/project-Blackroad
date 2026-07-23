@@ -1,6 +1,9 @@
 import ToursSearchForm from "./ToursSearchForm";
 import ToursHero from "./ToursHero";
-import { dbFindFilteredTours } from "@/lib/repositories/tour.repo";
+import {
+  dbFindFilteredTours,
+  dbFindPopularTours,
+} from "@/lib/repositories/tour.repo";
 import { dbFindFavorteTours } from "@/lib/repositories/profile.repo";
 import { getCurrentUser } from "@/lib/utility/getCurrentUser";
 
@@ -26,14 +29,16 @@ export default async function page({
 
   const params = await searchParams;
   // console.log(params);
-  const toursList = await dbFindFilteredTours(params);
+  const allToursList = await dbFindPopularTours();
+  const filteredToursList = await dbFindFilteredTours(params);
   // console.log("toursList", toursList);
 
   return (
     <main>
       <ToursHero />
       <ToursSearchForm
-        toursListData={toursList}
+        allToursList={allToursList}
+        filteredToursList={filteredToursList}
         favoriteToursList={favoriteToursList}
       />
     </main>

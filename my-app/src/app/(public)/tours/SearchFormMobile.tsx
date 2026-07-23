@@ -3,11 +3,11 @@
 import SelectCity from "@/components/SelectCity";
 import SelectDate from "@/components/SelectDate";
 import SelectPeopleAndRooms from "@/components/SelectPeopleAndRooms";
-import { TourListPayload } from "@/types/tour.types";
+import { PopularToursProps } from "@/types/tour.types";
 import { Dispatch, SetStateAction } from "react";
 
 type SearchFormMobileProps = {
-  tours: TourListPayload[];
+  tours: PopularToursProps[];
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 

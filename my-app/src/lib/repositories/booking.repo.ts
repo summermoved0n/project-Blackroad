@@ -5,7 +5,9 @@ type CreateBookingProps = {
   userId: number;
   tourId: number;
   customerId: number;
-  guests: number;
+  departureId: number;
+  adults: number;
+  children: number;
   room: RoomType;
   totalPrice: number;
   status: BookingStatus;

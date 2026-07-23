@@ -8,13 +8,14 @@ import SearchFormMobile from "./SearchFormMobile";
 import { useState } from "react";
 import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
-import { TourListPayload } from "@/types/tour.types";
+import { PopularToursProps, TourListPayload } from "@/types/tour.types";
 import { Text } from "@/components/Text";
 
 const toursPerPage = 4;
 
 type ToursListProps = {
-  toursListData: TourListPayload[];
+  allToursList: PopularToursProps[];
+  filteredToursList: TourListPayload[];
   favoriteToursList:
     | {
         id: number;
@@ -24,17 +25,18 @@ type ToursListProps = {
 };
 
 export default function ToursSearchForm({
-  toursListData,
+  allToursList,
+  filteredToursList,
   favoriteToursList,
 }: ToursListProps) {
-  const totalPages = Math.ceil(toursListData.length / toursPerPage);
+  const totalPages = Math.ceil(filteredToursList.length / toursPerPage);
 
   const { searchParams } = useFilters();
 
   const [showModal, setShowModal] = useState(false);
 
   const currentPage = Number(searchParams.get("page") || 1);
-  const paginateListData = toursListData.slice(
+  const paginateListData = filteredToursList.slice(
     (currentPage - 1) * toursPerPage,
     toursPerPage * currentPage,
   );
@@ -43,14 +45,14 @@ export default function ToursSearchForm({
 
   return (
     <section>
-      <SearchFormMobile setShowModal={setShowModal} tours={toursListData} />
+      <SearchFormMobile setShowModal={setShowModal} tours={allToursList} />
 
       <div className="py-5 px-4 md:py-25 md:px-20">
         <div className="hidden xl:block bg-primary rounded-xl md:mb-25">
           <SearchForm
             showModal={showModal}
             setShowModal={setShowModal}
-            tours={toursListData}
+            tours={allToursList}
             fromTours
           />
         </div>
@@ -73,7 +75,7 @@ export default function ToursSearchForm({
           )}
         </div>
 
-        {isShowTours && toursListData.length > toursPerPage && (
+        {isShowTours && filteredToursList.length > toursPerPage && (
           <ToursPagination currentPage={currentPage} totalPages={totalPages} />
         )}
       </div>

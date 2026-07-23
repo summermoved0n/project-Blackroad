@@ -53,6 +53,10 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
   const where: Prisma.TourWhereInput = {};
   const orderBy: Prisma.TourOrderByWithRelationInput = {};
 
+  if (filter.city) {
+    where.slug = filter.city;
+  }
+
   if (filter.rating) {
     where.rating = {
       gte: Number(filter.rating),
