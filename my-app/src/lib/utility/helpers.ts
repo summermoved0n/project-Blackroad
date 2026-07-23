@@ -29,3 +29,32 @@ export const parseBirthDate = (value: string) => {
 
   return isRealDate ? date : null;
 };
+
+export const calculateTotalPrice = (
+  tourPrice: number,
+  adults: string,
+  children: string,
+  rooms: string,
+  roomType: string,
+): { totalPrice: number; taxPrice: number } => {
+  let roomTypeFee;
+
+  const taxValue = 0.15;
+
+  const adultsPrice = tourPrice * Number(adults);
+  const childrenPrice = tourPrice * Number(children);
+
+  if (roomType === "single") {
+    roomTypeFee = 500;
+  } else if (roomType === "double") {
+    roomTypeFee = 600;
+  } else {
+    roomTypeFee = 0;
+  }
+
+  const roomsPrice = roomTypeFee * Number(rooms);
+
+  const totalPrice = adultsPrice + childrenPrice + roomsPrice + roomTypeFee;
+
+  return { totalPrice, taxPrice: totalPrice * taxValue };
+};

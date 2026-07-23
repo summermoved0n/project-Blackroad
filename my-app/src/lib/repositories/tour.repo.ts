@@ -1,4 +1,9 @@
-import { Categories, Prisma } from "../../../generated/prisma/client";
+import {
+  Categories,
+  Prisma,
+  ToursType,
+  PropertyType,
+} from "../../../generated/prisma/client";
 import { TourWhereUniqueInput } from "../../../generated/prisma/models";
 import { prisma } from "../prisma";
 
@@ -12,6 +17,8 @@ type TourFilterProps = {
   category?: string;
   sort?: string;
   price?: string;
+  tourType?: string;
+  type?: string;
 };
 
 export const dbFindTour = async (filter: TourWhereUniqueInput) => {
@@ -55,6 +62,34 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
 
   if (filter.city) {
     where.slug = filter.city;
+  }
+
+  if (filter.tourType?.trim()) {
+    const tourTypes = filter.tourType
+      .split(",")
+      .filter((item): item is ToursType =>
+        Object.values(ToursType).includes(item as ToursType),
+      );
+
+    if (tourTypes.length) {
+      where.toursType = {
+        in: tourTypes,
+      };
+    }
+  }
+
+  if (filter.type?.trim()) {
+    const propertyTypes = filter.type
+      .split(",")
+      .filter((item): item is PropertyType =>
+        Object.values(PropertyType).includes(item as PropertyType),
+      );
+
+    if (propertyTypes.length) {
+      where.propertyType = {
+        in: propertyTypes,
+      };
+    }
   }
 
   if (filter.rating) {

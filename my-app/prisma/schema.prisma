@@ -82,6 +82,8 @@ model Tour {
   slug                String  @unique
   description         String
   imageUrl            String
+
+
   category            Categories
   propertyType        PropertyType
   toursType           ToursType

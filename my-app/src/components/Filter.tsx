@@ -45,9 +45,9 @@ export default function Filter() {
           label="Cottages"
         />
         <Checkbox
-          checked={selectedType.includes("appartments")}
-          onChange={() => toggleFilter("type", "appartments")}
-          label="Appartments"
+          checked={selectedType.includes("chalet")}
+          onChange={() => toggleFilter("type", "chalet")}
+          label="Chalet"
         />
       </div>
 
