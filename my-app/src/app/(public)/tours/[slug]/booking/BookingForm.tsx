@@ -24,6 +24,8 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { useFilters } from "@/hooks/useFilters";
+import BookingNotFound from "./BookingNotFound";
 
 export default function BookingForm({
   user,
@@ -35,6 +37,14 @@ export default function BookingForm({
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+
+  const { searchParams } = useFilters();
+
+  const departureDates = searchParams.get("departureDates");
+  const roomType = searchParams.get("roomType");
+  const adults = searchParams.get("adults");
+  const children = searchParams.get("children");
+  const rooms = searchParams.get("rooms");
 
   const [arrivalTime, setArrivalTime] = useState("");
 
@@ -60,6 +70,7 @@ export default function BookingForm({
   }, [user, reset]);
 
   const onSubmit = async (data: BookingSchema) => {
+    console.log(data);
     try {
       const checkout = {
         tourId,
@@ -68,6 +79,13 @@ export default function BookingForm({
           surname: data.surname,
           email: data.email,
           phoneNumber: data.phoneNumber,
+        },
+        departureData: {
+          departureId: Number(departureDates),
+          room: roomType,
+          adults: Number(adults),
+          children: Number(children),
+          numberOfRooms: Number(rooms),
         },
         contactDetails: {
           city: data.city,
@@ -129,6 +147,10 @@ export default function BookingForm({
       handleApiError(error);
     }
   };
+
+  if (!departureDates || !roomType || !adults || !children || !rooms) {
+    return <BookingNotFound />;
+  }
 
   return (
     <form

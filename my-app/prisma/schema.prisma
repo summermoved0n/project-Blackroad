@@ -179,6 +179,7 @@ model Booking {
 
   adults     Int
   children     Int
+  numberOfRooms Int
   room       RoomType    @default(single)
   totalPrice Decimal     @db.Decimal(10, 2)
   status     BookingStatus

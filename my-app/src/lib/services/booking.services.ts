@@ -22,6 +22,13 @@ type BookingDataProps = {
     email: string;
     phoneNumber: string;
   };
+  departureData: {
+    departureId: number;
+    room: RoomType;
+    adults: number;
+    children: number;
+    numberOfRooms: number;
+  };
   contactDetails: {
     city: string;
     address: string;
@@ -51,6 +58,14 @@ export const createBooking = async (data: BookingDataProps) => {
 
   if (!tour) {
     throw new Error("Tour not found");
+  }
+
+  const isRealDepartureDates = tour.departures.find(
+    (item) => item.id === data.departureData.departureId,
+  );
+
+  if (!isRealDepartureDates) {
+    throw new Error("Tour dates does not exist");
   }
 
   const isThisBookingExist = await dbFindBookingByFilter({
@@ -110,10 +125,11 @@ export const createBooking = async (data: BookingDataProps) => {
     userId: user.id,
     tourId: tour.id,
     customerId: newCustomer.id,
-    departureId: 1,
-    children: 1,
-    adults: 2,
-    room: RoomType.single,
+    departureId: isRealDepartureDates.id,
+    children: data.departureData.children,
+    adults: data.departureData.adults,
+    room: data.departureData.room,
+    numberOfRooms: data.departureData.numberOfRooms,
     totalPrice: tour.price,
     status: BookingStatus.pending,
   });

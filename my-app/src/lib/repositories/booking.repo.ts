@@ -11,6 +11,7 @@ type CreateBookingProps = {
   room: RoomType;
   totalPrice: number;
   status: BookingStatus;
+  numberOfRooms: number;
 };
 
 export const dbFindBookingById = async (id: number) =>

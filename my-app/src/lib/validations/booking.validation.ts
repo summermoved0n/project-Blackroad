@@ -1,4 +1,5 @@
 import z from "zod";
+import { RoomType } from "../../../generated/prisma/enums";
 
 export const bookingInterfaceSchema = z.object({
   name: z.string().min(1, "Must be at least 2 characters"),
@@ -7,6 +8,19 @@ export const bookingInterfaceSchema = z.object({
   phoneNumber: z.string(),
   city: z.string().min(2, "Must be at least 2 characters"),
   address: z.string().min(2, "Must be at least 2 characters"),
+  // departureId: z.number(),
+  // room: z.enum(RoomType, {
+  //   message: "Room must be either 'single' or 'double'",
+  // }),
+  // adults: z
+  //   .number()
+  //   .min(1, "Must be selected at least 1 tenant")
+  //   .max(10, "Max tenants for one booking is 10"),
+  // children: z.number().min(0).max(10, "Max children for one booking is 10"),
+  // numberOfRooms: z
+  //   .number()
+  //   .min(1, "Must be selected at least 1 room")
+  //   .max(10, "Total rooms for one booking is 10"),
   region: z
     .string()
     .min(2, "Must be at least 2 characters")
@@ -28,6 +42,21 @@ export const bookingAPISchema = z.object({
     surname: z.string().min(2, "Must be at least 2 characters"),
     email: z.string().email("Invalid email"),
     phoneNumber: z.string(),
+  }),
+  departureData: z.object({
+    departureId: z.number(),
+    room: z.enum(RoomType, {
+      message: "Room must be either 'single' or 'double'",
+    }),
+    adults: z
+      .number()
+      .min(1, "Must be selected at least 1 tenant")
+      .max(10, "Max tenants for one booking is 10"),
+    children: z.number().min(0).max(10, "Max children for one booking is 10"),
+    numberOfRooms: z
+      .number()
+      .min(1, "Must be selected at least 1 room")
+      .max(10, "Total rooms for one booking is 10"),
   }),
   contactDetails: z.object({
     city: z.string().min(2, "Must be at least 2 characters"),

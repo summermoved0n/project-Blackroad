@@ -32,7 +32,7 @@ export default function BookingInfoRating({ tour }: TourProps) {
         {capitalizeFirstLetter(category)}
       </Text>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between grid grid-cols-2 md:gap-5 md:grid-cols-1 xl:grid-cols-2 xl:gap-0">
         <Text as="p" color="white60" size="sm" className="flex gap-2">
           <WiFiIcon />
           Free Wi-Fi
