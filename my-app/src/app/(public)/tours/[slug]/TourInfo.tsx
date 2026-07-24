@@ -126,7 +126,7 @@ export default function TourInfo({
 
           <div className="mb-10 md:mb-0 flex items-center justify-between">
             <ReviewStars stars={rating} />
-            <Text as="h3" color="white" size="md" className="md:hidden">
+            <Text as="h3" color="white" size="sm">
               {rating}
             </Text>
           </div>

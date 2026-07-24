@@ -13,6 +13,7 @@ import {
 import { dbCreatePayment, dbFindPayment } from "../repositories/payment.repo";
 import { dbFindTour } from "../repositories/tour.repo";
 import { getCurrentUser } from "../utility/getCurrentUser";
+import { calculateTotalPrice } from "../utility/helpers";
 
 type BookingDataProps = {
   tourId: number;
@@ -73,8 +74,6 @@ export const createBooking = async (data: BookingDataProps) => {
     tourId: tour.id,
   });
 
-  console.log("isThisBookingExist", isThisBookingExist);
-
   if (isThisBookingExist?.status === BookingStatus.confirmed) {
     throw new Error("You have already booked this tour.");
   }
@@ -103,7 +102,20 @@ export const createBooking = async (data: BookingDataProps) => {
     };
   }
 
-  const { customerInfo, contactDetails, additional } = data;
+  const {
+    customerInfo,
+    contactDetails,
+    additional,
+    departureData: { adults, room, children, numberOfRooms },
+  } = data;
+
+  const { totalPrice, taxPrice } = calculateTotalPrice(
+    tour.price,
+    adults.toString(),
+    children.toString(),
+    numberOfRooms.toString(),
+    room,
+  );
 
   console.log("Creating new Customer...");
 
@@ -126,11 +138,11 @@ export const createBooking = async (data: BookingDataProps) => {
     tourId: tour.id,
     customerId: newCustomer.id,
     departureId: isRealDepartureDates.id,
-    children: data.departureData.children,
-    adults: data.departureData.adults,
-    room: data.departureData.room,
-    numberOfRooms: data.departureData.numberOfRooms,
-    totalPrice: tour.price,
+    children,
+    adults,
+    room,
+    numberOfRooms,
+    totalPrice: totalPrice + taxPrice,
     status: BookingStatus.pending,
   });
 

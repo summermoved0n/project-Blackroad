@@ -45,6 +45,7 @@ export default function ToursTabelMobile({
           <Text as="p" color="white60" size="sm">
             {new Date(startDate).toLocaleDateString("en-US", {
               weekday: "long",
+              timeZone: "UTC",
             })}
           </Text>
           <Text as="p" color="white" size="md">
@@ -52,6 +53,7 @@ export default function ToursTabelMobile({
               day: "2-digit",
               month: "short",
               year: "numeric",
+              timeZone: "UTC",
             })}
           </Text>
           <Text as="p" color="white60" size="sm">
@@ -68,6 +70,7 @@ export default function ToursTabelMobile({
           <Text as="p" color="white60" size="sm">
             {new Date(endDate).toLocaleDateString("en-US", {
               weekday: "long",
+              timeZone: "UTC",
             })}
           </Text>
           <Text as="p" color="white" size="md">
@@ -75,6 +78,7 @@ export default function ToursTabelMobile({
               day: "2-digit",
               month: "short",
               year: "numeric",
+              timeZone: "UTC",
             })}
           </Text>
           <Text as="p" color="white60" size="sm">

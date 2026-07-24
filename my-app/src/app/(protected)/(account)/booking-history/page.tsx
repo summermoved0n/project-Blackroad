@@ -17,7 +17,6 @@ export default async function page() {
   return (
     <section>
       <BookingHistoryList
-        userId={userId}
         userReviews={findReview}
         bookingHistoryList={userBookingHistory}
       />

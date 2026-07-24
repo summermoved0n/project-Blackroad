@@ -26,10 +26,12 @@ export default function SelectDate({ setShowModal }: SelectDateProps) {
               weekday: "short",
               month: "short",
               day: "numeric",
+              timeZone: "UTC",
             })} - ${new Date(pickDate[1]).toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
               day: "numeric",
+              timeZone: "UTC",
             })}`}
         <ArrowDownIcon />
       </button>

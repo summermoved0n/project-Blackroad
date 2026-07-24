@@ -6,8 +6,9 @@ import {
   dbCancelPaidBooking,
   dbCancelPendingBooking,
   dbCreateReview,
+  dbFindReview,
 } from "../repositories/profile.repo";
-import { dbFindTour } from "../repositories/tour.repo";
+import { dbFindTour, dbUpdateOneTour } from "../repositories/tour.repo";
 import { stripe } from "../stripe";
 import { getCurrentUser } from "../utility/getCurrentUser";
 
@@ -58,6 +59,19 @@ export const leaveReview = async ({
     comment: review,
     rating,
   });
+
+  const getAllTourReviews = await dbFindReview({ tourId: tour.id });
+  const averageRating =
+    getAllTourReviews.length === 0
+      ? 0
+      : Number(
+          (
+            getAllTourReviews.reduce((sum, review) => sum + review.rating, 0) /
+            getAllTourReviews.length
+          ).toFixed(1),
+        );
+  // console.log(averageRating);
+  await dbUpdateOneTour(tour.id, { rating: averageRating });
 };
 
 export const cancelBooking = async ({ bookingId }: { bookingId: number }) => {

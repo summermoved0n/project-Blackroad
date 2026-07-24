@@ -29,7 +29,7 @@ export default function Login() {
               size="md"
               className="text-center mb-7.5"
             >
-              Don&apos;t have an account?
+              Don&apos;t have an account?{" "}
               <button
                 className="group"
                 type="button"

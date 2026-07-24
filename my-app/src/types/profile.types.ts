@@ -19,18 +19,18 @@ export type TourListHistoryPayload = {
   id: number;
   totalPrice: Decimal;
   status: string;
+  user: {
+    id: number;
+  };
   tour: {
     id: number;
     title: string;
     slug: string;
     imageUrl: string;
-    departures: {
-      id: number;
-      tourId: number;
-      status: string;
-      startDate: Date;
-      endDate: Date;
-      departureCity: string;
-    }[];
+  };
+  departure: {
+    id: number;
+    startDate: Date;
+    endDate: Date;
   };
 };

@@ -7,14 +7,12 @@ import {
 import Link from "next/link";
 
 type BookingHistoryListProps = {
-  userId: number;
   bookingHistoryList: TourListHistoryPayload[];
   userReviews: UserReviewPayload[];
 };
 
 export default function BookingHistoryList({
   userReviews,
-  userId,
   bookingHistoryList,
 }: BookingHistoryListProps) {
   return (
@@ -40,17 +38,20 @@ export default function BookingHistoryList({
         </div>
       ) : (
         <ul className="flex flex-col gap-10">
-          {bookingHistoryList.map(({ id, totalPrice, tour, status }) => (
-            <BookingHistoryItem
-              key={id}
-              userId={userId}
-              bookingId={id}
-              userReviews={userReviews}
-              totalPrice={totalPrice.toString()}
-              tour={tour}
-              status={status}
-            />
-          ))}
+          {bookingHistoryList.map(
+            ({ id, totalPrice, tour, departure, status, user }) => (
+              <BookingHistoryItem
+                key={id}
+                userId={user.id}
+                bookingId={id}
+                userReviews={userReviews}
+                totalPrice={totalPrice.toString()}
+                tour={tour}
+                departure={departure}
+                status={status}
+              />
+            ),
+          )}
         </ul>
       )}
     </section>

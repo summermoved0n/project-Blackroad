@@ -20,22 +20,20 @@ type BookingHistoryItemProps = {
     title: string;
     slug: string;
     imageUrl: string;
-    departures: {
-      id: number;
-      tourId: number;
-      status: string;
-      startDate: Date;
-      endDate: Date;
-      departureCity: string;
-    }[];
+  };
+  departure: {
+    id: number;
+    startDate: Date;
+    endDate: Date;
   };
   userReviews: UserReviewPayload[];
 };
 
 export default function BookingHistoryItem({
+  userId,
   bookingId,
   userReviews,
-  userId,
+  departure,
   totalPrice,
   tour,
   status,
@@ -61,21 +59,17 @@ export default function BookingHistoryItem({
             </Text>
 
             <Text as="p" color="black60" size="sm">
-              {new Date(tour.departures[0].startDate).toLocaleDateString(
-                "en-US",
-                {
-                  day: "2-digit",
-                  month: "short",
-                },
-              )}{" "}
+              {new Date(departure.startDate).toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+                timeZone: "UTC",
+              })}{" "}
               -{" "}
-              {new Date(tour.departures[0].endDate).toLocaleDateString(
-                "en-US",
-                {
-                  day: "2-digit",
-                  month: "short",
-                },
-              )}
+              {new Date(departure.endDate).toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+                timeZone: "UTC",
+              })}
             </Text>
 
             <Text as="h2" color="black" size="md" className="md:hidden h-fit">

@@ -47,7 +47,7 @@ export default function DotButtonMenu({
       (review) => review.tour.slug === tourSlug && review.author.id === userId,
     );
 
-    const isStatusComplited = status === "cancelled";
+    const isStatusComplited = status === "cancelled" || status === "completed";
     return isUserAndTourMatch || isStatusComplited;
   };
 

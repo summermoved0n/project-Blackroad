@@ -56,6 +56,13 @@ export const dbFindPopularTours = async () => {
   });
 };
 
+export const dbUpdateOneTour = async (id: number, data: { rating: number }) => {
+  return prisma.tour.update({
+    where: { id },
+    data,
+  });
+};
+
 export const dbFindFilteredTours = async (filter: TourFilterProps) => {
   const where: Prisma.TourWhereInput = {};
   const orderBy: Prisma.TourOrderByWithRelationInput = {};

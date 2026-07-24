@@ -57,6 +57,7 @@ export default function BookingInfoDates({
               day: "2-digit",
               month: "short",
               year: "numeric",
+              timeZone: "UTC",
             })}
           </Text>
         </div>
@@ -66,14 +67,13 @@ export default function BookingInfoDates({
             Date of departure
           </Text>
           <Text as="p" color="white" size="sm">
-            {departureDates
-              ? new Date(endDate).toLocaleDateString("en-US", {
-                  weekday: "short",
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                })
-              : "Wrong data"}
+            {new Date(endDate).toLocaleDateString("en-US", {
+              weekday: "short",
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              timeZone: "UTC",
+            })}
           </Text>
         </div>
       </div>
