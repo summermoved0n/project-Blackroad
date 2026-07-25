@@ -60,7 +60,11 @@ export default function LeaveReview({
             onClick={() => setRating(star)}
             className="focus:outline-none"
           >
-            {rating >= star ? <EmptyStarIcon filled /> : <EmptyStarIcon />}
+            {rating >= star ? (
+              <EmptyStarIcon fillPercent={100} />
+            ) : (
+              <EmptyStarIcon fillPercent={0} />
+            )}
           </button>
         ))}
       </div>
