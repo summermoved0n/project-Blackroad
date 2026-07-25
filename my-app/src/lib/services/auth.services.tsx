@@ -10,8 +10,8 @@ import {
 } from "../repositories/auth.repo";
 import { resend } from "../resend";
 import { getCurrentUser } from "../utility/getCurrentUser";
-import { Prisma } from "../../../generated/prisma/browser";
 import { parseBirthDate } from "../utility/helpers";
+import VerifyEmail from "@/emails/VerifyEmail";
 
 const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
@@ -68,7 +68,11 @@ export const signUpUser = async ({ email, password }: SignUpUserProps) => {
     from: RESEND_EMAIL_FROM!,
     to: email,
     subject: "Verify email for Blackroad",
-    html: `<a href="${BASE_URL}/verify/${verificationToken}" target="_blank">Click to verify</a>`,
+    react: (
+      <VerifyEmail
+        verificationUrl={`${BASE_URL}/verify/${verificationToken}`}
+      />
+    ),
   });
 };
 

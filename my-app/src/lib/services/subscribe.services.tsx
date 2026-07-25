@@ -7,6 +7,7 @@ import {
 import { resend } from "../resend";
 import { getCurrentUser } from "../utility/getCurrentUser";
 import { dbFindUser } from "../repositories/auth.repo";
+import SubscribeEmail from "@/emails/SubscribeEmail";
 
 const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
@@ -46,7 +47,11 @@ export const userSubscribe = async ({ email }: { email: string }) => {
     from: RESEND_EMAIL_FROM!,
     to: email,
     subject: "Subscribe to Blackroad Newsletter",
-    html: `<a href="${BASE_URL}/subscribe/confirm?token=${verificationToken}" target="_blank">Click to subscribe</a>`,
+    react: (
+      <SubscribeEmail
+        confirmationUrl={`${BASE_URL}/subscribe/confirm?token=${verificationToken}`}
+      />
+    ),
   });
 };
 
