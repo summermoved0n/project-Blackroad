@@ -16,11 +16,13 @@ import { ArrowLeftIcon } from "@/components/icons/ArrowLeftIcon";
 import { handleApiError } from "@/lib/utility/handleApiError";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Spinner from "@/components/ui/loader/Spinner";
 
 export default function ForgotForm() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(true);
   const [showForm, setShowForm] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -31,6 +33,7 @@ export default function ForgotForm() {
   });
 
   const onSubmit = async (data: ForgotPasswordSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/forgot-password", data);
 
@@ -39,6 +42,8 @@ export default function ForgotForm() {
       toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +84,13 @@ export default function ForgotForm() {
               />
 
               <Button variant="primary" type="submit">
-                Renew password
+                {isLoading ? (
+                  <div className="flex justify-center">
+                    <Spinner size="sm" />
+                  </div>
+                ) : (
+                  "Renew password"
+                )}
               </Button>
 
               <div className="flex justify-center">

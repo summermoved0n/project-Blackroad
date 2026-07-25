@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { handleApiError } from "@/lib/utility/handleApiError";
+import Spinner from "./ui/loader/Spinner";
 
 export default function SubscribeField({
   isKeepInTouch,
@@ -13,8 +14,10 @@ export default function SubscribeField({
   isKeepInTouch?: boolean;
 }) {
   const [email, setEmail] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setIsLoading(true);
     try {
       e.preventDefault();
       const response = await axios.post("/api/subscribe", { email });
@@ -22,6 +25,8 @@ export default function SubscribeField({
       setEmail("");
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,7 +51,13 @@ export default function SubscribeField({
       />
 
       <Button variant="primary" size="sm" type="submit">
-        Subscribe
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner size="sm" />
+          </div>
+        ) : (
+          "Subscribe"
+        )}
       </Button>
     </form>
   );

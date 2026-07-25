@@ -10,6 +10,7 @@ import SearchForm from "@/components/SearchForm";
 import Filter from "@/components/Filter";
 import { PopularToursProps, TourListPayload } from "@/types/tour.types";
 import { Text } from "@/components/Text";
+import Spinner from "@/components/ui/loader/Spinner";
 
 const toursPerPage = 4;
 
