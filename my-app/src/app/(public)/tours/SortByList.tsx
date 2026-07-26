@@ -26,7 +26,7 @@ export default function SortByList({
         setShowSortList?.(false);
         setFilter("sort", label);
       }}
-      className="text-left"
+      className="text-left w-fit"
     >
       <Text
         as="p"

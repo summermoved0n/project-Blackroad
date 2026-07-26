@@ -1,12 +1,7 @@
 import { z } from "zod";
 
 export const subscribeEmailSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .email("Invalid email")
-    .or(z.literal("")),
+  email: z.string().trim().toLowerCase().email("Invalid email"),
 });
 
 export const subscribeConfirmSchema = z.object({

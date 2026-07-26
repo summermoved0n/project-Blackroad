@@ -27,7 +27,7 @@ export default function FAQItem({ question, description }: FAQItemProps) {
       </div>
 
       {showText && (
-        <Text as="p" color="black60" size="sm" className="w-[80%] mt-7.5">
+        <Text as="p" color="black60" size="sm" className="mt-7.5">
           {description}
         </Text>
       )}
