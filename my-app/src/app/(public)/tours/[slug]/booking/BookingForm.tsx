@@ -26,6 +26,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useFilters } from "@/hooks/useFilters";
 import BookingNotFound from "./BookingNotFound";
+import Spinner from "@/components/ui/loader/Spinner";
 
 export default function BookingForm({
   user,
@@ -46,6 +47,7 @@ export default function BookingForm({
   const children = searchParams.get("children");
   const rooms = searchParams.get("rooms");
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [arrivalTime, setArrivalTime] = useState("");
 
   const {
@@ -70,7 +72,7 @@ export default function BookingForm({
   }, [user, reset]);
 
   const onSubmit = async (data: BookingSchema) => {
-    console.log(data);
+    setIsLoading(true);
     try {
       const checkout = {
         tourId,
@@ -145,6 +147,8 @@ export default function BookingForm({
       toast.error("Payment was not completed");
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -181,7 +185,13 @@ export default function BookingForm({
         variant="primary"
         disabled={isSubmitting || !stripe || !elements}
       >
-        Book and pay
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner size="sm" />
+          </div>
+        ) : (
+          "Book and pay"
+        )}
       </Button>
     </form>
   );

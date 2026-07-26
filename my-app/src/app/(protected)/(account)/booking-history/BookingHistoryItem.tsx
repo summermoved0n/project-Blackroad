@@ -39,7 +39,6 @@ export default function BookingHistoryItem({
   status,
 }: BookingHistoryItemProps) {
   const [menuItem, setMenuItem] = useState<string | null>(null);
-
   return (
     <>
       <li className="bg-white md:h-35 flex flex-col md:flex-row">

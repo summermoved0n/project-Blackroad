@@ -1,6 +1,5 @@
 'use client";';
 
-// import { Button } from "@/components/Button";
 import ReviewStars from "@/components/ReviewStars";
 import SelectPeopleAndRooms from "@/components/SelectPeopleAndRooms";
 import { Text } from "@/components/Text";
@@ -82,30 +81,32 @@ export default function TourInfo({
         </Text>
       </div>
 
-      <div className="flex justify-between w-full mb-10 gap-10">
+      <div className="flex justify-between md:grid md:grid-cols-[2fr_1fr] w-full mb-10 md:gap-10 lg:gap-35">
         <Text as="h2" color="white" size="lg" className="uppercase">
           {title}
         </Text>
 
-        {favoriteTour ? (
-          <button
-            type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
-            onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
-          >
-            <span className="hidden md:block">Add to Favorites</span>
-            <EmptyHeartIcon active />
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
-            onClick={() => onAddToFavoriteClick(id!)}
-          >
-            <span className="hidden md:block">Add to Favorites</span>
-            <EmptyHeartIcon />
-          </button>
-        )}
+        <div className="flex justify-end">
+          {favoriteTour ? (
+            <button
+              type="button"
+              className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-end items-center gap-5 hover:text-accent focus:text-accent transition"
+              onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
+            >
+              <span className="hidden md:block">Add to Favorites</span>
+              <EmptyHeartIcon active />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
+              onClick={() => onAddToFavoriteClick(id!)}
+            >
+              <span className="hidden md:block">Add to Favorites</span>
+              <EmptyHeartIcon />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="w-full md:h-163 grid md:grid-cols-[2fr_1fr] md:gap-10 lg:gap-35">

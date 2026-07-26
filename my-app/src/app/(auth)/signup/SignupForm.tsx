@@ -13,9 +13,12 @@ import { handleApiError } from "@/lib/utility/handleApiError";
 import InputField from "@/components/InputField";
 import InputPassword from "@/components/InputPassword";
 import { Button } from "@/components/Button";
+import { useState } from "react";
+import Spinner from "@/components/ui/loader/Spinner";
 
 export default function SignupForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -26,6 +29,7 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: SignupSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/signup", data);
       router.back();
@@ -33,6 +37,8 @@ export default function SignupForm() {
       toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,7 +70,13 @@ export default function SignupForm() {
       />
 
       <Button variant="primary" type="submit">
-        Sign up
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner size="sm" />
+          </div>
+        ) : (
+          "Sign up"
+        )}
       </Button>
     </form>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text } from "@/components/Text";
 import { CrossGreyIcon } from "@/components/icons";
 import { Button } from "@/components/Button";
@@ -6,6 +6,7 @@ import { handleApiError } from "@/lib/utility/handleApiError";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/ui/loader/Spinner";
 
 type CancelBookingProps = {
   bookingId: number;
@@ -17,8 +18,10 @@ export default function CancelBooking({
   setMenuItem,
 }: CancelBookingProps) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCancel = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.post("api/profile/cancel-booking", {
         bookingId,
@@ -29,6 +32,8 @@ export default function CancelBooking({
       router.refresh();
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -54,10 +59,16 @@ export default function CancelBooking({
       <Button
         variant="primary"
         size="sm"
-        className="text-black"
+        className="text-black flex justify-center items-center"
         onClick={() => handleCancel()}
       >
-        Cancel
+        {isLoading ? (
+          <div className="flex justify-center">
+            <Spinner size="sm" />
+          </div>
+        ) : (
+          "Cancel"
+        )}
       </Button>
     </li>
   );

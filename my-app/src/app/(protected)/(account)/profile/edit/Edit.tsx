@@ -16,10 +16,12 @@ import Modal from "@/components/Modal";
 import { useState } from "react";
 import MaskInput from "@/components/MaskInput";
 import { Button } from "@/components/Button";
+import Spinner from "@/components/ui/loader/Spinner";
 
 export default function Edit() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     control,
@@ -31,6 +33,7 @@ export default function Edit() {
   });
 
   const onSubmit = async (data: EditUserInfoSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/user-update", data);
       toast.success(response.data.message);
@@ -38,6 +41,8 @@ export default function Edit() {
       router.refresh();
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,9 +112,9 @@ export default function Edit() {
                 as="p"
                 color="white"
                 size="sm"
-                className="hover:text-accent transition"
+                className="hover:text-accent transition flex justify-center items-center gap-4"
               >
-                Submit changes
+                Submit changes {isLoading && <Spinner size="sm" />}
               </Text>
             </Button>
           </div>

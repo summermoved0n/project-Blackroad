@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import ForgotPasswordBtn from "@/components/ForgotPasswordBtn";
 import InputPassword from "@/components/InputPassword";
 import { Text } from "@/components/Text";
+import Spinner from "@/components/ui/loader/Spinner";
 import { handleApiError } from "@/lib/utility/handleApiError";
 import {
   ChangePasswordSchema,
@@ -11,10 +12,13 @@ import {
 } from "@/lib/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function ChangePassword() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const {
     reset,
     register,
@@ -25,12 +29,15 @@ export default function ChangePassword() {
   });
 
   const onSubmit = async (data: ChangePasswordSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/change-password", data);
       toast.success(response.data.message);
       reset();
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +79,13 @@ export default function ChangePassword() {
         />
 
         <Button type="submit" variant="primary" size="sm">
-          Save
+          {isLoading ? (
+            <div className="flex justify-center">
+              <Spinner size="sm" />
+            </div>
+          ) : (
+            "Save"
+          )}
         </Button>
       </form>
     </div>

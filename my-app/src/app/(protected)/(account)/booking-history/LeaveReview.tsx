@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { EmptyStarIcon } from "@/components/icons";
 import { CrossGreyIcon } from "@/components/icons/CrossGreyIcon";
 import { Text } from "@/components/Text";
+import Spinner from "@/components/ui/loader/Spinner";
 import { handleApiError } from "@/lib/utility/handleApiError";
 import axios from "axios";
 import { useRouter } from "next/dist/client/components/navigation";
@@ -22,8 +23,10 @@ export default function LeaveReview({
   const router = useRouter();
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     try {
       e.preventDefault();
       const payload = {
@@ -38,6 +41,8 @@ export default function LeaveReview({
       router.refresh();
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -89,7 +94,13 @@ export default function LeaveReview({
           type="submit"
           className="text-black"
         >
-          Submit Review
+          {isLoading ? (
+            <div className="flex justify-center">
+              <Spinner size="sm" />
+            </div>
+          ) : (
+            "Submit Review"
+          )}
         </Button>
       </form>
     </li>

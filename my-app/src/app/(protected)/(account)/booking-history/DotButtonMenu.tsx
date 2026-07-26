@@ -43,12 +43,8 @@ export default function DotButtonMenu({
   };
 
   const isDisabledCancelBookingBtn = () => {
-    const isUserAndTourMatch = userReviews.some(
-      (review) => review.tour.slug === tourSlug && review.author.id === userId,
-    );
-
     const isStatusComplited = status === "cancelled" || status === "completed";
-    return isUserAndTourMatch || isStatusComplited;
+    return isStatusComplited;
   };
 
   return (
