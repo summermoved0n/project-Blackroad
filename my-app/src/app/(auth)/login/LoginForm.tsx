@@ -16,9 +16,12 @@ import toast from "react-hot-toast";
 import ForgotPasswordBtn from "@/components/ForgotPasswordBtn";
 import { Text } from "@/components/Text";
 import SignWithSocialMedia from "@/components/SignWithSocialMedia";
+import { useState } from "react";
+import Spinner from "@/components/ui/loader/Spinner";
 
 export default function LoginForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -29,6 +32,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/login", data);
       router.back();
@@ -36,6 +40,8 @@ export default function LoginForm() {
       toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,7 +67,13 @@ export default function LoginForm() {
 
       <div className="w-full flex gap-25 mb-10">
         <Button variant="primary" size="sm" type="submit">
-          Login
+          {isLoading ? (
+            <div className="flex justify-center">
+              <Spinner size="sm" />
+            </div>
+          ) : (
+            "Login"
+          )}
         </Button>
 
         <ForgotPasswordBtn fromLogin />

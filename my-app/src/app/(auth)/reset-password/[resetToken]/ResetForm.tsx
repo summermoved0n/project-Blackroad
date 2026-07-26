@@ -3,6 +3,7 @@
 import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { Text } from "@/components/Text";
+import Spinner from "@/components/ui/loader/Spinner";
 import { handleApiError } from "@/lib/utility/handleApiError";
 import {
   resetPassValidationSchema,
@@ -10,14 +11,15 @@ import {
 } from "@/lib/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function ResetForm() {
+export default function ResetForm({ resetToken }: { resetToken: string }) {
   const router = useRouter();
-  const { resetToken } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -27,6 +29,7 @@ export default function ResetForm() {
   });
 
   const onSubmit = async (data: ResetPasswordSchema) => {
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/reset-password", {
         ...data,
@@ -38,18 +41,14 @@ export default function ResetForm() {
       toast.success(response.data.message);
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <main
-      className="pt-17 sm:pt-20 bg-primary
-"
-    >
-      <div
-        className="bg-secondary
- p-20 flex flex-col justify-center items-center"
-      >
+    <main className="pt-17 sm:pt-20 bg-primary">
+      <div className="bg-secondary p-20 flex flex-col justify-center items-center">
         <div className="md:w-130 mb-7.5">
           <Text
             as="p"
@@ -85,7 +84,13 @@ export default function ResetForm() {
           />
 
           <Button variant="primary" type="submit">
-            Reset password
+            {isLoading ? (
+              <div className="flex justify-center">
+                <Spinner size="sm" />
+              </div>
+            ) : (
+              "Reset password"
+            )}
           </Button>
         </form>
       </div>

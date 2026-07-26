@@ -12,6 +12,7 @@ import { resend } from "../resend";
 import { getCurrentUser } from "../utility/getCurrentUser";
 import { parseBirthDate } from "../utility/helpers";
 import VerifyEmail from "@/emails/VerifyEmail";
+import ForgotPasswordEmail from "@/emails/ForgotPasswordEmail";
 
 const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
@@ -176,7 +177,12 @@ export const userForgotPassword = async ({ email }: { email: string }) => {
     from: RESEND_EMAIL_FROM!,
     to: email,
     subject: "Reset password for Blackroad",
-    html: `<a href="${BASE_URL}/reset-password/${resetToken}" target="_blank">Click to reset password</a>`,
+    react: (
+      <ForgotPasswordEmail
+        name={existedUser.name}
+        resetUrl={`${BASE_URL}/reset-password/${resetToken}`}
+      />
+    ),
   });
 };
 
