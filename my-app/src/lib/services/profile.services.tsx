@@ -1,6 +1,9 @@
 import { BookingStatus, PaymentStatus } from "../../../generated/prisma/client";
 import { dbFindUser } from "../repositories/auth.repo";
-import { dbFindBookingById } from "../repositories/booking.repo";
+import {
+  dbFindBookingById,
+  dbFindBookingEmailData,
+} from "../repositories/booking.repo";
 import { dbFindPayment } from "../repositories/payment.repo";
 import {
   dbCancelPaidBooking,
@@ -9,8 +12,10 @@ import {
   dbFindReview,
 } from "../repositories/profile.repo";
 import { dbFindTour, dbUpdateOneTour } from "../repositories/tour.repo";
+import { resend } from "../resend";
 import { stripe } from "../stripe";
 import { getCurrentUser } from "../utility/getCurrentUser";
+import BookingCancelledEmail from "@/emails/BookingCancelledEmail";
 
 type LeaveReviewProps = {
   review: string;
@@ -70,7 +75,7 @@ export const leaveReview = async ({
             getAllTourReviews.length
           ).toFixed(1),
         );
-  // console.log(averageRating);
+
   await dbUpdateOneTour(tour.id, { rating: averageRating });
 };
 
@@ -151,4 +156,40 @@ export const cancelBooking = async ({ bookingId }: { bookingId: number }) => {
   }
 
   await dbCancelPaidBooking({ bookingId, paymentId: payment.id });
+
+  const bookingData = await dbFindBookingEmailData(bookingId);
+
+  if (bookingData) {
+    await resend.emails.send({
+      from: process.env.RESEND_EMAIL_FROM!,
+      to: bookingData.user.email,
+      subject: "Booking Cancellation from Blackroad",
+      react: (
+        <BookingCancelledEmail
+          customerName={bookingData.user.name}
+          tourTitle={bookingData.tour.title}
+          departureDate={new Date(
+            bookingData.departure.startDate,
+          ).toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            timeZone: "UTC",
+          })}
+          returnDate={new Date(
+            bookingData.departure.endDate,
+          ).toLocaleDateString("en-US", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            timeZone: "UTC",
+          })}
+          guests={bookingData.adults + bookingData.children}
+          wasPaid={bookingData.status === "cancelled"}
+          imageUrl={bookingData.tour.imageUrl}
+          toursUrl={`${process.env.BASE_URL}/tours`}
+        />
+      ),
+    });
+  }
 };

@@ -7,6 +7,9 @@ import {
 } from "@/lib/repositories/webhook.repo";
 import { dbUpdatePaymentByFilter } from "@/lib/repositories/payment.repo";
 import { PaymentStatus } from "../../../../../generated/prisma/enums";
+import { resend } from "@/lib/resend";
+import BookingConfirmationEmail from "@/emails/BookingConfirmationEmail";
+import { dbFindBookingEmailData } from "@/lib/repositories/booking.repo";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -46,6 +49,43 @@ export async function POST(req: Request) {
       paymentId,
       providerPaymentId: paymentIntent.id,
     });
+
+    const bookingData = await dbFindBookingEmailData(bookingId);
+
+    if (bookingData) {
+      await resend.emails.send({
+        from: process.env.RESEND_EMAIL_FROM!,
+        to: bookingData.user.email,
+        subject: "Confirmation Email from Blackroad",
+        react: (
+          <BookingConfirmationEmail
+            customerName={bookingData.user.name}
+            tourTitle={bookingData.tour.title}
+            departureDate={new Date(
+              bookingData.departure.startDate,
+            ).toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              timeZone: "UTC",
+            })}
+            returnDate={new Date(
+              bookingData.departure.endDate,
+            ).toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              timeZone: "UTC",
+            })}
+            guests={bookingData.adults + bookingData.children}
+            room={bookingData.room}
+            totalPrice={bookingData.totalPrice.toString()}
+            imageUrl={bookingData.tour.imageUrl}
+            bookingUrl={`${process.env.BASE_URL}/booking-history`}
+          />
+        ),
+      });
+    }
   } else if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 

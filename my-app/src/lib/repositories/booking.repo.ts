@@ -19,6 +19,37 @@ export const dbFindBookingById = async (id: number) =>
     where: { id },
   });
 
+export const dbFindBookingEmailData = async (id: number) =>
+  prisma.booking.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      status: true,
+      totalPrice: true,
+      room: true,
+      adults: true,
+      children: true,
+      user: {
+        select: {
+          email: true,
+          name: true,
+        },
+      },
+      tour: {
+        select: {
+          title: true,
+          imageUrl: true,
+        },
+      },
+      departure: {
+        select: {
+          startDate: true,
+          endDate: true,
+        },
+      },
+    },
+  });
+
 export const dbFindBookingByFilter = async (filter: {
   userId: number;
   tourId?: number;

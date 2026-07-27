@@ -28,9 +28,15 @@ export default async function page({ searchParams }: Props) {
 
   return (
     <div className="pt-20 bg-primary">
-      <div className="bg-secondary p-10">
-        <Text as="p" color="white" size="md">
-          {isSuccess ? "Payment successful" : "Payment is not completed"}
+      <div className="bg-secondary py-10 px-20">
+        <Text as="p" color="white" size="md" className="mb-5">
+          {isSuccess ? "Payment successful" : "Payment was not completed"}
+        </Text>
+
+        <Text as="p" color="white60" size="sm">
+          {isSuccess
+            ? "A confirmation email with your booking summary and next steps has been sent to your email address. Please check your inbox (and spam folder if you don't see it)."
+            : "Your booking has not been confirmed because the payment was not completed. Please try again or contact our support team if the problem persists."}
         </Text>
       </div>
     </div>

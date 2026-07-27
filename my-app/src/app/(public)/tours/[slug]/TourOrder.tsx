@@ -3,6 +3,7 @@
 import { Text } from "@/components/Text";
 import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import { ChevronRightIcon } from "@/components/icons/ChevronRightIcon";
+import { orderPolicySections } from "@/lib/data/homePageData";
 import { clsx } from "clsx";
 import { useState } from "react";
 
@@ -26,28 +27,24 @@ export default function TourOrder() {
           {showOrder ? <ArrowDownIcon isBig /> : <ChevronRightIcon />}
         </button>
 
-        {/* {showOrder && (
+        {showOrder && (
           <ol className="pl-5 list-decimal marker:text-white/60 flex flex-col gap-4">
-            {cancellationPolicy.map(({ id, text, points }) => (
-              <li key={id}>
+            {orderPolicySections.map(({ title, description }) => (
+              <li key={title}>
                 <Text as="p" color="white60" size="sm">
-                  {text}
+                  {title}
                 </Text>
-                {points && (
-                  <ol className="mt-2 pl-5 list-disc marker:text-white/60 flex flex-col gap-2">
-                    {points.map((point, index) => (
-                      <li key={index}>
-                        <Text as="p" color="white60" size="sm">
-                          {point}
-                        </Text>
-                      </li>
-                    ))}
-                  </ol>
-                )}
+                <ol className="mt-2 pl-5 list-disc marker:text-white/60 flex flex-col gap-2">
+                  <li>
+                    <Text as="p" color="white60" size="sm">
+                      {description}
+                    </Text>
+                  </li>
+                </ol>
               </li>
             ))}
           </ol>
-        )} */}
+        )}
       </div>
     </section>
   );

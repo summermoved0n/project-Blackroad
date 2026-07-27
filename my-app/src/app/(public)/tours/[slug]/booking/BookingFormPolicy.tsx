@@ -1,29 +1,42 @@
 import Modal from "@/components/Modal";
 import { Text } from "@/components/Text";
+import { orderPolicySections } from "@/lib/data/homePageData";
 import { cancellationPolicy } from "@/lib/data/toursPageData";
 import { useState } from "react";
 
 export default function BookingFormPolicy() {
   const [showPolicy, setShowPolicy] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
+
   return (
     <section>
       <div className="w-full flex flex-col gap-5">
         <button
           className="w-fit group"
           type="button"
-          onClick={() => setShowPolicy(!showPolicy)}
+          onClick={() => {
+            setShowPolicy(!showPolicy);
+            setShowOrder(false);
+          }}
         >
           <Text
             as="h2"
             color="white"
             size="sm"
-            className="group-hover:text-accent group-focus:text-accent transition"    
+            className="group-hover:text-accent group-focus:text-accent transition"
           >
             Cancellation Policy
           </Text>
         </button>
 
-        <button className="w-fit group" type="button">
+        <button
+          className="w-fit group"
+          type="button"
+          onClick={() => {
+            setShowOrder(!showOrder);
+            setShowPolicy(false);
+          }}
+        >
           <Text
             as="h2"
             color="white"
@@ -36,7 +49,7 @@ export default function BookingFormPolicy() {
       </div>
 
       <Modal openModal={showPolicy} setOpenModal={setShowPolicy} isUIModal>
-        <div className="px-20 pt-20">
+        <div className="p-20">
           <Text as="h2" color="white" size="md" className="mb-10">
             Cancellation Policy
           </Text>
@@ -57,6 +70,30 @@ export default function BookingFormPolicy() {
                     ))}
                   </ol>
                 )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Modal>
+
+      <Modal openModal={showOrder} setOpenModal={setShowOrder} isUIModal>
+        <div className="p-20">
+          <Text as="h2" color="white" size="md" className="mb-10">
+            Order Policy
+          </Text>
+          <ol className="pl-5 list-decimal marker:text-white/60 flex flex-col gap-4">
+            {orderPolicySections.map(({ title, description }) => (
+              <li key={title}>
+                <Text as="p" color="white60" size="sm">
+                  {title}
+                </Text>
+                <ol className="mt-2 pl-5 list-disc marker:text-white/60 flex flex-col gap-2">
+                  <li>
+                    <Text as="p" color="white60" size="sm">
+                      {description}
+                    </Text>
+                  </li>
+                </ol>
               </li>
             ))}
           </ol>

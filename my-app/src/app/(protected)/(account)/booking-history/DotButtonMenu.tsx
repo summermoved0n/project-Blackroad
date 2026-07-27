@@ -62,7 +62,7 @@ export default function DotButtonMenu({
       {showMenu && (
         <div className="absolute w-42 bg-white text-black right-0 top-10 shadow-lg">
           <button
-            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 w-full"
             type="button"
             onClick={() => {
               setMenuItem(MenuItem.BookingAgain);
@@ -73,7 +73,7 @@ export default function DotButtonMenu({
             {MenuItem.BookingAgain}
           </button>
           <button
-            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400 w-full"
             type="button"
             disabled={isDisabledReviewBtn()}
             onClick={() => {
@@ -84,7 +84,7 @@ export default function DotButtonMenu({
             {MenuItem.LeaveReview}
           </button>
           <button
-            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400"
+            className="px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 disabled:text-gray-400 w-full"
             type="button"
             disabled={isDisabledCancelBookingBtn()}
             onClick={() => {
