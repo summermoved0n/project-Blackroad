@@ -37,24 +37,17 @@ export const calculateTotalPrice = (
   rooms: string,
   roomType: string,
 ): { totalPrice: number; taxPrice: number } => {
-  let roomTypeFee;
-
   const taxValue = 0.15;
 
   const adultsPrice = tourPrice * Number(adults);
   const childrenPrice = tourPrice * Number(children);
 
-  if (roomType === "single") {
-    roomTypeFee = 500;
-  } else if (roomType === "double") {
-    roomTypeFee = 600;
-  } else {
-    roomTypeFee = 0;
-  }
+  const roomPrice =
+    roomType === "single" ? 500 : roomType === "double" ? 600 : 0;
 
-  const roomsPrice = roomTypeFee * Number(rooms);
+  const roomsPrice = roomPrice * Number(rooms);
 
-  const totalPrice = adultsPrice + childrenPrice + roomsPrice + roomTypeFee;
+  const totalPrice = adultsPrice + childrenPrice + roomsPrice;
 
   return { totalPrice, taxPrice: totalPrice * taxValue };
 };
