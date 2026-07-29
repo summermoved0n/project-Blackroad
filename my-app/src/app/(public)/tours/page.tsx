@@ -6,17 +6,18 @@ import {
 } from "@/lib/repositories/tour.repo";
 import { dbFindFavorteTours } from "@/lib/repositories/profile.repo";
 import { getCurrentUser } from "@/lib/utility/getCurrentUser";
+import { Categories, Province } from "../../../../generated/prisma/enums";
 
 export default async function page({
   searchParams,
 }: {
   searchParams: Promise<{
-    provicnce?: string;
+    province?: Province;
     dates?: string;
     rating?: string;
     price?: string;
     sort?: string;
-    category?: string;
+    category?: Categories;
   }>;
 }) {
   const userId = await getCurrentUser();

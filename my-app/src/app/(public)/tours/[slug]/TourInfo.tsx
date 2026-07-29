@@ -147,7 +147,7 @@ export default function TourInfo({
                 Tour capacity:
               </Text>
               <Text as="p" color="white" size="sm">
-                35
+                {tourData.capacity}
               </Text>
             </div>
 

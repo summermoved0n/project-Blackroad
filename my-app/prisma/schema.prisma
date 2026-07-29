@@ -106,6 +106,8 @@ model Tour {
   toursType           ToursType
   rating              Float @default(0) 
   price               Int
+  capacity            Int
+
 
   route               String[]
   food                String
@@ -129,7 +131,6 @@ model TourDeparture {
 
   bookings    Booking[]
 
-  capacity    Int
   availableSeats  Int
 
   startDate   DateTime

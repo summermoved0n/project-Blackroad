@@ -15,6 +15,7 @@ type ToursTabelMobileProps = {
     tourId: number;
     startDate: Date;
     endDate: Date;
+    availableSeats: number;
     departureCity: string;
     status: string;
   };
@@ -31,7 +32,7 @@ export default function ToursTabelMobile({
   const children = searchParams.get(FilterField.children) || "0";
   const rooms = searchParams.get(FilterField.rooms) || "1";
 
-  const { id, startDate, endDate, departureCity } = tourDate;
+  const { id, startDate, endDate, departureCity, availableSeats } = tourDate;
   const [selectedRoom, setSelectedRoom] = useState("single");
 
   return (
@@ -141,6 +142,7 @@ export default function ToursTabelMobile({
       <Button
         variant="primary"
         size="sm"
+        disabled={availableSeats === 0}
         onClick={() =>
           router.push(
             `${slug}/booking?departureDates=${id}&roomType=${selectedRoom}&adults=${adults}&children=${children}&rooms=${rooms}`,

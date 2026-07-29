@@ -1,7 +1,5 @@
-"use client";
-
 import { Text } from "./Text";
-import SelectCity from "./SelectCity";
+import SelectProvince from "./SelectProvince";
 import SelectDate from "./SelectDate";
 import SelectPeopleAndRooms from "./SelectPeopleAndRooms";
 import Modal from "./Modal";
@@ -12,7 +10,7 @@ import { useFilters } from "@/hooks/useFilters";
 import clsx from "clsx";
 
 type SearchFormProps = {
-  tours: { id: number; slug: string; title: string }[];
+  tours: { id: number; province: string; title: string }[];
   fromTours?: boolean;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -36,7 +34,7 @@ export default function SearchForm({
           : "md:pl-10 xl:pl-10 md:grid-cols-[1fr_1fr_1fr_180px]",
       )}
     >
-      <SelectCity tours={tours} />
+      <SelectProvince tours={tours} />
       <SelectDate setShowModal={setShowModal} />
       <SelectPeopleAndRooms />
       {!fromTours && (

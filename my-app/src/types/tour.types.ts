@@ -2,6 +2,7 @@ export type TourPayload = {
   slug: string;
   id: number;
   title: string;
+  province: string;
   description: string;
   imageUrl: string;
   category: string;
@@ -11,10 +12,12 @@ export type TourPayload = {
   route: string[];
   food: string;
   rating: number;
+  capacity: number;
 
   departures: {
     id: number;
     tourId: number;
+    availableSeats: number;
     startDate: Date;
     endDate: Date;
     departureCity: string;

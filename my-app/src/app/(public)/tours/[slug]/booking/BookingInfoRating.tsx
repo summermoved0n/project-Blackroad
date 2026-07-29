@@ -6,6 +6,7 @@ import { capitalizeFirstLetter } from "@/lib/utility/helpers";
 
 type TourProps = {
   tour: {
+    province: string;
     title: string;
     category: string;
     rating: number;
@@ -13,7 +14,7 @@ type TourProps = {
 };
 
 export default function BookingInfoRating({ tour }: TourProps) {
-  const { rating, title, category } = tour;
+  const { rating, title, category, province } = tour;
 
   return (
     <div className="bg-primary px-4 py-7.5 lg:py-15 lg:px-15 flex flex-col gap-7.5">
@@ -29,7 +30,7 @@ export default function BookingInfoRating({ tour }: TourProps) {
       </Text>
 
       <Text as="p" color="white60" size="sm">
-        {capitalizeFirstLetter(category)}
+        {`${capitalizeFirstLetter(category)} (${capitalizeFirstLetter(province).replaceAll("_", " ")})`}
       </Text>
 
       <div className="flex justify-between grid grid-cols-2 md:gap-5 md:grid-cols-1 xl:grid-cols-2 xl:gap-0">

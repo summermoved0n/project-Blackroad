@@ -3,12 +3,13 @@ import {
   Prisma,
   ToursType,
   PropertyType,
+  Province,
 } from "../../../generated/prisma/client";
 import { TourWhereUniqueInput } from "../../../generated/prisma/models";
 import { prisma } from "../prisma";
 
 type TourFilterProps = {
-  province?: string;
+  province?: Province;
   dates?: string;
   adults?: string;
   children?: string;
@@ -28,6 +29,7 @@ export const dbFindTour = async (filter: TourWhereUniqueInput) => {
       id: true,
       title: true,
       slug: true,
+      province: true,
       description: true,
       imageUrl: true,
       category: true,
@@ -37,6 +39,7 @@ export const dbFindTour = async (filter: TourWhereUniqueInput) => {
       route: true,
       food: true,
       rating: true,
+      capacity: true,
       departures: true,
     },
   });
@@ -69,7 +72,7 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
   const orderBy: Prisma.TourOrderByWithRelationInput = {};
 
   if (filter.province) {
-    where.slug = filter.province;
+    where.province = filter.province;
   }
 
   if (filter.tourType?.trim()) {

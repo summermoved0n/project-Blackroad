@@ -4,6 +4,11 @@
   --color-primary: #171717;
   --color-secondary: #1e1e1f;
   --color-accent: #ea9c3f;
+
+  --color-error: #f16437;
+  --color-success: #37a355;
+  --color-warning: #ffc531;
+
   --color-primary-white: #fafafa;
 
   --color-white-60: rgba(255, 255, 255, 0.6);

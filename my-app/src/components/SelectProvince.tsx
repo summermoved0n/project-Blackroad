@@ -6,18 +6,19 @@ import { ArrowDownIcon } from "@/components/icons/ArrowDownIcon";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useFilters } from "@/hooks/useFilters";
 import { FilterField } from "@/types/filter.types";
+import { capitalizeFirstLetter } from "@/lib/utility/helpers";
 
-export default function SelectCity({
+export default function SelectProvince({
   tours,
 }: {
-  tours: { id: number; slug: string; title: string }[];
+  tours: { id: number; province: string }[];
 }) {
   const [showList, setShowList] = useState<boolean>(false);
 
   const { setFilter, searchParams } = useFilters();
 
-  const cityName = searchParams.get(FilterField.city);
-  const tour = tours.find((item) => item.slug === cityName);
+  const cityName = searchParams.get(FilterField.province);
+  const title = tours.find((item) => item.province === cityName);
 
   const containerRef = useRef<HTMLDivElement>(null);
   useClickOutside(containerRef, () => setShowList(false));
@@ -32,8 +33,10 @@ export default function SelectCity({
         }}
       >
         {!cityName || cityName === "Clear field"
-          ? "Where are you going?"
-          : tour?.title}
+          ? "What province are you going?"
+          : title?.province
+            ? capitalizeFirstLetter(title.province).replaceAll("_", " ")
+            : ""}
         <ArrowDownIcon />
       </button>
 
@@ -44,24 +47,24 @@ export default function SelectCity({
             className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"
             onClick={() => {
               setShowList(false);
-              setFilter(FilterField.city, "Clear field");
+              setFilter(FilterField.province, "Clear field");
             }}
           >
             <Text as="p" color="black" size="sm">
               Clear field
             </Text>
           </li>
-          {tours.map(({ id, slug, title }) => (
+          {tours.map(({ id, province }) => (
             <li
               key={id}
               className="cursor-pointer py-2.5 px-5 bg-white hover:bg-gray-300"
               onClick={() => {
                 setShowList(false);
-                setFilter(FilterField.city, slug);
+                setFilter(FilterField.province, province);
               }}
             >
               <Text as="p" color="black" size="sm">
-                {title}
+                {capitalizeFirstLetter(province).replaceAll("_", " ")}
               </Text>
             </li>
           ))}

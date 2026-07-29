@@ -75,6 +75,7 @@ async function main() {
       food: "Breakfasts",
       price: 5000,
       rating: 5,
+      capacity: 10,
 
       departures: {
         create: [
@@ -83,7 +84,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 10,
             availableSeats: 10,
           },
           {
@@ -91,7 +91,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 10,
             availableSeats: 10,
           },
         ],
@@ -113,6 +112,7 @@ async function main() {
       food: "Breakfasts",
       price: 3000,
       rating: 4.5,
+      capacity: 15,
 
       departures: {
         create: [
@@ -121,7 +121,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 15,
             availableSeats: 15,
           },
           {
@@ -129,7 +128,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 15,
             availableSeats: 15,
           },
         ],
@@ -151,6 +149,7 @@ async function main() {
       food: "Breakfasts",
       price: 3300,
       rating: 3.5,
+      capacity: 18,
 
       departures: {
         create: [
@@ -159,7 +158,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 18,
             availableSeats: 18,
           },
           {
@@ -167,7 +165,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 18,
             availableSeats: 18,
           },
         ],
@@ -189,6 +186,7 @@ async function main() {
       food: "Breakfasts",
       price: 6200,
       rating: 4.7,
+      capacity: 12,
 
       departures: {
         create: [
@@ -197,7 +195,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 12,
             availableSeats: 12,
           },
           {
@@ -205,7 +202,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 12,
             availableSeats: 12,
           },
         ],
@@ -227,6 +223,7 @@ async function main() {
       food: "Breakfasts",
       price: 3500,
       rating: 3.9,
+      capacity: 22,
 
       departures: {
         create: [
@@ -235,7 +232,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 22,
             availableSeats: 22,
           },
           {
@@ -243,7 +239,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 22,
             availableSeats: 22,
           },
         ],
@@ -265,6 +260,7 @@ async function main() {
       food: "Breakfasts",
       price: 4500,
       rating: 4.3,
+      capacity: 25,
 
       departures: {
         create: [
@@ -273,7 +269,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 25,
             availableSeats: 25,
           },
           {
@@ -281,7 +276,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 25,
             availableSeats: 25,
           },
         ],
@@ -303,6 +297,7 @@ async function main() {
       food: "Breakfasts",
       price: 2700,
       rating: 4.8,
+      capacity: 23,
 
       departures: {
         create: [
@@ -311,7 +306,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 23,
             availableSeats: 23,
           },
           {
@@ -319,7 +313,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 23,
             availableSeats: 23,
           },
         ],
@@ -341,6 +334,7 @@ async function main() {
       food: "Breakfasts",
       price: 6250,
       rating: 4.4,
+      capacity: 31,
 
       departures: {
         create: [
@@ -349,7 +343,6 @@ async function main() {
             endDate: new Date("2026-10-23T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 31,
             availableSeats: 31,
           },
           {
@@ -357,7 +350,6 @@ async function main() {
             endDate: new Date("2026-11-13T00:00:00.000Z"),
             status: DepartureStatus.available,
             departureCity: "Toronto",
-            capacity: 31,
             availableSeats: 31,
           },
         ],

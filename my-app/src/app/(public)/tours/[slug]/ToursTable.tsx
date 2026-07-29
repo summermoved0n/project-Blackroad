@@ -9,6 +9,7 @@ type ToursTableProps = {
     tourId: number;
     startDate: Date;
     endDate: Date;
+    availableSeats: number;
     departureCity: string;
     status: string;
   }[];

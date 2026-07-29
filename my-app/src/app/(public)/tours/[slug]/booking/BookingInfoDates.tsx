@@ -1,9 +1,12 @@
 import { Text } from "@/components/Text";
 import { calculateNights } from "@/lib/utility/helpers";
+import clsx from "clsx";
+import { redirect } from "next/navigation";
 
 type TourProps = {
   departureDates:
     | {
+        availableSeats: number;
         startDate: Date;
         endDate: Date;
       }
@@ -21,23 +24,15 @@ export default function BookingInfoDates({
 }: TourProps) {
   if (
     !departureDates ||
+    departureDates.availableSeats <= 0 ||
     !capasityData.adults ||
     !capasityData.children ||
     !capasityData.rooms
   ) {
-    return (
-      <Text
-        as="p"
-        color="white"
-        size="md"
-        className="bg-primary py-7.5 px-4 lg:py-15 lg:px-15"
-      >
-        Something went wrong
-      </Text>
-    );
+    return redirect("/tours");
   }
 
-  const { startDate, endDate } = departureDates;
+  const { startDate, endDate, availableSeats } = departureDates;
   const { adults, children, rooms } = capasityData;
 
   return (
@@ -84,6 +79,26 @@ export default function BookingInfoDates({
         </Text>
         <Text as="p" color="white" size="sm">
           {calculateNights(startDate, endDate)} nights
+        </Text>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Text as="p" color="white60" size="sm">
+          Available seats left:
+        </Text>
+        <Text
+          as="p"
+          size="sm"
+          className={clsx(
+            availableSeats <= 4
+              ? "text-error"
+              : availableSeats <= 6
+                ? "text-warning"
+                : "text-white",
+          )}
+        >
+          {availableSeats <= 4 && "Only"} {availableSeats}{" "}
+          {availableSeats === 1 ? "seat" : "seats"} left
         </Text>
       </div>
 

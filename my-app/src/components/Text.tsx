@@ -3,7 +3,7 @@ import { cn } from "@/components/ui/cn";
 
 type TextProps = {
   children: React.ReactNode;
-  color:
+  color?:
     | "white"
     | "white20"
     | "white60"

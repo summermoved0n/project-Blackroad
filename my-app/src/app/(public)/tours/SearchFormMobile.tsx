@@ -1,6 +1,4 @@
-"use client";
-
-import SelectCity from "@/components/SelectCity";
+import SelectProvince from "@/components/SelectProvince";
 import SelectDate from "@/components/SelectDate";
 import SelectPeopleAndRooms from "@/components/SelectPeopleAndRooms";
 import { PopularToursProps } from "@/types/tour.types";
@@ -18,7 +16,7 @@ export default function SearchFormMobile({
   return (
     <section className="xl:hidden py-5 px-4 bg-primary">
       <div className="mb-5">
-        <SelectCity tours={tours} />
+        <SelectProvince tours={tours} />
         <SelectDate setShowModal={setShowModal} />
         <SelectPeopleAndRooms />
       </div>
