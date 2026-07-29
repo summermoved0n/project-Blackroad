@@ -8,7 +8,7 @@ import { TourWhereUniqueInput } from "../../../generated/prisma/models";
 import { prisma } from "../prisma";
 
 type TourFilterProps = {
-  city?: string;
+  province?: string;
   dates?: string;
   adults?: string;
   children?: string;
@@ -48,6 +48,7 @@ export const dbFindPopularTours = async () => {
       id: true,
       slug: true,
       title: true,
+      province: true,
       description: true,
       imageUrl: true,
       price: true,
@@ -67,8 +68,8 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
   const where: Prisma.TourWhereInput = {};
   const orderBy: Prisma.TourOrderByWithRelationInput = {};
 
-  if (filter.city) {
-    where.slug = filter.city;
+  if (filter.province) {
+    where.slug = filter.province;
   }
 
   if (filter.tourType?.trim()) {

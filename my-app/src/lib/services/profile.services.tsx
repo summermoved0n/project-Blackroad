@@ -52,6 +52,10 @@ export const leaveReview = async ({
     throw new Error("Tour not found");
   }
 
+  if (booking.userId !== user.id) {
+    throw new Error("Forbidden");
+  }
+
   if (booking.status !== BookingStatus.completed) {
     throw new Error(
       "You are not allowed to review this tour because you haven't completed it yet.",

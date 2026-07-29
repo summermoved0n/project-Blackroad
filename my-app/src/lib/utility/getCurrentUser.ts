@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
 
 type TokenPayload = {
   id: number;
@@ -12,7 +12,15 @@ export const getCurrentUser = async () => {
 
   if (!token) return null;
 
-  const { id } = jwt.verify(token!, process.env.JWT_SECRET!) as TokenPayload;
+  try {
+    const { id } = jwt.verify(token, process.env.JWT_SECRET!) as TokenPayload;
 
-  return id;
+    return id;
+  } catch (error) {
+    if (error instanceof JsonWebTokenError) {
+      return null;
+    }
+
+    throw error;
+  }
 };

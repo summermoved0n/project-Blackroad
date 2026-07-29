@@ -5,6 +5,7 @@ import { dbGetUser } from "@/lib/repositories/auth.repo";
 
 export default async function page() {
   const userId = await getCurrentUser();
+  console.log(userId);
   const user = await dbGetUser({ id: userId! });
 
   return (

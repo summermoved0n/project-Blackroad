@@ -62,7 +62,7 @@ export const dbFindPopularReview = async () =>
       tourId: true,
     },
     orderBy: {
-      rating: "asc",
+      rating: "desc",
     },
     take: 10,
   });
@@ -87,9 +87,15 @@ export const dbCreateFavorteTour = async (data: FavorteTourProps) =>
     data,
   });
 
-export const dbDeleteFavorteTours = async ({ id }: { id: number }) =>
+export const dbDeleteFavorteTours = async ({
+  id,
+  userId,
+}: {
+  id: number;
+  userId: number;
+}) =>
   prisma.favorite.delete({
-    where: { id },
+    where: { id, userId },
   });
 
 export const dbFindFavorteTours = async (userId: { userId: number }) =>

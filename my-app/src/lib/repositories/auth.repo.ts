@@ -6,6 +6,7 @@ type dbCreateUserProps = {
   email: string;
   password: string;
   verificationToken: string;
+  verificationTokenExpire: Date;
 };
 
 type dbUpdateUserProps = {

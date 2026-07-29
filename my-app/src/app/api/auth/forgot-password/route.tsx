@@ -18,7 +18,10 @@ export async function POST(req: Request) {
     await userForgotPassword(validatedBody.data);
 
     return NextResponse.json(
-      { message: "The link to renew your password was sent to email" },
+      {
+        message:
+          "If an account with this email exists, we've sent password reset instructions.",
+      },
       { status: 200 },
     );
   } catch (error) {

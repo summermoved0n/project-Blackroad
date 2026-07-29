@@ -1,10 +1,8 @@
-import { cookies } from "next/headers";
 import Header from "./Header";
+import { getCurrentUser } from "@/lib/utility/getCurrentUser";
 
 export default async function HeaderServer() {
-  const cookieStore = await cookies();
+  const isAuth = await getCurrentUser();
 
-  const token = cookieStore.get("token");
-
-  return <Header isAuth={!!token} />;
+  return <Header isAuth={!!isAuth} />;
 }

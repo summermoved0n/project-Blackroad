@@ -51,6 +51,21 @@ enum DepartureStatus {
   cancelled
   completed
 }
+enum Province {
+  alberta
+  british_columbia
+  manitoba
+  new_brunswick
+  newfoundland_and_labrador
+  northwest_territories
+  nova_scotia
+  nunavut
+  ontario
+  prince_edward_island
+  quebec
+  saskatchewan
+  yukon
+}
 
 model User { 
   id        Int     @id @default(autoincrement()) 
@@ -62,6 +77,8 @@ model User {
   
   isVerify  Boolean @default(false)
   verificationToken  String?
+  verificationTokenExpire  DateTime?
+
 
   resetPasswordToken String?
   resetPasswordExpire DateTime?
@@ -83,7 +100,7 @@ model Tour {
   description         String
   imageUrl            String
 
-
+  province            Province
   category            Categories
   propertyType        PropertyType
   toursType           ToursType
@@ -110,8 +127,10 @@ model TourDeparture {
   tourId      Int
   tour        Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
 
-  bookings          Booking[]
+  bookings    Booking[]
 
+  capacity    Int
+  availableSeats  Int
 
   startDate   DateTime
   endDate     DateTime

@@ -1,23 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token");
+export async function middleware(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
 
   const isAuthPage =
     req.nextUrl.pathname.startsWith("/login") ||
     req.nextUrl.pathname.startsWith("/signup");
 
   const isProtectedRoute =
-    req.nextUrl.pathname.includes("/profile") ||
+    req.nextUrl.pathname.startsWith("/profile") ||
     req.nextUrl.pathname.startsWith("/build-trip") ||
     req.nextUrl.pathname.includes("/booking") ||
-    req.nextUrl.pathname.includes("/favorites");
+    req.nextUrl.pathname.startsWith("/favorites");
 
-  if (!token && isProtectedRoute) {
+  let isAuthenticated = false;
+
+  if (token) {
+    try {
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+
+      await jwtVerify(token, secret);
+
+      isAuthenticated = true;
+    } catch {
+      const response = NextResponse.redirect(new URL("/login", req.url));
+      response.cookies.delete("token");
+
+      return response;
+    }
+  }
+
+  if (!isAuthenticated && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (token && isAuthPage) {
+  if (isAuthenticated && isAuthPage) {
     return NextResponse.redirect(new URL("/profile", req.url));
   }
 

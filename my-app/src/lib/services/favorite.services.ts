@@ -38,5 +38,5 @@ export const deleteFavoriteTour = async ({
     throw new Error("Wrong user Id or can't find this user");
   }
 
-  await dbDeleteFavorteTours({ id: favoriteId });
+  await dbDeleteFavorteTours({ id: favoriteId, userId: user.id });
 };

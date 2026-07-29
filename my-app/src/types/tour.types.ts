@@ -41,6 +41,7 @@ export type PopularToursProps = {
   id: number;
   slug: string;
   title: string;
+  province: string;
   description: string;
   imageUrl: string;
   price: number;

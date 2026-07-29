@@ -15,7 +15,6 @@ type HeaderProps = {
 export default function Header({ isAuth }: HeaderProps) {
   const router = useRouter();
   const [openDropMenu, setOpenDropMenu] = useState<boolean>(false);
-  const [] = useState<boolean>(false);
 
   useEffect(() => {
     if (openDropMenu) {

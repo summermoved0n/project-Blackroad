@@ -62,8 +62,14 @@ export const signUpUser = async ({ email, password }: SignUpUserProps) => {
   }
 
   const verificationToken = nanoid();
+  const verificationTokenExpire = new Date(Date.now() + 1000 * 60 * 30);
 
-  await dbCreateUser({ email, password, verificationToken });
+  await dbCreateUser({
+    email,
+    password,
+    verificationToken,
+    verificationTokenExpire,
+  });
 
   await resend.emails.send({
     from: RESEND_EMAIL_FROM!,
@@ -156,11 +162,14 @@ export const userForgotPassword = async ({ email }: { email: string }) => {
   const existedUser = await dbFindUser({ email });
 
   if (!existedUser) {
-    throw new Error("User not found");
+    return;
   }
 
-  if (existedUser!.resetPasswordExpire! > new Date()) {
-    throw new Error("Token was sent and still active");
+  if (
+    existedUser.resetPasswordExpire &&
+    existedUser.resetPasswordExpire > new Date()
+  ) {
+    return;
   }
 
   const resetToken = nanoid(25);

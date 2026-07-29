@@ -90,7 +90,7 @@ export default function TourInfo({
           {favoriteTour ? (
             <button
               type="button"
-              className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-end items-center gap-5 hover:text-accent focus:text-accent transition"
+              className="w-16 md:w-53.5 h-12 bg-primary rounded-md text-white flex justify-center items-center gap-5 hover:text-accent focus:text-accent transition"
               onClick={() => onRemoveFromFavoriteClick(favoriteTour.id)}
             >
               <span className="hidden md:block">Add to Favorites</span>

@@ -11,7 +11,7 @@ export default async function page({
   searchParams,
 }: {
   searchParams: Promise<{
-    city?: string;
+    provicnce?: string;
     dates?: string;
     rating?: string;
     price?: string;
@@ -31,7 +31,7 @@ export default async function page({
   // console.log(params);
   const allToursList = await dbFindPopularTours();
   const filteredToursList = await dbFindFilteredTours(params);
-  // console.log("toursList", toursList);
+  console.log("toursList", filteredToursList);
 
   return (
     <main>
