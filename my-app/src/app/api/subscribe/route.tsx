@@ -1,8 +1,16 @@
 import { userSubscribe } from "@/lib/services/subscribe.services";
 import { subscribeEmailSchema } from "@/lib/validations/subscribe.validation";
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/utility/rateLimit";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
+  const limited = enforceRateLimit(req, "newsletter:subscribe", {
+    limit: 5,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   try {
     const body = await req.json();
 
@@ -29,9 +37,9 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 401 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to subscribe") },
+      { status: 400 },
+    );
   }
 }

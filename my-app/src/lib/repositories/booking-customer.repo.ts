@@ -1,3 +1,5 @@
+import { Prisma } from "../../../generated/prisma/browser";
+import { PrismaClient } from "../../../generated/prisma/client";
 import { BookingCustomerWhereUniqueInput } from "../../../generated/prisma/models";
 import { prisma } from "../prisma";
 
@@ -13,8 +15,12 @@ type CustomerCreateProps = {
   guestArrivalTime: string | null;
 };
 
-export const dbCreateCustomer = async (data: CustomerCreateProps) =>
-  prisma.bookingCustomer.create({ data });
+type DbClient = PrismaClient | Prisma.TransactionClient;
+
+export const dbCreateCustomer = async (
+  db: DbClient,
+  data: CustomerCreateProps,
+) => db.bookingCustomer.create({ data });
 
 export const dbFindCustomerSnapshot = async (
   filter: BookingCustomerWhereUniqueInput,

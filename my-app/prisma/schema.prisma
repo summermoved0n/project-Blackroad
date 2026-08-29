@@ -26,6 +26,9 @@ enum PaymentStatus {
   pending
   paid
   failed
+  refund_pending
+  refund_failed
+  refund_required
   refunded
 }
 enum PaymentProvider {
@@ -82,6 +85,7 @@ model User {
 
   resetPasswordToken String?
   resetPasswordExpire DateTime?
+  sessionVersion Int @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -156,6 +160,9 @@ model Review {
   tourId     Int
   tour       Tour     @relation(fields: [tourId], references: [id])
 
+  bookingId  Int?     @unique
+  booking    Booking? @relation(fields: [bookingId], references: [id])
+
   @@map("reviews")
 }
 
@@ -196,6 +203,7 @@ model Booking {
 
 
   payments Payment[]
+  review   Review?
 
   adults     Int
   children     Int
@@ -203,6 +211,7 @@ model Booking {
   room       RoomType    @default(single)
   totalPrice Decimal     @db.Decimal(10, 2)
   status     BookingStatus
+  expiresAt  DateTime?
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -223,6 +232,7 @@ model Payment {
   currency String  @default("CAD")
 
   providerPaymentId String? @unique
+  providerRefundId  String? @unique
   clientSecret      String? 
 
   errorMessage String?

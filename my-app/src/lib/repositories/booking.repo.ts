@@ -1,3 +1,5 @@
+import { Prisma } from "../../../generated/prisma/browser";
+import { PrismaClient } from "../../../generated/prisma/client";
 import { BookingStatus, RoomType } from "../../../generated/prisma/enums";
 import { prisma } from "../prisma";
 
@@ -12,11 +14,24 @@ type CreateBookingProps = {
   totalPrice: number;
   status: BookingStatus;
   numberOfRooms: number;
+  expiresAt: Date;
 };
+
+type DbClient = PrismaClient | Prisma.TransactionClient;
 
 export const dbFindBookingById = async (id: number) =>
   prisma.booking.findUnique({
     where: { id },
+    include: {
+      departure: {
+        select: {
+          id: true,
+          tourId: true,
+          startDate: true,
+          status: true,
+        },
+      },
+    },
   });
 
 export const dbFindBookingEmailData = async (id: number) =>
@@ -53,13 +68,15 @@ export const dbFindBookingEmailData = async (id: number) =>
 export const dbFindBookingByFilter = async (filter: {
   userId: number;
   tourId?: number;
+  departureId?: number;
+  status?: BookingStatus | { in: BookingStatus[] };
 }) =>
   prisma.booking.findFirst({
     where: filter,
   });
 
-export const dbCreateBooking = async (data: CreateBookingProps) =>
-  prisma.booking.create({ data });
+export const dbCreateBooking = async (db: DbClient, data: CreateBookingProps) =>
+  db.booking.create({ data });
 
 export const dbFindAllUserBookings = async (filter: { userId: number }) =>
   prisma.booking.findMany({

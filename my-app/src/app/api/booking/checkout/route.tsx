@@ -1,8 +1,16 @@
 import { createBooking } from "@/lib/services/booking.services";
 import { bookingAPISchema } from "@/lib/validations/booking.validation";
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@/lib/utility/rateLimit";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
+  const limited = enforceRateLimit(req, "booking:checkout", {
+    limit: 10,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   try {
     const body = await req.json();
 
@@ -22,9 +30,9 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to create booking") },
+      { status: 400 },
+    );
   }
 }

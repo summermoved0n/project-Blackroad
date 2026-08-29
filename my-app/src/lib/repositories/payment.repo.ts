@@ -1,3 +1,5 @@
+import { Prisma } from "../../../generated/prisma/browser";
+import { PrismaClient } from "../../../generated/prisma/client";
 import {
   BookingStatus,
   PaymentProvider,
@@ -26,8 +28,10 @@ type UpdateFilterProps = {
   status: PaymentStatus;
 };
 
-export const dbCreatePayment = async (data: CreateProps) =>
-  prisma.payment.create({
+type DbClient = PrismaClient | Prisma.TransactionClient;
+
+export const dbCreatePayment = async (db: DbClient, data: CreateProps) =>
+  db.payment.create({
     data,
   });
 
@@ -70,6 +74,7 @@ export const dbAttachPaymentIntent = async (
       providerPaymentId: null,
       booking: {
         status: BookingStatus.pending,
+        expiresAt: { gt: new Date() },
       },
     },
     data,

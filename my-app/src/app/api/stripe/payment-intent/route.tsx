@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createPayment, finishPayment } from "@/lib/services/payment.services";
+import { enforceRateLimit } from "@/lib/utility/rateLimit";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
+  const limited = enforceRateLimit(req, "stripe:payment-intent", {
+    limit: 20,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (limited) return limited;
+
   try {
     const body = await req.json();
 
@@ -30,26 +38,22 @@ export async function POST(req: Request) {
     );
 
     const updateData = {
+      bookingId: body.bookingId,
       paymentId: body.paymentId,
       paymentIntentId: paymentIntent.id,
       amount: paymentIntent.amount,
       client_secret: paymentIntent.client_secret,
     };
 
-    const result = await finishPayment(updateData);
-
-    if (result.count === 0) {
-      await stripe.paymentIntents.cancel(paymentIntent.id);
-      throw new Error("Payment was cancelled while being created");
-    }
+    const clientSecret = await finishPayment(updateData);
 
     return NextResponse.json({
-      clientSecret: paymentIntent.client_secret,
+      clientSecret,
     });
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to initialize payment") },
+      { status: 400 },
+    );
   }
 }

@@ -22,7 +22,6 @@ export default function BookingInfo({ tour }: { tour: TourPayload }) {
   const departureDates = departures.find(
     (item) => item.id === Number(departureDateId),
   );
-  console.log(departureDates);
   return (
     <section className="flex flex-col gap-7.5">
       <BookingInfoRating tour={tour} />

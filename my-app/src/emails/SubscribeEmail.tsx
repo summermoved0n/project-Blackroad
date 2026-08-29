@@ -3,7 +3,6 @@ import {
   Container,
   Heading,
   Hr,
-  Img,
   Preview,
   Section,
   Text,
@@ -33,12 +32,6 @@ export default function SubscribeEmail({
           overflow: "hidden",
         }}
       >
-        {/* <Img
-          src={`${process.env.BASE_URL}/email-banner.png`}
-          alt="Blackroad"
-          width="600"
-        /> */}
-
         <Section style={{ padding: "40px" }}>
           <Heading
             style={{

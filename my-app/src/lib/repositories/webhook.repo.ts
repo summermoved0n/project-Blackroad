@@ -1,5 +1,12 @@
 import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../prisma";
+import { dbExpirePendingBooking } from "./profile.repo";
+
+export type PaymentSuccessResult =
+  | "confirmed"
+  | "already_confirmed"
+  | "reconciliation_required"
+  | "ignored";
 
 export const dbPaymentSuccess = async ({
   bookingId,
@@ -9,8 +16,10 @@ export const dbPaymentSuccess = async ({
   bookingId: number;
   paymentId: number;
   providerPaymentId: string;
-}) =>
-  prisma.$transaction(async (tx) => {
+}) => {
+  await dbExpirePendingBooking({ bookingId });
+
+  return prisma.$transaction(async (tx): Promise<PaymentSuccessResult> => {
     const payment = await tx.payment.findUnique({
       where: { id: paymentId },
     });
@@ -30,45 +39,124 @@ export const dbPaymentSuccess = async ({
       throw new Error("Stripe payment does not match booking");
     }
 
+    const departure = await tx.tourDeparture.findUnique({
+      where: { id: booking.departureId },
+    });
+
+    if (!departure || departure.tourId !== booking.tourId) {
+      throw new Error("Booking departure not found or does not match tour");
+    }
+
     if (
       payment.status === PaymentStatus.paid &&
       booking.status === BookingStatus.confirmed
     ) {
-      return;
+      return "already_confirmed";
+    }
+
+    if (booking.status === BookingStatus.cancelled) {
+      const reconciliation = await tx.payment.updateMany({
+        where: {
+          id: paymentId,
+          bookingId,
+          providerPaymentId,
+          status: { in: [PaymentStatus.pending, PaymentStatus.failed] },
+        },
+        data: {
+          status: PaymentStatus.refund_required,
+          errorMessage:
+            "Stripe payment succeeded after the booking was cancelled or expired",
+        },
+      });
+
+      return reconciliation.count === 1
+        ? "reconciliation_required"
+        : "ignored";
     }
 
     if (
       payment.status !== PaymentStatus.pending ||
       booking.status !== BookingStatus.pending
     ) {
-      return;
+      return "ignored";
     }
 
-    await tx.payment.update({
-      where: { id: paymentId },
+    const bookingUpdate = await tx.booking.updateMany({
+      where: {
+        id: bookingId,
+        status: BookingStatus.pending,
+        expiresAt: { gt: new Date() },
+      },
+      data: {
+        status: BookingStatus.confirmed,
+      },
+    });
+
+    if (bookingUpdate.count !== 1) {
+      return "ignored";
+    }
+
+    const paymentUpdate = await tx.payment.updateMany({
+      where: {
+        id: paymentId,
+        bookingId,
+        providerPaymentId,
+        status: PaymentStatus.pending,
+      },
       data: {
         status: PaymentStatus.paid,
         errorMessage: null,
       },
     });
 
-    await tx.booking.update({
-      where: { id: bookingId },
-      data: {
-        status: BookingStatus.confirmed,
-      },
-    });
+    if (paymentUpdate.count !== 1) {
+      throw new Error("Payment state changed while confirming booking");
+    }
+
+    return "confirmed";
+  });
+};
+
+type RefundTransitionProps = {
+  bookingId: number;
+  paymentId: number;
+  providerPaymentId: string;
+  providerRefundId: string;
+};
+
+export const dbRefundSucceeded = async ({
+  bookingId,
+  paymentId,
+  providerPaymentId,
+  providerRefundId,
+}: RefundTransitionProps) =>
+  prisma.payment.updateMany({
+    where: {
+      id: paymentId,
+      bookingId,
+      providerPaymentId,
+      OR: [{ providerRefundId }, { providerRefundId: null }],
+      status: PaymentStatus.refund_pending,
+      booking: { status: BookingStatus.cancelled },
+    },
+    data: {
+      status: PaymentStatus.refunded,
+      providerRefundId,
+      errorMessage: null,
+    },
   });
 
 export const dbRefundFailed = async ({
   bookingId,
   paymentId,
   providerPaymentId,
+  providerRefundId,
   errorMessage,
 }: {
   bookingId: number;
   paymentId: number;
   providerPaymentId: string;
+  providerRefundId: string;
   errorMessage: string;
 }) =>
   prisma.payment.updateMany({
@@ -76,10 +164,13 @@ export const dbRefundFailed = async ({
       id: paymentId,
       bookingId,
       providerPaymentId,
-      status: PaymentStatus.refunded,
+      OR: [{ providerRefundId }, { providerRefundId: null }],
+      status: PaymentStatus.refund_pending,
+      booking: { status: BookingStatus.cancelled },
     },
     data: {
-      status: PaymentStatus.paid,
+      status: PaymentStatus.refund_failed,
+      providerRefundId,
       errorMessage,
     },
   });

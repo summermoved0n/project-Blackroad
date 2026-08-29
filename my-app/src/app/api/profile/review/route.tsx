@@ -1,6 +1,7 @@
 import { leaveReview } from "@/lib/services/profile.services";
 import { createReviewSchema } from "@/lib/validations/booking.validation";
 import { NextResponse } from "next/server";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
   try {
@@ -24,9 +25,9 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 404 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to submit review") },
+      { status: 400 },
+    );
   }
 }

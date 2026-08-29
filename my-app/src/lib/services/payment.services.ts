@@ -1,4 +1,8 @@
-import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums";
+import {
+  BookingStatus,
+  DepartureStatus,
+  PaymentStatus,
+} from "../../../generated/prisma/enums";
 import { dbFindUser } from "../repositories/auth.repo";
 import { dbFindBookingById } from "../repositories/booking.repo";
 import {
@@ -6,9 +10,11 @@ import {
   dbFindPaymentById,
 } from "../repositories/payment.repo";
 import { getCurrentUser } from "../utility/getCurrentUser";
+import { dbExpirePendingBooking } from "../repositories/profile.repo";
 
 type CreateProps = { bookingId: number; paymentId: number };
 type FinishPaymentProps = {
+  bookingId: number;
   paymentId: number;
   paymentIntentId: string;
   amount: number;
@@ -38,6 +44,20 @@ export const createPayment = async ({ bookingId, paymentId }: CreateProps) => {
     throw new Error("Booking not found or wrong status");
   }
 
+  if (!booking.expiresAt || booking.expiresAt <= new Date()) {
+    await dbExpirePendingBooking({ bookingId: booking.id });
+    throw new Error("Booking has expired");
+  }
+
+  if (
+    booking.departure.tourId !== booking.tourId ||
+    booking.departure.startDate <= new Date() ||
+    booking.departure.status === DepartureStatus.cancelled ||
+    booking.departure.status === DepartureStatus.completed
+  ) {
+    throw new Error("Booking departure is no longer valid for payment");
+  }
+
   const payment = await dbFindPaymentById(paymentId);
 
   if (
@@ -54,6 +74,7 @@ export const createPayment = async ({ bookingId, paymentId }: CreateProps) => {
 };
 
 export const finishPayment = async ({
+  bookingId,
   paymentId,
   paymentIntentId,
   amount,
@@ -65,9 +86,26 @@ export const finishPayment = async ({
     throw new Error("Payment does not exist");
   }
 
-  return dbAttachPaymentIntent(paymentId, {
+  const result = await dbAttachPaymentIntent(paymentId, {
     providerPaymentId: paymentIntentId,
     amount: amount / 100,
     clientSecret: client_secret,
   });
+
+  if (result.count === 0) {
+    await dbExpirePendingBooking({ bookingId });
+
+    const attachedPayment = await dbFindPaymentById(paymentId);
+
+    if (
+      attachedPayment?.providerPaymentId === paymentIntentId &&
+      attachedPayment.clientSecret
+    ) {
+      return attachedPayment.clientSecret;
+    }
+
+    throw new Error("Payment is no longer available");
+  }
+
+  return client_secret;
 };

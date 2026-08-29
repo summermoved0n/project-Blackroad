@@ -24,6 +24,10 @@ export const forgotPassValidationSchema = z.object({
   email: z.string().email("Invalid email"),
 });
 
+export const verificationTokenSchema = z.object({
+  verificationToken: z.string().min(20).max(100),
+});
+
 export const resetPassValidationSchema = z
   .object({
     password: z.string().min(6, "Password is required"),

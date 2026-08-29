@@ -4,12 +4,14 @@ import { stripe } from "@/lib/stripe";
 import {
   dbPaymentSuccess,
   dbRefundFailed,
+  dbRefundSucceeded,
 } from "@/lib/repositories/webhook.repo";
 import { dbUpdatePaymentByFilter } from "@/lib/repositories/payment.repo";
 import { PaymentStatus } from "../../../../../generated/prisma/enums";
 import { resend } from "@/lib/resend";
 import BookingConfirmationEmail from "@/emails/BookingConfirmationEmail";
 import { dbFindBookingEmailData } from "@/lib/repositories/booking.repo";
+import { serverEnv } from "@/lib/env/server";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      serverEnv.STRIPE_WEBHOOK_SECRET,
     );
   } catch {
     return NextResponse.json(
@@ -44,17 +46,26 @@ export async function POST(req: Request) {
       throw new Error("Invalid PaymentIntent metadata");
     }
 
-    await dbPaymentSuccess({
+    const paymentResult = await dbPaymentSuccess({
       bookingId,
       paymentId,
       providerPaymentId: paymentIntent.id,
     });
 
-    const bookingData = await dbFindBookingEmailData(bookingId);
+    if (paymentResult === "reconciliation_required") {
+      console.error(
+        "A Stripe payment succeeded for a cancelled or expired booking; refund reconciliation is required",
+      );
+    }
+
+    const bookingData =
+      paymentResult === "confirmed"
+        ? await dbFindBookingEmailData(bookingId)
+        : null;
 
     if (bookingData) {
       await resend.emails.send({
-        from: process.env.RESEND_EMAIL_FROM!,
+        from: serverEnv.RESEND_EMAIL_FROM,
         to: bookingData.user.email,
         subject: "Confirmation Email from Blackroad",
         react: (
@@ -81,7 +92,7 @@ export async function POST(req: Request) {
             room={bookingData.room}
             totalPrice={bookingData.totalPrice.toString()}
             imageUrl={bookingData.tour.imageUrl}
-            bookingUrl={`${process.env.BASE_URL}/booking-history`}
+            bookingUrl={`${serverEnv.BASE_URL}/booking-history`}
           />
         ),
       });
@@ -108,7 +119,11 @@ export async function POST(req: Request) {
           paymentIntent.last_payment_error?.message || "Payment attempt failed",
       },
     );
-  } else if (event.type === "refund.failed") {
+  } else if (
+    event.type === "refund.created" ||
+    event.type === "refund.updated" ||
+    event.type === "refund.failed"
+  ) {
     const refund = event.data.object as Stripe.Refund;
 
     const bookingId = Number(refund.metadata?.bookingId);
@@ -122,17 +137,28 @@ export async function POST(req: Request) {
     if (
       !Number.isInteger(bookingId) ||
       !Number.isInteger(paymentId) ||
-      !providerPaymentId
+      !providerPaymentId ||
+      !refund.id
     ) {
       throw new Error("Invalid refund metadata");
     }
 
-    await dbRefundFailed({
-      bookingId,
-      paymentId,
-      providerPaymentId,
-      errorMessage: refund.failure_reason ?? "Stripe refund failed",
-    });
+    if (refund.status === "succeeded") {
+      await dbRefundSucceeded({
+        bookingId,
+        paymentId,
+        providerPaymentId,
+        providerRefundId: refund.id,
+      });
+    } else if (refund.status === "failed" || refund.status === "canceled") {
+      await dbRefundFailed({
+        bookingId,
+        paymentId,
+        providerPaymentId,
+        providerRefundId: refund.id,
+        errorMessage: refund.failure_reason ?? `Stripe refund ${refund.status}`,
+      });
+    }
   }
 
   return NextResponse.json({ received: true });

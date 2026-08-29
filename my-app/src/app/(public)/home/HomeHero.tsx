@@ -10,7 +10,12 @@ import { useState } from "react";
 export default function HomeHero({
   popularTours,
 }: {
-  popularTours: { id: number; slug: string; title: string }[];
+  popularTours: {
+    id: number;
+    slug: string;
+    province: string;
+    title: string;
+  }[];
 }) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();

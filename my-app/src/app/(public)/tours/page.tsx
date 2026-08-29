@@ -6,19 +6,11 @@ import {
 } from "@/lib/repositories/tour.repo";
 import { dbFindFavorteTours } from "@/lib/repositories/profile.repo";
 import { getCurrentUser } from "@/lib/utility/getCurrentUser";
-import { Categories, Province } from "../../../../generated/prisma/enums";
 
 export default async function page({
   searchParams,
 }: {
-  searchParams: Promise<{
-    province?: Province;
-    dates?: string;
-    rating?: string;
-    price?: string;
-    sort?: string;
-    category?: Categories;
-  }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const userId = await getCurrentUser();
   let favoriteToursList = null;
@@ -29,10 +21,8 @@ export default async function page({
   }
 
   const params = await searchParams;
-  // console.log(params);
   const allToursList = await dbFindPopularTours();
   const filteredToursList = await dbFindFilteredTours(params);
-  console.log("toursList", filteredToursList);
 
   return (
     <main>

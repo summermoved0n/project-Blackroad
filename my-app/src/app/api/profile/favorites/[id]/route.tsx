@@ -1,4 +1,5 @@
 import { deleteFavoriteTour } from "@/lib/services/favorite.services";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 import { NextResponse } from "next/server";
 
 export async function DELETE(
@@ -16,10 +17,9 @@ export async function DELETE(
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 401 });
-    }
-
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to update favorite") },
+      { status: 401 },
+    );
   }
 }

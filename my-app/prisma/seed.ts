@@ -536,8 +536,8 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (error) => {
-    console.error(error);
+  .catch(async () => {
+    console.error("Database seed failed");
     await prisma.$disconnect();
     process.exit(1);
   });

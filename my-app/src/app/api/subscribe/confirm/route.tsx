@@ -1,4 +1,5 @@
 import { subscribeConfirm } from "@/lib/services/subscribe.services";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 import { subscribeConfirmSchema } from "@/lib/validations/subscribe.validation";
 import { NextResponse } from "next/server";
 
@@ -22,9 +23,14 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 404 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: getPublicErrorMessage(
+          error,
+          "Subscription confirmation failed",
+        ),
+      },
+      { status: 404 },
+    );
   }
 }

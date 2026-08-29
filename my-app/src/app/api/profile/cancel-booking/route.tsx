@@ -1,6 +1,7 @@
 import { cancelBooking } from "@/lib/services/profile.services";
 import { cancelBookingSchema } from "@/lib/validations/booking.validation";
 import { NextResponse } from "next/server";
+import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(request: Request) {
   try {
@@ -22,9 +23,9 @@ export async function POST(request: Request) {
       { status: 200 },
     );
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 400 });
-    }
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: getPublicErrorMessage(error, "Unable to cancel booking") },
+      { status: 400 },
+    );
   }
 }

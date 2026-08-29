@@ -26,10 +26,8 @@ export default async function Page({ params }: PageProps) {
     favoriteToursList = data;
   }
 
-  console.log(getTourById);
 
   const tourReviews = await dbFindReview({ tourId: getTourById?.id });
-  // console.log("tourReviews", tourReviews);
 
   return (
     <Suspense fallback={null}>
