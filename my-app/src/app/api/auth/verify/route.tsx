@@ -5,6 +5,16 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
+    if (
+      typeof body?.verificationToken !== "string" ||
+      !body.verificationToken.trim()
+    ) {
+      return NextResponse.json(
+        { message: "Invalid verification token" },
+        { status: 400 },
+      );
+    }
+
     await userVerify(body);
 
     return NextResponse.json(
