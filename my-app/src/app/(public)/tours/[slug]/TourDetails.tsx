@@ -57,7 +57,7 @@ export default function TourDetails({
     }
 
     router.replace(`?${params.toString()}`);
-  }, []);
+  }, [router, searchParams]);
 
   return (
     <main className="pt-17 sm:pt-20 bg-primary">

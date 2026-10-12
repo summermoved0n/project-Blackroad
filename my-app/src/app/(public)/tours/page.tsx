@@ -29,10 +29,8 @@ export default async function page({
   }
 
   const params = await searchParams;
-  // console.log(params);
   const allToursList = await dbFindPopularTours();
   const filteredToursList = await dbFindFilteredTours(params);
-  console.log("toursList", filteredToursList);
 
   return (
     <main>

@@ -117,8 +117,6 @@ export const createBooking = async (data: BookingDataProps) => {
     room,
   );
 
-  console.log("Creating new Customer...");
-
   const newCustomer = await dbCreateCustomer({
     email: customerInfo.email,
     phoneNumber: customerInfo.phoneNumber,
@@ -130,8 +128,6 @@ export const createBooking = async (data: BookingDataProps) => {
     specialWishes: additional.specialWishes ?? null,
     guestArrivalTime: additional.guestArrivalTime ?? null,
   });
-
-  console.log("Creating new booking...");
 
   const booking = await dbCreateBooking({
     userId: user.id,

@@ -14,10 +14,8 @@ type PageProps = {
 
 export default async function page({ params }: PageProps) {
   const { slug } = await params;
-  // console.log("slug", slug);
 
   const getTourById = await dbFindTour({ slug });
-  // console.log("getTourById", getTourById);
   const userId = await getCurrentUser();
   const user = await dbGetUser({ id: userId! });
 
