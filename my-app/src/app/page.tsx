@@ -13,6 +13,7 @@ import { dbFindPopularTours } from "@/lib/repositories/tour.repo";
 export default async function Home() {
   const popularTours = await dbFindPopularTours();
   const tourReviews = await dbFindPopularReview();
+  // console.log("tourReviews", tourReviews);
   return (
     <main>
       <HomeHero popularTours={popularTours} />

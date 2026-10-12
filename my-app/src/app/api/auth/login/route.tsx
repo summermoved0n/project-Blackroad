@@ -3,17 +3,8 @@ import jwt from "jsonwebtoken";
 import { logInUser } from "@/lib/services/auth.services";
 import { loginValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
-import { enforceRateLimit } from "@/lib/utility/rateLimit";
-import { serverEnv } from "@/lib/env/server";
-import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
-  const limited = enforceRateLimit(req, "auth:login", {
-    limit: 5,
-    windowMs: 15 * 60 * 1000,
-  });
-  if (limited) return limited;
-
   try {
     const body = await req.json();
     const validatedBody = loginValidationSchema.safeParse(body);
@@ -31,9 +22,8 @@ export async function POST(req: Request) {
       {
         id: user.id,
         email: user.email,
-        sessionVersion: user.sessionVersion,
       },
-      serverEnv.JWT_SECRET,
+      process.env.JWT_SECRET!,
       {
         expiresIn: "7d",
       },
@@ -54,9 +44,9 @@ export async function POST(req: Request) {
 
     return response;
   } catch (error) {
-    return NextResponse.json(
-      { message: getPublicErrorMessage(error, "Unable to sign in") },
-      { status: 401 },
-    );
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 401 });
+    }
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

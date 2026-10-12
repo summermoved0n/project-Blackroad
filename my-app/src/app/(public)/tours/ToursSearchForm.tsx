@@ -35,11 +35,7 @@ export default function ToursSearchForm({
 
   const [showModal, setShowModal] = useState(false);
 
-  const requestedPage = Number(searchParams.get("page"));
-  const currentPage =
-    Number.isSafeInteger(requestedPage) && requestedPage > 0
-      ? requestedPage
-      : 1;
+  const currentPage = Number(searchParams.get("page") || 1);
   const paginateListData = filteredToursList.slice(
     (currentPage - 1) * toursPerPage,
     toursPerPage * currentPage,

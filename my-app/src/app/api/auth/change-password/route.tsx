@@ -1,7 +1,6 @@
 import { userChangePassword } from "@/lib/services/auth.services";
 import { changePassValidationSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
-import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
   try {
@@ -18,16 +17,15 @@ export async function POST(req: Request) {
 
     await userChangePassword(validatedBody.data);
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       { message: "Password change success" },
       { status: 200 },
     );
-    response.cookies.delete("token");
-    return response;
   } catch (error) {
-    return NextResponse.json(
-      { message: getPublicErrorMessage(error, "Unable to change password") },
-      { status: 400 },
-    );
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

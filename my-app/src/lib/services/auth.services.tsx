@@ -2,10 +2,9 @@ import "dotenv/config";
 import { nanoid } from "nanoid";
 import {
   dbCreateUser,
-  dbConsumeVerificationToken,
   dbFindUser,
+  dbFindUserByToken,
   dbUpdateUser,
-  dbResetPasswordByToken,
   hashNewPassword,
   validatePassword,
 } from "../repositories/auth.repo";
@@ -14,9 +13,8 @@ import { getCurrentUser } from "../utility/getCurrentUser";
 import { parseBirthDate } from "../utility/helpers";
 import VerifyEmail from "@/emails/VerifyEmail";
 import ForgotPasswordEmail from "@/emails/ForgotPasswordEmail";
-import { serverEnv } from "../env/server";
 
-const { RESEND_EMAIL_FROM, BASE_URL } = serverEnv;
+const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
 type SignUpUserProps = {
   email: string;
@@ -50,10 +48,6 @@ type EditUserData = {
   name?: string;
   phoneNumber?: string;
   dateOfBirth?: Date;
-  isVerify?: boolean;
-  verificationToken?: string;
-  verificationTokenExpire?: Date;
-  sessionVersion?: { increment: number };
 };
 
 type VerificationTokenProps = {
@@ -96,6 +90,10 @@ export const logInUser = async ({ email, password }: LogInUserProps) => {
     throw new Error("Email or password not valid");
   }
 
+  if (!existedUser.isVerify) {
+    throw new Error("Email is not verify");
+  }
+
   const comparePassword = await validatePassword(
     password,
     existedUser.password,
@@ -105,19 +103,22 @@ export const logInUser = async ({ email, password }: LogInUserProps) => {
     throw new Error("Email or password not valid");
   }
 
-  if (!existedUser.isVerify) {
-    throw new Error("Email is not verify");
-  }
-
   return existedUser;
 };
 
 export const userVerify = async ({
   verificationToken,
 }: VerificationTokenProps) => {
-  const result = await dbConsumeVerificationToken(verificationToken);
+  const user = await dbFindUserByToken({ verificationToken });
 
-  if (result.count !== 1) throw new Error("Invalid or expired token");
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  await dbUpdateUser({
+    filter: { id: user.id },
+    data: { isVerify: true, verificationToken: null },
+  });
 };
 
 export const userChangePassword = async ({
@@ -153,10 +154,7 @@ export const userChangePassword = async ({
 
   await dbUpdateUser({
     filter: { id: existedUser.id },
-    data: {
-      password: createNewPassword,
-      sessionVersion: { increment: 1 },
-    },
+    data: { password: createNewPassword },
   });
 };
 
@@ -201,14 +199,22 @@ export const userResetPassword = async ({
   password,
   resetToken,
 }: ResetPassProps) => {
+  const user = await dbFindUserByToken({ resetPasswordToken: resetToken });
+
+  if (!user || user.resetPasswordExpire! < new Date()) {
+    throw new Error("Invalid or expired token");
+  }
+
   const hashedPassword = await hashNewPassword(password);
 
-  const result = await dbResetPasswordByToken({
-    resetPasswordToken: resetToken,
-    password: hashedPassword,
+  await dbUpdateUser({
+    filter: { id: user.id },
+    data: {
+      password: hashedPassword,
+      resetPasswordToken: null,
+      resetPasswordExpire: null,
+    },
   });
-
-  if (result.count !== 1) throw new Error("Invalid or expired token");
 };
 
 export const userUpdateInfo = async ({
@@ -226,21 +232,8 @@ export const userUpdateInfo = async ({
 
   const editData: EditUserData = {};
 
-  let newVerificationToken: string | null = null;
-
-  if (email && email !== user.email) {
-    const emailOwner = await dbFindUser({ email });
-
-    if (emailOwner && emailOwner.id !== user.id) {
-      throw new Error("Email in use");
-    }
-
-    newVerificationToken = nanoid();
+  if (email) {
     editData.email = email;
-    editData.isVerify = false;
-    editData.verificationToken = newVerificationToken;
-    editData.verificationTokenExpire = new Date(Date.now() + 1000 * 60 * 30);
-    editData.sessionVersion = { increment: 1 };
   }
   if (name) {
     editData.name = name;
@@ -262,19 +255,4 @@ export const userUpdateInfo = async ({
     filter: { id: user.id },
     data: editData,
   });
-
-  if (newVerificationToken && email) {
-    await resend.emails.send({
-      from: RESEND_EMAIL_FROM!,
-      to: email,
-      subject: "Verify your new email for Blackroad",
-      react: (
-        <VerifyEmail
-          verificationUrl={`${BASE_URL}/verify/${newVerificationToken}`}
-        />
-      ),
-    });
-  }
-
-  return Boolean(newVerificationToken);
 };

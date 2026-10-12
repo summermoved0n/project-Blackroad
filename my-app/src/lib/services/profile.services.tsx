@@ -6,19 +6,16 @@ import {
 } from "../repositories/booking.repo";
 import { dbFindPayment } from "../repositories/payment.repo";
 import {
-  dbAttachRefundId,
   dbCancelPaidBooking,
   dbCancelPendingBooking,
   dbCreateReview,
   dbFindReview,
-  dbMarkRefundRequestFailed,
 } from "../repositories/profile.repo";
 import { dbFindTour, dbUpdateOneTour } from "../repositories/tour.repo";
 import { resend } from "../resend";
 import { stripe } from "../stripe";
 import { getCurrentUser } from "../utility/getCurrentUser";
 import BookingCancelledEmail from "@/emails/BookingCancelledEmail";
-import { serverEnv } from "../env/server";
 
 type LeaveReviewProps = {
   review: string;
@@ -68,7 +65,6 @@ export const leaveReview = async ({
   await dbCreateReview({
     authorId: user.id,
     tourId: tour.id,
-    bookingId: booking.id,
     comment: review,
     rating,
   });
@@ -144,56 +140,32 @@ export const cancelBooking = async ({ bookingId }: { bookingId: number }) => {
 
   const refundAmount = Math.round(Number(payment.amount) * 100 * 0.75);
 
-  await dbCancelPaidBooking({ bookingId, paymentId: payment.id });
-
-  let refund;
-
-  try {
-    refund = await stripe.refunds.create(
-      {
-        amount: refundAmount,
-        payment_intent: payment.providerPaymentId,
-        reason: "requested_by_customer",
-        metadata: {
-          bookingId: String(bookingId),
-          paymentId: String(payment.id),
-        },
+  const refund = await stripe.refunds.create(
+    {
+      amount: refundAmount,
+      payment_intent: payment.providerPaymentId,
+      reason: "requested_by_customer",
+      metadata: {
+        bookingId: String(bookingId),
+        paymentId: String(payment.id),
       },
-      {
-        idempotencyKey: `refund-payment-${payment.id}`,
-      },
-    );
-  } catch (error) {
-    await dbMarkRefundRequestFailed({
-      bookingId,
-      paymentId: payment.id,
-      errorMessage:
-        error instanceof Error ? error.message : "Stripe refund request failed",
-    });
-    throw error;
-  }
-
-  await dbAttachRefundId({
-    bookingId,
-    paymentId: payment.id,
-    providerRefundId: refund.id,
-  });
+    },
+    {
+      idempotencyKey: `refund-payment-${payment.id}`,
+    },
+  );
 
   if (refund.status === "failed" || refund.status === "canceled") {
-    await dbMarkRefundRequestFailed({
-      bookingId,
-      paymentId: payment.id,
-      providerRefundId: refund.id,
-      errorMessage: refund.failure_reason ?? `Stripe refund ${refund.status}`,
-    });
     throw new Error("Stripe refund failed");
   }
+
+  await dbCancelPaidBooking({ bookingId, paymentId: payment.id });
 
   const bookingData = await dbFindBookingEmailData(bookingId);
 
   if (bookingData) {
     await resend.emails.send({
-      from: serverEnv.RESEND_EMAIL_FROM,
+      from: process.env.RESEND_EMAIL_FROM!,
       to: bookingData.user.email,
       subject: "Booking Cancellation from Blackroad",
       react: (
@@ -219,7 +191,7 @@ export const cancelBooking = async ({ bookingId }: { bookingId: number }) => {
           guests={bookingData.adults + bookingData.children}
           wasPaid={bookingData.status === "cancelled"}
           imageUrl={bookingData.tour.imageUrl}
-          toursUrl={`${serverEnv.BASE_URL}/tours`}
+          toursUrl={`${process.env.BASE_URL}/tours`}
         />
       ),
     });

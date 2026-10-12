@@ -8,9 +8,8 @@ import { resend } from "../resend";
 import { getCurrentUser } from "../utility/getCurrentUser";
 import { dbFindUser } from "../repositories/auth.repo";
 import SubscribeEmail from "@/emails/SubscribeEmail";
-import { serverEnv } from "../env/server";
 
-const { RESEND_EMAIL_FROM, BASE_URL } = serverEnv;
+const { RESEND_EMAIL_FROM, BASE_URL } = process.env;
 
 export const userSubscribe = async ({ email }: { email: string }) => {
   const userId = await getCurrentUser();

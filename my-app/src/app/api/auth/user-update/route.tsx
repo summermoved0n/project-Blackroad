@@ -1,7 +1,6 @@
 import { userUpdateInfo } from "@/lib/services/auth.services";
 import { editUserInfoSchema } from "@/lib/validations/auth.validation";
 import { NextResponse } from "next/server";
-import { getPublicErrorMessage } from "@/lib/utility/publicError";
 
 export async function POST(req: Request) {
   try {
@@ -15,18 +14,17 @@ export async function POST(req: Request) {
       );
     }
 
-    const emailChanged = await userUpdateInfo(validatedBody.data);
+    await userUpdateInfo(validatedBody.data);
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       { message: "User info update success" },
       { status: 200 },
     );
-    if (emailChanged) response.cookies.delete("token");
-    return response;
   } catch (error) {
-    return NextResponse.json(
-      { message: getPublicErrorMessage(error, "Unable to update profile") },
-      { status: 400 },
-    );
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

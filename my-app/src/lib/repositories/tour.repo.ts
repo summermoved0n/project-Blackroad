@@ -157,6 +157,7 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
   } else if (filter.sort === "popularity") {
     orderBy.rating = "desc";
   }
+  // console.log("where", where);
   return prisma.tour.findMany({
     where,
     orderBy,

@@ -19,11 +19,9 @@ type dbUpdateUserProps = {
     password?: string;
     isVerify?: boolean;
     verificationToken?: string | null;
-    verificationTokenExpire?: Date | null;
     resetPasswordToken?: string | null;
     resetPasswordExpire?: Date | null;
     subscribe?: boolean;
-    sessionVersion?: number | { increment: number };
   };
 };
 
@@ -68,40 +66,6 @@ export const dbUpdateUser = async ({ filter, data }: dbUpdateUserProps) => {
     data,
   });
 };
-
-export const dbConsumeVerificationToken = async (verificationToken: string) =>
-  prisma.user.updateMany({
-    where: {
-      verificationToken,
-      verificationTokenExpire: { gt: new Date() },
-      isVerify: false,
-    },
-    data: {
-      isVerify: true,
-      verificationToken: null,
-      verificationTokenExpire: null,
-    },
-  });
-
-export const dbResetPasswordByToken = async ({
-  resetPasswordToken,
-  password,
-}: {
-  resetPasswordToken: string;
-  password: string;
-}) =>
-  prisma.user.updateMany({
-    where: {
-      resetPasswordToken,
-      resetPasswordExpire: { gt: new Date() },
-    },
-    data: {
-      password,
-      resetPasswordToken: null,
-      resetPasswordExpire: null,
-      sessionVersion: { increment: 1 },
-    },
-  });
 
 export const validatePassword = async (
   password: string,

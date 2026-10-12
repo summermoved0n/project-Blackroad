@@ -1,11 +1,9 @@
 import {
   BookingStatus,
-  DepartureStatus,
   PaymentProvider,
   PaymentStatus,
   RoomType,
 } from "../../../generated/prisma/enums";
-import { prisma } from "../prisma";
 import { dbFindUser } from "../repositories/auth.repo";
 import { dbCreateCustomer } from "../repositories/booking-customer.repo";
 import {
@@ -14,7 +12,6 @@ import {
 } from "../repositories/booking.repo";
 import { dbCreatePayment, dbFindPayment } from "../repositories/payment.repo";
 import { dbFindTour } from "../repositories/tour.repo";
-import { dbExpirePendingBooking } from "../repositories/profile.repo";
 import { getCurrentUser } from "../utility/getCurrentUser";
 import { calculateTotalPrice } from "../utility/helpers";
 
@@ -74,10 +71,7 @@ export const createBooking = async (data: BookingDataProps) => {
 
   const isThisBookingExist = await dbFindBookingByFilter({
     userId: user.id,
-    departureId: isRealDepartureDates.id,
-    status: {
-      in: [BookingStatus.pending, BookingStatus.confirmed],
-    },
+    tourId: tour.id,
   });
 
   if (isThisBookingExist?.status === BookingStatus.confirmed) {
@@ -85,35 +79,27 @@ export const createBooking = async (data: BookingDataProps) => {
   }
 
   if (isThisBookingExist?.status === BookingStatus.pending) {
-    const isExpired =
-      !isThisBookingExist.expiresAt ||
-      isThisBookingExist.expiresAt <= new Date();
-
-    if (isExpired) {
-      await dbExpirePendingBooking({ bookingId: isThisBookingExist.id });
-    } else {
-      const payment = await dbFindPayment({
-        bookingId: isThisBookingExist.id,
-        status: PaymentStatus.pending,
-      });
-      if (payment?.status === PaymentStatus.pending) {
-        return {
-          bookingId: isThisBookingExist.id,
-          paymentId: payment.id,
-        };
-      }
-
-      const newPayment = await dbCreatePayment(prisma, {
-        bookingId: isThisBookingExist.id,
-        provider: PaymentProvider.stripe,
-        status: PaymentStatus.pending,
-      });
-
+    const payment = await dbFindPayment({
+      bookingId: isThisBookingExist.id,
+      status: PaymentStatus.pending,
+    });
+    if (payment?.status === PaymentStatus.pending) {
       return {
         bookingId: isThisBookingExist.id,
-        paymentId: newPayment.id,
+        paymentId: payment.id,
       };
     }
+
+    const newPayment = await dbCreatePayment({
+      bookingId: isThisBookingExist.id,
+      provider: PaymentProvider.stripe,
+      status: PaymentStatus.pending,
+    });
+
+    return {
+      bookingId: isThisBookingExist.id,
+      paymentId: newPayment.id,
+    };
   }
 
   const {
@@ -123,8 +109,6 @@ export const createBooking = async (data: BookingDataProps) => {
     departureData: { adults, room, children, numberOfRooms },
   } = data;
 
-  const bookedSeats = adults + children;
-
   const { totalPrice, taxPrice } = calculateTotalPrice(
     tour.price,
     adults.toString(),
@@ -133,62 +117,39 @@ export const createBooking = async (data: BookingDataProps) => {
     room,
   );
 
-  const { booking, payment } = await prisma.$transaction(async (tx) => {
-    const reservation = await tx.tourDeparture.updateMany({
-      where: {
-        id: isRealDepartureDates.id,
-        tourId: tour.id,
-        status: DepartureStatus.available,
-        startDate: { gt: new Date() },
-        availableSeats: {
-          gte: bookedSeats,
-          lte: tour.capacity,
-        },
-      },
-      data: {
-        availableSeats: {
-          decrement: bookedSeats,
-        },
-      },
-    });
+  console.log("Creating new Customer...");
 
-    if (reservation.count !== 1) {
-      throw new Error("Departure is unavailable or does not have enough seats");
-    }
+  const newCustomer = await dbCreateCustomer({
+    email: customerInfo.email,
+    phoneNumber: customerInfo.phoneNumber,
+    fullName: `${customerInfo.name} ${customerInfo.surname}`,
+    city: contactDetails.city,
+    address: contactDetails.address,
+    region: contactDetails.region ?? null,
+    country: contactDetails.country,
+    specialWishes: additional.specialWishes ?? null,
+    guestArrivalTime: additional.guestArrivalTime ?? null,
+  });
 
-    const newCustomer = await dbCreateCustomer(tx, {
-      email: customerInfo.email,
-      phoneNumber: customerInfo.phoneNumber,
-      fullName: `${customerInfo.name} ${customerInfo.surname}`,
-      city: contactDetails.city,
-      address: contactDetails.address,
-      region: contactDetails.region ?? null,
-      country: contactDetails.country,
-      specialWishes: additional.specialWishes ?? null,
-      guestArrivalTime: additional.guestArrivalTime ?? null,
-    });
+  console.log("Creating new booking...");
 
-    const booking = await dbCreateBooking(tx, {
-      userId: user.id,
-      tourId: tour.id,
-      customerId: newCustomer.id,
-      departureId: isRealDepartureDates.id,
-      children,
-      adults,
-      room,
-      numberOfRooms,
-      totalPrice: totalPrice + taxPrice,
-      status: BookingStatus.pending,
-      expiresAt: new Date(Date.now() + 30 * 60 * 1000),
-    });
+  const booking = await dbCreateBooking({
+    userId: user.id,
+    tourId: tour.id,
+    customerId: newCustomer.id,
+    departureId: isRealDepartureDates.id,
+    children,
+    adults,
+    room,
+    numberOfRooms,
+    totalPrice: totalPrice + taxPrice,
+    status: BookingStatus.pending,
+  });
 
-    const payment = await dbCreatePayment(tx, {
-      bookingId: booking.id,
-      provider: PaymentProvider.stripe,
-      status: PaymentStatus.pending,
-    });
-
-    return { booking, payment };
+  const payment = await dbCreatePayment({
+    bookingId: booking.id,
+    provider: PaymentProvider.stripe,
+    status: PaymentStatus.pending,
   });
 
   return {
