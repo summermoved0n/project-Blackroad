@@ -8,18 +8,20 @@ Blackroad is a portfolio project focused on building a practical travel-booking 
 
 ## Live demo
 
-- **Website:** _Add your Vercel deployment URL here_
+- **Website:** [https://blackroad-eight.vercel.app](https://blackroad-eight.vercel.app)
 - **Source code:** [github.com/summermoved0n/project-Blackroad](https://github.com/summermoved0n/project-Blackroad)
 
 ## Features
 
 ### Explore tours
+
 - Browse the tour catalog and view individual tour pages.
 - Filter and sort tours using available search criteria.
 - Explore tour details, departure dates, descriptions, and reviews.
 - Browse a responsive interface designed for desktop and mobile devices.
 
 ### Account experience
+
 - Register an account and confirm the email address.
 - Sign in and sign out.
 - Access account and profile pages.
@@ -27,6 +29,7 @@ Blackroad is a portfolio project focused on building a practical travel-booking 
 - Use password recovery and profile management flows.
 
 ### Booking and communications
+
 - Select departure details and submit booking information.
 - Integrate a Stripe-based payment flow (**test mode recommended; end-to-end deployment verification pending**).
 - Subscribe to a newsletter with email confirmation.
@@ -36,17 +39,17 @@ Blackroad is a portfolio project focused on building a practical travel-booking 
 
 ## Technology stack
 
-| Layer | Technologies |
-| --- | --- |
-| Application | Next.js 16 (App Router), React 19, TypeScript |
-| Styling | Tailwind CSS 4, responsive UI components |
-| Database | PostgreSQL, Prisma ORM 7, `@prisma/adapter-pg` |
-| Authentication | JWT-based authentication, password hashing with bcrypt |
-| Forms and validation | React Hook Form, Zod |
-| Payments | Stripe, Stripe.js, React Stripe.js |
-| Email | Resend, React Email |
-| Additional UI | Embla Carousel, React Day Picker, React Hot Toast |
-| Deployment target | Vercel |
+| Layer                | Technologies                                           |
+| -------------------- | ------------------------------------------------------ |
+| Application          | Next.js 16 (App Router), React 19, TypeScript          |
+| Styling              | Tailwind CSS 4, responsive UI components               |
+| Database             | PostgreSQL, Prisma ORM 7, `@prisma/adapter-pg`         |
+| Authentication       | JWT-based authentication, password hashing with bcrypt |
+| Forms and validation | React Hook Form, Zod                                   |
+| Payments             | Stripe, Stripe.js, React Stripe.js                     |
+| Email                | Resend, React Email                                    |
+| Additional UI        | Embla Carousel, React Day Picker, React Hot Toast      |
+| Deployment target    | Vercel                                                 |
 
 ## Project structure
 
@@ -109,17 +112,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Refer to [`my-app/.env.example`](./.env.example) for the current variable names.
 
-| Variable | Purpose |
-| --- | --- |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `JWT_SECRET` | Secret used to sign and verify authentication tokens |
-| `RESEND_API_KEY` | Resend API key |
-| `RESEND_EMAIL_FROM` | Verified sender address for application emails |
-| `BASE_URL` | Public application origin, used for links in emails |
-| `STRIPE_SECRET_KEY` | Server-side Stripe secret key |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Browser-safe Stripe publishable key |
-| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signature secret |
-| `SEED_USER_PASSWORD` | Password for seed/demo users, when running the seed process |
+| Variable                             | Purpose                                                     |
+| ------------------------------------ | ----------------------------------------------------------- |
+| `DATABASE_URL`                       | PostgreSQL connection string                                |
+| `JWT_SECRET`                         | Secret used to sign and verify authentication tokens        |
+| `RESEND_API_KEY`                     | Resend API key                                              |
+| `RESEND_EMAIL_FROM`                  | Verified sender address for application emails              |
+| `BASE_URL`                           | Public application origin, used for links in emails         |
+| `STRIPE_SECRET_KEY`                  | Server-side Stripe secret key                               |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Browser-safe Stripe publishable key                         |
+| `STRIPE_WEBHOOK_SECRET`              | Stripe webhook signature secret                             |
+| `SEED_USER_PASSWORD`                 | Password for seed/demo users, when running the seed process |
 
 For local testing, `BASE_URL` typically points to `http://localhost:3000`. For Vercel, set it to the exact deployed origin, without a path. Stripe test credentials should be used for portfolio demonstrations.
 
