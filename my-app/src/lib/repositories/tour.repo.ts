@@ -146,6 +146,14 @@ export const dbFindFilteredTours = async (filter: TourFilterProps) => {
     };
   }
 
+  if (filter.adults || filter.children) {
+    const totalCapacity =
+      (Number(filter.adults) || 0) + (Number(filter.children) || 0);
+    where.capacity = {
+      gte: totalCapacity,
+    };
+  }
+
   if (!filter.sort || filter.sort === "default") {
     orderBy.id = "asc";
   } else if (filter.sort === "price: Low to High") {

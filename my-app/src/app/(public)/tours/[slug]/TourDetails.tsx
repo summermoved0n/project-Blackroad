@@ -38,12 +38,13 @@ export default function TourDetails({
   if (!tourData) {
     notFound();
   }
+
   const router = useRouter();
   const { searchParams } = useFilters();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
-
+    console.log("params", params.toString());
     if (!params.has(FilterField.adults)) {
       params.set(FilterField.adults, "2");
     }
@@ -55,9 +56,10 @@ export default function TourDetails({
     if (!params.has(FilterField.rooms)) {
       params.set(FilterField.rooms, "1");
     }
+    console.log("params2", params.toString());
 
     router.replace(`?${params.toString()}`);
-  }, [router, searchParams]);
+  }, []);
 
   return (
     <main className="pt-17 sm:pt-20 bg-primary">

@@ -12,12 +12,12 @@ export default function ComingSoon({
 }: ComingSoonProps) {
   return (
     <div className="bg-primary pt-17 md:pt-20">
-      <div className="bg-secondary py-20 flex flex-col items-center justify-center gap-10">
+      <div className="bg-secondary px-5 py-20 flex flex-col items-center justify-center gap-10">
         <Text as="h1" color="white" size="lg">
           {title}
         </Text>
 
-        <Text as="h2" color="white60" size="md">
+        <Text as="h2" color="white60" size="md" className="text-center">
           {description}
         </Text>
 

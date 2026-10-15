@@ -7,9 +7,9 @@ export default function ExploreWithUs() {
       <Text className="mb-25" as="h2" color="black" size="xl" spacing="sm">
         EXPLORE CANADA WITH US
       </Text>
-      <div className="flex flex-col md:flex-row justify-end gap-7.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-7.5">
         <div className="flex flex-col items-start justify-start gap-15">
-          <Text className="w-102" color="black60" size="sm">
+          <Text className="max-w-102" color="black60" size="sm">
             We have been organizing tours in Ukraine since 2007 and have not
             missed a single day. Because in our country there are many unknown
             and unexplored places that are worth visiting and showing them to
@@ -22,7 +22,7 @@ export default function ExploreWithUs() {
           </ButtonWithArrow>
         </div>
 
-        <Text className="w-102" as="p" color="black60" size="sm">
+        <Text className="max-w-102" as="p" color="black60" size="sm">
           Experienced travelers, guides, specialists who worked in tourist
           complexes in different parts of the world work on creating tours.
           There are no random people. Only those who are passionate about

@@ -28,9 +28,9 @@ export default function DatePicker({ setShowModal }: DatePickerProps) {
       className="pt-10 p-4 flex flex-col items-center justify-start"
       classNames={{
         months:
-          "flex gap-15 relative bg-white p-5 md:before:absolute md:before:content-[''] md:before:bg-black/20 md:before:w-px md:before:h-[90%] md:before:top-[5%] md:before:left-1/2",
+          "flex gap-15 relative bg-white sm:p-4 md:before:absolute md:before:content-[''] md:before:bg-black/20 md:before:w-px md:before:h-[90%] md:before:top-[5%] md:before:left-1/2",
         weekday: "font-medium text-white bg-black/10",
-        nav: "absolute w-full flex justify-between pt-3 pr-9",
+        nav: "absolute w-full flex justify-between pt-3 pr-0.5 sm:pr-9",
         month_caption: "text-xl font-bold py-4 text-center",
         today: `text-xl font-semibold text-red-500`,
         selected: `text-bold text-xl`,

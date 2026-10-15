@@ -11,6 +11,7 @@ import { handleApiError } from "@/lib/utility/handleApiError";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useFilters } from "@/hooks/useFilters";
 
 type ToursListItemProps = {
   itemData: {
@@ -36,6 +37,8 @@ export default function ToursListItem({
   favoriteToursList,
 }: ToursListItemProps) {
   const router = useRouter();
+  const { searchParams } = useFilters();
+  console.log("searchParams", searchParams.has("adults"));
 
   const { id, slug, rating, category, title, imageUrl, description, price } =
     itemData;
@@ -117,7 +120,10 @@ export default function ToursListItem({
           {description}
         </Text>
         <div className="flex justify-between items-center">
-          <ButtonWithArrow path={`/tours/${slug}`} className="text-white">
+          <ButtonWithArrow
+            path={`/tours/${slug}?${searchParams.has("adults") && `adults=${searchParams.get("adults")}`}&${searchParams.has("children") && `children=${searchParams.get("children")}`}&${searchParams.has("rooms") && `rooms=${searchParams.get("rooms")}`}`}
+            className="text-white"
+          >
             Book now
           </ButtonWithArrow>
           <Text as="p" color="white" size="md">

@@ -53,7 +53,7 @@ export default function SearchForm({
             your journey
           </Text>
 
-          <Text as="p" color="white60" size="sm">
+          <Text as="p" color="white60" size="sm" className="text-center px-4">
             Great, now select the start and end dates for your trip.
           </Text>
 

@@ -18,6 +18,8 @@ export default async function page({
     price?: string;
     sort?: string;
     category?: Categories;
+    adults?: string;
+    children?: string;
   }>;
 }) {
   const userId = await getCurrentUser();
