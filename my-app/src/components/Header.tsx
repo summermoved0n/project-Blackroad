@@ -16,6 +16,7 @@ type HeaderProps = {
 export default function Header({ isAuth }: HeaderProps) {
   const router = useRouter();
   const [openDropMenu, setOpenDropMenu] = useState<boolean>(false);
+  const [isHoveringLangInfo, setIsHoveringLangInfo] = useState<boolean>(false);
 
   useEffect(() => {
     if (openDropMenu) {
@@ -67,10 +68,17 @@ export default function Header({ isAuth }: HeaderProps) {
       </div>
       <button
         type="button"
+        onMouseEnter={() => setIsHoveringLangInfo(true)}
+        onMouseLeave={() => setIsHoveringLangInfo(false)}
         className="hidden md:h-full md:flex md:items-center md:justify-center transition hover:text-accent focus:text-accent"
       >
         Fr / En
       </button>
+      {isHoveringLangInfo && (
+        <div className="absolute p-5 top-17 sm:top-20 left-1/4 transform -translate-x-1/2 w-fit h-fit bg-white/70 z-50 flex items-center justify-center">
+          <p className="text-black">Language selection coming soon!</p>
+        </div>
+      )}
       <div className="h-full flex items-center justify-center">
         <Logo onClose={setOpenDropMenu} />
       </div>
